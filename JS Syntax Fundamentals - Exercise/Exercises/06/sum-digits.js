@@ -2,8 +2,8 @@ function solve(number) {
     let sum = 0;
     const digits = number.toString();
 
-    for (const digit of digits) {
-        sum += parseInt(digit, 10); // Convert each character to an integer and add to sum
+    for (let i = 0; i < digits.length; i++) {
+        sum += Number(digits[i]);
     }
     console.log(sum);
 }
