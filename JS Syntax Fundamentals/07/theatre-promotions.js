@@ -3,7 +3,7 @@ function solve(ticket, age) {
 
     switch (ticket) {
         case 'Weekday':
-            if (0 < age && age <= 18) {
+            if (0 <= age && age <= 18) {
                 result = '12$';
                 break;
             } else if (18 < age && age <= 64) {
@@ -17,7 +17,7 @@ function solve(ticket, age) {
                 break;
             }
         case 'Weekend':
-            if (0 < age && age <= 18) {
+            if (0 <= age && age <= 18) {
                 result = '15$';
                 break;
             } else if (18 < age && age <= 64) {
@@ -31,7 +31,7 @@ function solve(ticket, age) {
                 break;
             }
         case 'Holiday':
-            if (0 < age && age <= 18) {
+            if (0 <= age && age <= 18) {
                 result = '5$'
                 break;
             } else if (18 < age && age <= 64) {
