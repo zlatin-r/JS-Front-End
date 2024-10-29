@@ -5,3 +5,7 @@ function solve(grade) {
         console.log('Not excellent');
     }
 }
+
+solve(5.50)
+solve(5.59)
+solve(4.59)
