@@ -7,7 +7,7 @@ function solve(a, b) {
         sum += i
         numbers += i + ' '
     }
-    console.log(numbers);
+    console.log(numbers.trim());
     console.log(`Sum: ${sum}`)
 }
 
