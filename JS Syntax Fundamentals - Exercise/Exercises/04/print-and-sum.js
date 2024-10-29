@@ -1,13 +1,13 @@
 function solve(a, b) {
 
-    let numbers = [];
+    let numbers = '';
     let sum = 0
 
     for (let i = a; i <= b; i++) {
         sum += i
-        numbers.push(i)
+        numbers += i + ' '
     }
-    console.log(numbers.join(' '));
+    console.log(numbers);
     console.log(`Sum: ${sum}`)
 }
 
