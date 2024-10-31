@@ -5,7 +5,7 @@ function solve(arr, num) {
         firstEl = arr.shift();
         arr.push(firstEl);
     }
-    console.log(arr);
+    console.log(arr.join(' '));
 }
 
 solve([1, 2, 3, 4, 5], 3)
