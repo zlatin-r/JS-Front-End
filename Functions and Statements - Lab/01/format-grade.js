@@ -6,9 +6,9 @@ function grade(score) {
     } else if (score >= 3.5 && score < 4.5) {
         return `Good (${score.toFixed(2)})`
     } else if (score >= 4.5 && score < 5.5) {
-        return `Very Good (${score.toFixed(2)})`
+        return `Very good (${score.toFixed(2)})`
     } else if (score >= 5.5) {
-        return 'Excellent'
+        return `Excellent (${score.toFixed(2)})`
     }
 }
 
