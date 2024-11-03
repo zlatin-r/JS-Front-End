@@ -7,7 +7,7 @@ function solve(num1, num2) {
         return n * findFactorial(n - 1);
     }
 
-    function divideFactorial(n1, n2) {
+    function divideFactorials(n1, n2) {
         let factOne = findFactorial(n1)
         let factTwo = findFactorial(n2)
 
@@ -16,7 +16,7 @@ function solve(num1, num2) {
         return result.toFixed(2)
     }
 
-    console.log(divideFactorial(num1, num2));
+    console.log(divideFactorials(num1, num2));
 }
 
 solve(6, 2)
