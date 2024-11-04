@@ -1,7 +1,7 @@
 function solve(arr) {
     const targetThickness = arr[0];
     let chunks = arr.slice(1);
-    let currChunkThickness = 0;
+
 
     function cut(value) {
         return value /= 4;
@@ -26,4 +26,18 @@ function solve(arr) {
     function transportAndWashing(value) {
         return value = Math.floor(value)
     }
+
+    for (let currChunk of chunks) {
+        while (currChunk > targetThickness) {
+            while (cut(currChunk) >= targetThickness) {
+                currChunk = cut(currChunk);
+            }
+            while (lap(currChunk) > targetThickness) {
+                currChunk = cut(currChunk);
+            }
+        }
+    }
+    console.log(currChunk);
 }
+
+solve([1000, 4000, 8100])
