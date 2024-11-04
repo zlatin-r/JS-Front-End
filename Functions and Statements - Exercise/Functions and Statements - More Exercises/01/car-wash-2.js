@@ -1,14 +1,34 @@
 function solve(arr) {
     let cleaned = 0
 
+    function soap(value) {
+        return value += 10;
+    }
+
+    function water(value) {
+        return value * 1.20;
+    }
+
+    function vacuum(value) {
+        return value * 1.25;
+    }
+
+    function mud(value) {
+        return value *= 0.90;
+    }
+
     for (let command of arr) {
-        switch(command) {
-            case 'soap': cleaned += 10; break;
-            case 'water': cleaned *= 1.20; break;
-            case 'vacuum cleaner': cleaned *= 1.25; break;
-            case 'mud': cleaned *= 0.90; break;
+        if (command === 'soap') {
+            cleaned = soap(cleaned)
+        } else if (command === 'water') {
+            cleaned = water(cleaned)
+        } else if (command === 'vacuum cleaner') {
+            cleaned = vacuum(cleaned)
+        } else if (command === 'mud') {
+            cleaned = mud(cleaned)
         }
     }
+
     console.log(`The car is ${cleaned.toFixed(2)}% clean.`)
 }
 
