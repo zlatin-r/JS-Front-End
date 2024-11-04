@@ -28,6 +28,10 @@ function solve(arr) {
         return value = Math.floor(value)
     }
 
+    function printTransportingAndWashing() {
+        console.log('Transporting and washing');
+    }
+
     for (let currChunk of chunks) {
 
         let cutCount = 0;
@@ -45,7 +49,7 @@ function solve(arr) {
             if (cutCount) {
                 console.log(`Cut x${cutCount}`)
                 currChunk = transportAndWashing(currChunk);
-                console.log('Transporting and washing');
+                printTransportingAndWashing()
             }
             while (lap(currChunk) >= targetThickness || lap(currChunk) === targetThickness - 1) {
                 lapCount++
@@ -54,7 +58,7 @@ function solve(arr) {
             if (lapCount) {
                 console.log(`Lap x${lapCount}`)
                 currChunk = transportAndWashing(currChunk);
-                console.log('Transporting and washing');
+                printTransportingAndWashing()
             }
             while (grind(currChunk) >= targetThickness || grind(currChunk) === targetThickness - 1) {
                 grindCount++
@@ -63,7 +67,7 @@ function solve(arr) {
             if (grindCount) {
                 console.log(`Grind x${grindCount}`)
                 currChunk = transportAndWashing(currChunk);
-                console.log('Transporting and washing');
+                printTransportingAndWashing()
             }
             while (etch(currChunk) >= targetThickness || etch(currChunk) === targetThickness - 1) {
                 etchCount++
@@ -72,7 +76,7 @@ function solve(arr) {
             if (etchCount) {
                 console.log(`Etch x${etchCount}`)
                 currChunk = transportAndWashing(currChunk);
-                console.log('Transporting and washing');
+                printTransportingAndWashing()
             }
             if (currChunk === targetThickness - 1 && !xrayUsed) {
                 xrayUsed = true;
