@@ -13,16 +13,21 @@ function solve(input) {
 
     for (let line of input) {
         let [songType, songName, songTime] = line.split('_')
-        songsList.push(new Song(songType, songName, songTime));
+        let song = new Song(songType, songName, songTime);
+        songsList.push(song);
     }
 
-
+    if (typeList === 'all') {
+        songsList.forEach((i) => console.log(i.name));
+    } else {
+        let filtered = songsList.filter((i) => i.type === typeList);
+        filtered.forEach((i) => console.log(i.name));
+    }
 }
 
-solve([4,
+solve([3,
     'favourite_DownTown_3:14',
-    'listenLater_Andalouse_3:24',
-    'favourite_In To The Night_3:58',
-    'favourite_Live It Up_3:48',
-    'listenLater']
+    'favourite_Kiss_4:16',
+    'favourite_Smooth Criminal_4:01',
+    'favourite']
 )
