@@ -1,9 +1,9 @@
 function convertToJson (name, lastName, hairColor) {
-    let person = {}
-
-    person.name = name
-    person.lastName = lastName
-    person.hairColor = hairColor
+    let person = {
+        name,
+        lastName,
+        hairColor,
+    }
 
     console.log(JSON.stringify(person))
 }
