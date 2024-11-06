@@ -2,15 +2,13 @@ function meetings(input) {
     let meetings = {}
 
     for (let line of input) {
-        let tokens = line.split(' ')
-        let day = tokens[0]
-        let name = tokens[1]
+        let [day, name] = line.split(' ');
 
         if (meetings.hasOwnProperty(day)) {
-            console.log(`Conflict on ${day}!`)
+            console.log(`Conflict on ${day}!`);
         } else {
-            meetings[day] = name
-            console.log(`Scheduled for ${day}`)
+            meetings[day] = name;
+            console.log(`Scheduled for ${day}`);
         }
     }
     for (let key in meetings) {
