@@ -26,7 +26,6 @@ function solve(input) {
         .forEach(movie => console.log(JSON.stringify(movie)));
 }
 
-
 solve([
     'addMovie The Avengers',
     'addMovie Superman',
