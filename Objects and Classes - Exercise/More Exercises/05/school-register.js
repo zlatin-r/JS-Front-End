@@ -3,6 +3,7 @@ function solve(input) {
     const regex = /Student name:\s([A-Za-z]+),\sGrade:\s(\d+),\sGraduated with an average score:\s([\d.]+)/;
 
     for (let line of input) {
+
         let match = line.match(regex);
 
         if (match) {
