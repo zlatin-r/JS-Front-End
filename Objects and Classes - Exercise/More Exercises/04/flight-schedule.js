@@ -6,7 +6,7 @@ function solve(input) {
     let cancelledFlightNumbers = [];
 
     for (let flight of canceledFlights) {
-        let [number, status] = flight.split(' ');
+        let [number, x] = flight.split(' ');
         cancelledFlightNumbers.push(number);
     }
 

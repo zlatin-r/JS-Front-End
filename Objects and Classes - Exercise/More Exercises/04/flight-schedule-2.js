@@ -6,25 +6,26 @@ function solve(input) {
     let cancelledFlightNumbers = [];
 
     for (let flight of canceledFlights) {
-        let [number, status] = flight.split(' ');
+        let [number, x] = flight.split(' ');
         cancelledFlightNumbers.push(number);
     }
 
     for (let flight of flightsList) {
         let [number, destination] = flight.split(' ');
-        allFlights[number] = destination;
+        allFlights[number] = {'Destination': destination, 'Status': status};
     }
 
     if (status === 'Ready to fly') {
         for (let item in allFlights) {
             if (!cancelledFlightNumbers.includes(item)) {
-                console.log(`{ Destination: '${allFlights[item]}', Status: '${status}' }`);
+                console.log(allFlights[item]);
             }
         }
     } else if (status === 'Cancelled') {
         for (let item in allFlights) {
             if (cancelledFlightNumbers.includes(item)) {
-                console.log(`{ Destination: '${allFlights[item]}', Status: '${status}' }`);
+                item['Status'] = status;
+                console.log(allFlights[item]);
             }
         }
     }
@@ -43,7 +44,7 @@ solve([['WN269 Delaware',
         ['DL2120 Cancelled',
             'WN612 Cancelled',
             'WN1173 Cancelled',
-            'SK430 Cancelled'],
-        ['Cancelled']
+            'SK330 Cancelled'],
+        ['Ready to fly']
     ]
 )
