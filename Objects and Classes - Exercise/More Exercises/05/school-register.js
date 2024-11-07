@@ -27,9 +27,11 @@ function solve(input) {
     for (let [grade] of sortedByGrades) {
         console.log(`${grade} Grade`);
         console.log('List of students:', grades[grade]['list of students'].join(', '));
+
         let arrLength = grades[grade]['grades'].length;
         let arrSum = grades[grade]['grades'].reduce((a, b) => a + b, 0);
         let avgAnnualScore = arrSum / arrLength;
+
         console.log('Average annual score from last year:', avgAnnualScore.toFixed(2));
         console.log();
     }
