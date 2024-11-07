@@ -24,7 +24,7 @@ function solve(input) {
     }
     let sortedByGrades = Object.entries(grades).sort((a, b) => a[1] - (b[1]));
 
-    for (let [grade, studentsData] of sortedByGrades) {
+    for (let [grade] of sortedByGrades) {
         console.log(`${grade} Grade`);
         console.log('List of students:', grades[grade]['list of students'].join(', '));
         let arrLength = grades[grade]['grades'].length;
