@@ -10,9 +10,9 @@ function solve(input) {
             elements[el] = 1;
         }
     }
-    for (let [key, value] of Object.entries(elements)) {
-        if (value % 2 === 1) {
-            result.push(key)
+    for (let word in elements) {
+        if (elements[word] % 2 !== 0) {
+            result.push(word)
         }
     }
     console.log(result.join(' '));
