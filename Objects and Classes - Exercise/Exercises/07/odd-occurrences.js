@@ -1,13 +1,13 @@
 function solve(input) {
-    let elementsList = input.split(' ');
+    let elementsList = input.toLowerCase().split(' ');
     let elements = {};
     let result = [];
 
     for (let el of elementsList) {
-        if (elements.hasOwnProperty(el.toLowerCase())) {
-            elements[el.toLowerCase()]++;
+        if (elements.hasOwnProperty(el)) {
+            elements[el]++;
         } else {
-            elements[el.toLowerCase()] = 1;
+            elements[el] = 1;
         }
     }
     for (let [key, value] of Object.entries(elements)) {
