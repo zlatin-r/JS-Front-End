@@ -1,18 +1,18 @@
 function solve(input) {
     let dictionary = {};
 
-    for (let line of input) {
-        let obj = JSON.parse(line);
-        let entries = Object.entries(obj);
+    for (let item of input) {
+        let parsedItem = JSON.parse(item);
+        let term = Object.keys(parsedItem)[0];
+        let definition = parsedItem[term];
 
-        for (let [key, value] of entries) {
-            dictionary[key] = value;
-        }
+        dictionary[term] = definition;
     }
-    let sortedKeys = Object.keys(dictionary).sort();
 
-    for (let key of sortedKeys) {
-        console.log(`Term: ${key} => Definition: ${dictionary[key]}`);
+    let sortedTerms = Object.keys(dictionary).sort();
+
+    for (let term of sortedTerms) {
+        console.log(`Term: ${term} => Definition: ${dictionary[term]}`);
     }
 }
 
