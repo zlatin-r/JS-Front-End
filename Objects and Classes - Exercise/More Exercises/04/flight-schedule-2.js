@@ -1,31 +1,21 @@
 function solve(input) {
     let flightsList = input[0];
-    let canceledFlights = input[1];
+    let canceledFlights = input[1].map(flight => flight.split(' ')[0]);
     let status = input[2][0];
     let allFlights = {};
-    let cancelledFlightNumbers = [];
-
-    for (let flight of canceledFlights) {
-        let [number, x] = flight.split(' ');
-        cancelledFlightNumbers.push(number);
-    }
 
     for (let flight of flightsList) {
         let [number, destination] = flight.split(' ');
         allFlights[number] = {'Destination': destination, 'Status': status};
-    }
 
-    if (status === 'Ready to fly') {
-        for (let item in allFlights) {
-            if (!cancelledFlightNumbers.includes(item)) {
-                console.log(allFlights[item]);
+        if (status === 'Ready to fly') {
+            if (!canceledFlights.includes(number)) {
+                console.log(allFlights[number]);
             }
-        }
-    } else if (status === 'Cancelled') {
-        for (let item in allFlights) {
-            if (cancelledFlightNumbers.includes(item)) {
-                item['Status'] = status;
-                console.log(allFlights[item]);
+        } else if (status === 'Cancelled') {
+            if (canceledFlights.includes(number)) {
+                number['Status'] = status;
+                console.log(allFlights[number]);
             }
         }
     }
@@ -44,7 +34,7 @@ solve([['WN269 Delaware',
         ['DL2120 Cancelled',
             'WN612 Cancelled',
             'WN1173 Cancelled',
-            'SK330 Cancelled'],
-        ['Ready to fly']
+            'SK430 Cancelled'],
+        ['Cancelled']
     ]
 )
