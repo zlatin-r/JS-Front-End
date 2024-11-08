@@ -1,17 +1,24 @@
 function solve(input) {
     let leaders = {};
     let leaderName = '';
+    let armyInfo = '';
 
     for (let line of input) {
         if (line.includes('arrives')) {
             leaderName = line.slice(0, -8)
             leaders[leaderName] = [];
-            console.log(leaders)
         } else if (line.includes('defeated')) {
             leaderName = line.slice(0, -9)
-            delete leaders[leaderName];
-            console.log(leaders);
+            if (leaders.hasOwnProperty(leaderName)) {
+                delete leaders[leaderName];
+            }
+        } else if (line.includes(':')) {
+            [leaderName, armyInfo] = line.split(': ');
+            let [armyName, armyCount] = armyInfo.split(', ');
+
+            leaders[leaderName].push()
         }
+
     }
 }
 
