@@ -6,7 +6,7 @@ function solve(input) {
     for (let line of input) {
         if (line.includes('arrives')) {
             leaderName = line.slice(0, -8)
-            leaders[leaderName] = [];
+            leaders[leaderName] = {armyName: '', count: 0};
         } else if (line.includes('defeated')) {
             leaderName = line.slice(0, -9)
             if (leaders.hasOwnProperty(leaderName)) {
@@ -14,9 +14,11 @@ function solve(input) {
             }
         } else if (line.includes(':')) {
             [leaderName, armyInfo] = line.split(': ');
-            let [armyName, armyCount] = armyInfo.split(', ');
-
-            leaders[leaderName].push()
+            if (leaders.hasOwnProperty(leaderName)) {
+                let [armyName, armyCount] = armyInfo.split(', ');
+                leaders[leaderName][armyName] += armyCount;
+                console.log(leaders[leaderName]);
+            }
         }
 
     }
