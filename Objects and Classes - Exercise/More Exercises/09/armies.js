@@ -9,7 +9,7 @@ function solve(input) {
             console.log(leaders)
         } else if (line.includes('defeated')) {
             leaderName = line.slice(0, -9)
-            leaders = leaders.filter(leader => leaderName !== leaderName);
+            delete leaders[leaderName];
             console.log(leaders);
         }
     }
