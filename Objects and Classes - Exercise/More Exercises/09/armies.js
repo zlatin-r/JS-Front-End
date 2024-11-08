@@ -32,7 +32,6 @@ function solve(input) {
                 }
             )
         }
-
     }
     let sortedLeaders = Object.keys(leaders)
         .sort((a, b) => leaders[b].totalArmy - leaders[a].totalArmy);
