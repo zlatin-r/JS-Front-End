@@ -1,9 +1,5 @@
 function solve(browserData, commands) {
 
-    function addActionToLogs(el, arr) {
-        arr.push(el);
-    }
-
     function clearHistory(obj) {
         for (let key in obj) {
             if (Array.isArray(obj[key])) {
@@ -12,22 +8,26 @@ function solve(browserData, commands) {
         }
     }
 
+    function addSite(arr, site) {
+        arr.push(site);
+    }
+
     for (let line of commands) {
         if (line !== 'Clear History and Cache') {
             let [action, site] = line.split(' ');
 
             if (action === 'Open') {
-                browserData["Open Tabs"].push(site);
-                addActionToLogs(line, browserData['Browser Logs']);
+                addSite(browserData['Open Tabs'], site);
+                addSite(browserData['Browser Logs'], line);
             } else if (action === 'Close') {
                 if (browserData['Open Tabs'].includes(site)) {
-                    browserData['Recently Closed'].push(site);
+                    addSite(browserData['Recently Closed'], site);
+                    addSite(browserData['Browser Logs'], line);
                     browserData['Open Tabs'] = browserData['Open Tabs'].filter(tab => tab !== site);
-                    addActionToLogs(line, browserData['Browser Logs']);
                 }
             }
         } else {
-            clearHistory(browserData)
+            clearHistory(browserData);
         }
     }
     console.log(browserData['Browser Name']);
@@ -36,9 +36,10 @@ function solve(browserData, commands) {
     console.log(`Browser Logs: ${browserData['Browser Logs'].join(', ')}`);
 }
 
-solve({"Browser Name":"Mozilla Firefox",
-    "Open Tabs":["YouTube"],
-    "Recently Closed":["Gmail", "Dropbox"],
-    "Browser Logs":["Open Gmail", "Close Gmail", "Open Dropbox", "Open YouTube", "Close Dropbox"]},
-    ["Open Wikipedia", "Clear History and Cache", "Open Twitter"]
+solve({
+        "Browser Name": "Google Chrome", "Open Tabs": ["Facebook", "YouTube", "Google Translate"],
+        "Recently Closed": ["Yahoo", "Gmail"],
+        "Browser Logs": ["Open YouTube", "Open Yahoo", "Open Google Translate", "Close Yahoo", "Open Gmail", "Close Gmail", "Open Facebook"]
+    },
+    ["Close Facebook", "Open StackOverFlow", "Open Google"]
 )
