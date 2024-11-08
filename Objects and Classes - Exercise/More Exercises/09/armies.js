@@ -6,19 +6,31 @@ function solve(input) {
     for (let line of input) {
         if (line.includes('arrives')) {
             leaderName = line.slice(0, -8)
-            leaders[leaderName] = {armyName: '', count: 0};
+            leaders[leaderName] = {totalArmy: 0};
         } else if (line.includes('defeated')) {
             leaderName = line.slice(0, -9)
+
             if (leaders.hasOwnProperty(leaderName)) {
                 delete leaders[leaderName];
             }
         } else if (line.includes(':')) {
             [leaderName, armyInfo] = line.split(': ');
+
             if (leaders.hasOwnProperty(leaderName)) {
                 let [armyName, armyCount] = armyInfo.split(', ');
-                leaders[leaderName][armyName] += armyCount;
-                console.log(leaders[leaderName]);
+                leaders[leaderName][armyName] = Number(armyCount);
+                leaders[leaderName].totalArmy += Number(armyCount);
             }
+        } else if (line.includes('+')) {
+            let [armyName, armyCount] = armyInfo.split(' + ');
+
+            Object.values(leaders).map((value) => {
+                    if (Object.keys(value).includes(armyName)) {
+                        value[armyName] += Number(armyCount);
+                        value.totalArmy += Number(armyCount);
+                    }
+                }
+            )
         }
 
     }
