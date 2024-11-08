@@ -5,12 +5,11 @@ function solve(browserData, commands) {
     }
 
     function clearHistory(obj) {
-        for (let [key, value] of Object.entries(obj)) {
-            if (Array.isArray(value)) {
-                value = []
+        for (let key in obj) {
+            if (Array.isArray(obj[key])) {
+                obj[key].length = 0;
             }
         }
-        return obj;
     }
 
     for (let line of commands) {
@@ -28,13 +27,13 @@ function solve(browserData, commands) {
                 }
             }
         } else {
-            browserData = clearHistory(browserData);
+            clearHistory(browserData)
         }
     }
     console.log(browserData['Browser Name']);
-    console.log(browserData['Open Tabs']);
-    console.log(browserData['Recently Closed']);
-    console.log(browserData['Browser Logs']);
+    console.log(`Open Tabs: ${browserData['Open Tabs'].join(', ')}`);
+    console.log(`Recently Closed: ${browserData['Recently Closed'].join(', ')}`);
+    console.log(`Browser Logs: ${browserData['Browser Logs'].join(', ')}`);
 }
 
 solve({
@@ -44,5 +43,5 @@ solve({
         "Browser Logs": ["Open YouTube", "Open Yahoo", "Open Google Translate",
             "Close Yahoo", "Open Gmail", "Close Gmail", "Open Facebook"]
     },
-    ["Clear History and Cache", "Close Facebook", "Open StackOverFlow", "Open Google"]
+    ["Close Facebook", "Open StackOverFlow", "Open Google"]
 )
