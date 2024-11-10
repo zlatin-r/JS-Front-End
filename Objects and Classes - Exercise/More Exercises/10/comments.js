@@ -1,6 +1,5 @@
 function solve(input) {
-    let users = [];
-    let articles = [];
+    let addedInfo = [];
     let data = {};
 
     for (let line of input) {
@@ -9,20 +8,20 @@ function solve(input) {
 
         if (line.includes('user')) {
             userName = line.slice(5);
-            if (!users.includes(userName)) {
-                users.push(userName);
+            if (!addedInfo.includes(userName)) {
+                addedInfo.push(userName);
             }
         } else if (line.includes('article')) {
             articleTitle = line.slice(8);
-            if (!articles.includes(articleTitle)) {
-                articles.push(articleTitle);
+            if (!addedInfo.includes(articleTitle)) {
+                addedInfo.push(articleTitle);
             }
         } else {
             let [userName, info] = line.split(' posts on ');
             let [articleTitle, commentInfo] = info.split(': ');
             let [commentTitle, commentContent] = commentInfo.split(', ');
 
-            if (users.includes(userName) && articles.includes(articleTitle)) {
+            if (addedInfo.includes(userName) && addedInfo.includes(articleTitle)) {
                 if (!data[articleTitle]) data[articleTitle] = {};
                 if (!data[articleTitle][userName]) data[articleTitle][userName] = [];
 
