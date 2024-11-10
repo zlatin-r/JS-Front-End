@@ -1,5 +1,20 @@
 function solve(input) {
+    let shelfId = '';
+    let shelfGenre = '';
+    let bookTitle = '';
+    let bookAuthor = '';
+    let bookGenre = '';
+    let bookInfo = '';
+    let shelfData = {};
 
+    for (let line of input) {
+        if (line.includes('->')) {
+            [shelfId, shelfGenre] = line.split(' -> ');
+        } else {
+            [bookTitle, bookInfo] = line.split(': ');
+            [bookAuthor, bookGenre] = line.split(', ');
+        }
+    }
 }
 
 solve([
