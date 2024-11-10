@@ -59,4 +59,4 @@ solve([
     'uSeR4 posts on Movies: I also like movies, I really do',
     'someUser posts on Shopping: title, I go shopping every day',
     'someUser posts on Movies: Like, I also like movies very much'
-])
+]);
