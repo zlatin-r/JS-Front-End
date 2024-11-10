@@ -11,7 +11,9 @@ function solve(input) {
             let article = line.slice(8)
             console.log(article);
         } else {
-            let [userName]
+            let [userName, info] = line.split(' posts on ');
+            let [articleTitle, commentInfo] = info.split(' : ');
+            let [commentTitle, commentContent] = commentInfo.split(', ');
         }
     }
 }
