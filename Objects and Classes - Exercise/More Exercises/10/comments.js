@@ -1,21 +1,33 @@
 function solve(input) {
     let users = [];
     let articles = [];
-    let information = {};
+    let data = {};
 
     for (let line of input) {
+        let userName = '';
+        let articleTitle = '';
+
         if (line.includes('user')) {
-            let userName = line.slice(5)
-            information[userName] = {};
+            userName = line.slice(5);
+            if (!users.includes(userName)) {
+                users.push(userName);
+            }
         } else if (line.includes('article')) {
-            let article = line.slice(8)
-            console.log(article);
+            articleTitle = line.slice(8);
+            if (!articles.includes(articleTitle)) {
+                articles.push(articleTitle);
+            }
         } else {
             let [userName, info] = line.split(' posts on ');
             let [articleTitle, commentInfo] = info.split(' : ');
             let [commentTitle, commentContent] = commentInfo.split(', ');
+
+            if (users.includes(userName) && articles.includes(articleTitle)) {
+                data[articleTitle] = {userName: userName, commentTitle: commentTitle, commentContent: commentContent};
+            }
         }
     }
+
 }
 
 solve([
