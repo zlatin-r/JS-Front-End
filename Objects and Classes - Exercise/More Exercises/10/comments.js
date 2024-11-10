@@ -30,7 +30,7 @@ function solve(input) {
         }
     }
     let sortedArticles = Object.entries(data).sort((a, b) =>
-            Object.values(b[1]).length - Object.values(a[1]).length);
+        Object.values(b[1]).length - Object.values(a[1]).length);
 
     let result = "";
     sortedArticles.forEach(([article, usersComments]) => {
