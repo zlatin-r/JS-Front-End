@@ -1,4 +1,5 @@
 function solve(input) {
+    let addedData = [];
     let shelfId = '';
     let shelfGenre = '';
     let bookTitle = '';
@@ -10,6 +11,9 @@ function solve(input) {
     for (let line of input) {
         if (line.includes('->')) {
             [shelfId, shelfGenre] = line.split(' -> ');
+            if (!addedData.includes(shelfId)) {
+                addedData.push(shelfId);
+            }
         } else {
             [bookTitle, bookInfo] = line.split(': ');
             [bookAuthor, bookGenre] = line.split(', ');
