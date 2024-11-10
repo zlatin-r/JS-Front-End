@@ -11,9 +11,10 @@ function solve(input) {
     for (let line of input) {
         if (line.includes('->')) {
             [shelfId, shelfGenre] = line.split(' -> ');
-            if (!addedData.includes(shelfId)) {
-                addedData.push(shelfId);
-            }
+
+            if (!addedData.includes(shelfId)) addedData.push(shelfId);
+            if (!shelfData[shelfId]) shelfData[shelfId] = {};
+            if (!shelfData[shelfId][shelfGenre]) shelfData[shelfId][shelfGenre] = {};
         } else {
             [bookTitle, bookInfo] = line.split(': ');
             [bookAuthor, bookGenre] = line.split(', ');
