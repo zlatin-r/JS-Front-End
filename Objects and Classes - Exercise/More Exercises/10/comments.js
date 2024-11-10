@@ -23,16 +23,29 @@ function solve(input) {
             let [commentTitle, commentContent] = commentInfo.split(', ');
 
             if (users.includes(userName) && articles.includes(articleTitle)) {
-                data[articleTitle] = {userName: userName, commentTitle: commentTitle, commentContent: commentContent};
+                if (!data[articleTitle]) data[articleTitle] = {};
+                if (!data[articleTitle][userName]) data[articleTitle][userName] = [];
+
+                data[articleTitle][userName].push({commentTitle, commentContent});
             }
         }
     }
-    let sortedArticles = Object.keys(data).sort((a, b) => b.length - a.length);
+    let sortedArticles = Object.entries(data).sort((a, b) =>
+            Object.values(b[1]).flat().length - Object.values(a[1]).flat().length);
 
-    for (let article of sortedArticles) {
-        console.log(article);
-    }
+    let result = "";
+    sortedArticles.forEach(([article, usersComments]) => {
+        result += `Comments on ${article}\n`;
+
+        Object.keys(usersComments).sort().forEach(user => {
+            usersComments[user].forEach(comment => {
+                result += `--- From user ${user}: ${comment.commentTitle} - ${comment.commentContent}\n`;
+            });
+        });
+    });
+    console.log(result.trim());
 }
+
 
 solve([
     'user aUser123',
