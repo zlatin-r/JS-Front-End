@@ -19,7 +19,7 @@ function solve(input) {
             }
         } else {
             let [userName, info] = line.split(' posts on ');
-            let [articleTitle, commentInfo] = info.split(' : ');
+            let [articleTitle, commentInfo] = info.split(': ');
             let [commentTitle, commentContent] = commentInfo.split(', ');
 
             if (users.includes(userName) && articles.includes(articleTitle)) {
@@ -27,7 +27,11 @@ function solve(input) {
             }
         }
     }
+    let sortedArticles = Object.keys(data).sort((a, b) => b.length - a.length);
 
+    for (let article of sortedArticles) {
+        console.log(article);
+    }
 }
 
 solve([
