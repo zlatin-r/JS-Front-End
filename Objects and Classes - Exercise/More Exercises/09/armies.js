@@ -22,7 +22,7 @@ function solve(input) {
                 leaders[leaderName].totalArmy += Number(armyCount);
             }
         } else if (line.includes('+')) {
-            let [armyName, armyCount] = armyInfo.split(' + ');
+            let [armyName, armyCount] = armyInfo.split(', ');
 
             Object.values(leaders).map((value) => {
                     if (Object.keys(value).includes(armyName)) {
@@ -45,13 +45,15 @@ function solve(input) {
     }
 }
 
-solve([
-    'Rick Burr arrives',
+solve(['Rick Burr arrives',
+    'Fergus: Wexamp, 30245',
+    'Rick Burr: Juard, 50000',
     'Findlay arrives',
-    'Rick Burr: Juard, 1500',
-    'Wexamp arrives',
-    'Findlay: Wexamp, 34540',
-    'Wexamp + 340',
-    'Wexamp: Britox, 1155',
-    'Wexamp: Juard, 43423'
+    'Findlay: Britox, 34540',
+    'Wexamp + 6000', 'Juard + 1350',
+    'Britox + 4500', 'Porter arrives',
+    'Porter: Legion, 55000',
+    'Legion + 302',
+    'Rick Burr defeated',
+    'Porter: Retix, 3205'
 ])
