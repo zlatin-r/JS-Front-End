@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="9311346b-2484-4c60-a627-a91a79260e06" name="Changes" comment="Solution" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "zlatin-r"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/zlatin-r/JS-Front-End.git",
+    "accountId": "9c4542d2-26b9-4c6d-b7a0-211ad0ea9cdd"
+  }
+}]]></component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 3
+}]]></component>
+  <component name="ProjectId" id="2oFPV4UZGWbFPBMGLIJZhTXxKub" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Node.js.format-grade.js.executor": "Run",
+    "Node.js.math-power.js.executor": "Run",
+    "Node.js.orders.js.executor": "Run",
+    "Node.js.repeat-string-2.js.executor": "Run",
+    "Node.js.repeat-string.js.executor": "Run",
+    "Node.js.sign-check.js.executor": "Debug",
+    "Node.js.simple-calculator.js.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/home/zl/JS-Front-End/Functions and Statements - Exercise",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/03" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Node.js.sign-check.js">
+    <configuration name="orders.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/04/orders.js" working-dir="$PROJECT_DIR$/04">
+      <method v="2" />
+    </configuration>
+    <configuration name="repeat-string-2.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/03/repeat-string-2.js" working-dir="$PROJECT_DIR$/03">
+      <method v="2" />
+    </configuration>
+    <configuration name="repeat-string.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/03/repeat-string.js" working-dir="$PROJECT_DIR$/03">
+      <method v="2" />
+    </configuration>
+    <configuration name="sign-check.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/06/sign-check.js" working-dir="$PROJECT_DIR$/06">
+      <method v="2" />
+    </configuration>
+    <configuration name="simple-calculator.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/05/simple-calculator.js" working-dir="$PROJECT_DIR$/05">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Node.js.sign-check.js" />
+        <item itemvalue="Node.js.simple-calculator.js" />
+        <item itemvalue="Node.js.orders.js" />
+        <item itemvalue="Node.js.repeat-string-2.js" />
+        <item itemvalue="Node.js.repeat-string.js" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-PY-242.23726.102" />
+        <option value="bundled-python-sdk-5e1850174b45-399fe30bd8c1-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-242.23726.102" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9311346b-2484-4c60-a627-a91a79260e06" name="Changes" comment="" />
+      <created>1730462370861</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1730462370861</updated>
+      <workItem from="1730462371878" duration="3888000" />
+    </task>
+    <task id="LOCAL-00001" summary="Initial Commit">
+      <option name="closed" value="true" />
+      <created>1730468979287</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1730468979287</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Initial Commit">
+      <option name="closed" value="true" />
+      <created>1730469013487</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1730469013487</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Solution">
+      <option name="closed" value="true" />
+      <created>1730469459096</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1730469459096</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Solution">
+      <option name="closed" value="true" />
+      <created>1730469550128</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1730469550128</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Solution">
+      <option name="closed" value="true" />
+      <created>1730469571422</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1730469571422</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Solution">
+      <option name="closed" value="true" />
+      <created>1730469656206</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1730469656206</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Solution">
+      <option name="closed" value="true" />
+      <created>1730469679786</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1730469679786</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Solution">
+      <option name="closed" value="true" />
+      <created>1730469862934</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1730469862934</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Solution">
+      <option name="closed" value="true" />
+      <created>1730469914646</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1730469914646</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Solution">
+      <option name="closed" value="true" />
+      <created>1730469935379</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1730469935379</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Solution">
+      <option name="closed" value="true" />
+      <created>1730470224525</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1730470224525</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Solution">
+      <option name="closed" value="true" />
+      <created>1730470250599</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1730470250599</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Solution">
+      <option name="closed" value="true" />
+      <created>1730470926736</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1730470926736</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Solution">
+      <option name="closed" value="true" />
+      <created>1730470992646</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1730470992646</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Solution">
+      <option name="closed" value="true" />
+      <created>1730471991957</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1730471991957</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Initial Commit" />
+    <MESSAGE value="Solution" />
+    <option name="LAST_COMMIT_MESSAGE" value="Solution" />
+  </component>
+</project>
