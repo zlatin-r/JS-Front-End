@@ -1,22 +1,18 @@
 function meetings(input) {
-    let meetings = {}
+    const meetings = {};
 
-    for (let line of input) {
-        let [day, name] = line.split(' ');
-
+    input.forEach(line => {
+        const [day, name] = line.split(' ')
         if (!meetings.hasOwnProperty(day)) {
             meetings[day] = name;
             console.log(`Scheduled for ${day}`);
         } else {
             console.log(`Conflict on ${day}!`);
         }
-    }
-    for (let key in meetings) {
-        console.log(`${key} -> ${meetings[key]}`);
-    }
-    // Object.keys(meetings).forEach(key => {
-    //     console.log(`${key} - ${meetings[key]}`);
-    // })
+    });
+    Object.keys(meetings).forEach(key => {
+        console.log(`${key} - ${meetings[key]}`);
+    });
 }
 
 meetings(['Friday Bob',
