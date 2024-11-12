@@ -11,8 +11,8 @@ function solve(input) {
         return keyA.localeCompare(keyB);
     });
 
-    for (const [key, value] of addressBookSortable) {
-        console.log(`${key} -> ${value}`);
+    for (const [name, place] of addressBookSortable) {
+        console.log(`${name} -> ${place}`);
     }
 }
 
