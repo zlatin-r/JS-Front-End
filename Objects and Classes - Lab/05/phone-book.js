@@ -2,7 +2,6 @@ function phoneBook(input) {
     let phoneBook = {};
     for (let line of input) {
         let [name, number] = line.split(" ");
-
         phoneBook[name] = number;
     }
     for (let key in phoneBook) {
