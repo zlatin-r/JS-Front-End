@@ -1,7 +1,7 @@
 function solve(input) {
-    let songsList = []
-    let n = input.shift()
-    let typeList = input.pop()
+    let songsList = [];
+    let n = input.shift();
+    let typeList = input.pop();
 
     class Song {
         constructor(type, name, time) {
@@ -12,7 +12,7 @@ function solve(input) {
     }
 
     for (let line of input) {
-        let [songType, songName, songTime] = line.split('_')
+        let [songType, songName, songTime] = line.split('_');
         let song = new Song(songType, songName, songTime);
         songsList.push(song);
     }
@@ -25,9 +25,10 @@ function solve(input) {
     }
 }
 
-solve([3,
+solve([
+    3,
     'favourite_DownTown_3:14',
     'favourite_Kiss_4:16',
     'favourite_Smooth Criminal_4:01',
-    'favourite']
-)
+    'favourite'
+]);
