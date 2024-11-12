@@ -1,7 +1,7 @@
 function cityInfo(city){
 
-    for (let [key, value] of Object.entries(city)){
-        console.log(`${key} -> ${value}`);
+    for (let key of Object.keys(city)){
+        console.log(`${key} -> ${city[key]}`);
     }
 }
 
