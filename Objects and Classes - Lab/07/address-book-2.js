@@ -16,8 +16,9 @@ function solve(input) {
     }
 }
 
-solve(['Tim:Doe Crossing',
+solve([
+    'Tim:Doe Crossing',
     'Bill:Nelson Place',
     'Peter:Carlyle Ave',
-    'Bill:Ornery Rd']
-)
+    'Bill:Ornery Rd'
+]);
