@@ -4,11 +4,11 @@ function meetings(input) {
     for (let line of input) {
         let [day, name] = line.split(' ');
 
-        if (meetings.hasOwnProperty(day)) {
-            console.log(`Conflict on ${day}!`);
-        } else {
+        if (!meetings.hasOwnProperty(day)) {
             meetings[day] = name;
             console.log(`Scheduled for ${day}`);
+        } else {
+            console.log(`Conflict on ${day}!`);
         }
     }
     for (let key in meetings) {
