@@ -14,6 +14,9 @@ function meetings(input) {
     for (let key in meetings) {
         console.log(`${key} -> ${meetings[key]}`);
     }
+    // Object.keys(meetings).forEach(key => {
+    //     console.log(`${key} - ${meetings[key]}`);
+    // })
 }
 
 meetings(['Friday Bob',
