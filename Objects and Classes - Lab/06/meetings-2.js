@@ -21,4 +21,4 @@ meetings(['Friday Bob',
     'Monday Bill',
     'Monday John',
     'Wednesday George']
-)
+);
