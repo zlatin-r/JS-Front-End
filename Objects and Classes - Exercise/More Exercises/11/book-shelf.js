@@ -1,26 +1,31 @@
 function solve(input) {
-    let addedData = [];
+    let addedData = {};
+    let shelfData = {};
     let shelfId = '';
     let shelfGenre = '';
     let bookTitle = '';
     let bookAuthor = '';
     let bookGenre = '';
     let bookInfo = '';
-    let shelfData = {};
 
     for (let line of input) {
         if (line.includes('->')) {
             [shelfId, shelfGenre] = line.split(' -> ');
 
-            if (!addedData.includes(shelfId)) addedData.push(shelfId);
-            if (!shelfData[shelfId]) shelfData[shelfId] = {};
-            if (!shelfData[shelfId][shelfGenre]) shelfData[shelfId][shelfGenre] = {};
+            if (!addedData.hasOwnProperty(shelfId)) {
+                addedData[shelfId] = shelfGenre;
+
+                if (!shelfData[shelfGenre]) shelfData[shelfGenre] = {};
+            }
         } else {
             [bookTitle, bookInfo] = line.split(': ');
             [bookAuthor, bookGenre] = line.split(', ');
-
+            if(shelfData.hasOwnProperty(bookGenre)) {
+                shelfData[bookGenre][bookTitle] = bookAuthor;
+            }
         }
     }
+
 }
 
 solve([
