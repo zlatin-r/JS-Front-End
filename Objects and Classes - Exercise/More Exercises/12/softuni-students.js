@@ -34,28 +34,32 @@ function solve(input) {
         }
     }
 
-    let sortedCoursesArr = Object.entries(courses)
+    let sortedCoursesArray = Object.entries(courses)
         .sort(([, a], [, b]) => {
-            const aUserCount = Object.keys(a).length - 1; // Exclude 'capacity'
-            const bUserCount = Object.keys(b).length - 1; // Exclude 'capacity'
-            return bUserCount - aUserCount; // Sort in descending order
+            const aUserCount = Object.keys(a).length - 1;
+            const bUserCount = Object.keys(b).length - 1;
+            return bUserCount - aUserCount;
         });
 
-    const sortedCourses = Object.fromEntries(sortedCoursesArr);
+    const sortedCourses = Object.fromEntries(sortedCoursesArray);
 
-    let sortedCoursesAndUsers = Object.entries(sortedCourses)
-        .sort(([, a], [, b]) => {
 
+    const sortedCoursesWithSortedUsers = sortedCoursesArray
+        .map(([courseName, courseDetails]) => {
+            const users = Object.entries(courseDetails)
+                .filter(([key]) => key !== 'capacity')
+                .sort(([, a], [, b]) => b.credits - a.credits);
+            const sortedCourse = {
+                capacity: courseDetails.capacity,
+                ...Object.fromEntries(users)
+            };
+            return [courseName, sortedCourse];
         });
 
     for (let [k, v] of Object.entries(sortedCourses)) {
         console.log(`${k}: ${v['capacity']} places left`);
-        for (let [name, user] in Object.entries(v)) {
-            console.log(`${user[0]}: ${user[1]}`);
-        }
     }
-
-    console.log(sortedCourses);
+    console.log(sortedCoursesWithSortedUsers);
 }
 
 solve([
