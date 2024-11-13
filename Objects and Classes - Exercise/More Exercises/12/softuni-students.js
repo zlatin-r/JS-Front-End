@@ -39,9 +39,14 @@ function solve(input) {
             const aUserCount = Object.keys(a).length - 1; // Exclude 'capacity'
             const bUserCount = Object.keys(b).length - 1; // Exclude 'capacity'
             return bUserCount - aUserCount; // Sort in descending order
-        })
+        });
 
     const sortedCourses = Object.fromEntries(sortedCoursesArr);
+
+    let sortedCoursesAndUsers = Object.entries(sortedCourses)
+        .sort(([, a], [, b]) => {
+
+        });
 
     for (let [k, v] of Object.entries(sortedCourses)) {
         console.log(`${k}: ${v['capacity']} places left`);
