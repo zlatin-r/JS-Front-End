@@ -1,20 +1,51 @@
 function solve(input) {
     let courses = {};
     let courseName = '';
+    let credits = 0;
     let capacity = 0;
     let userName = '';
     let studentEmail = '';
-    const emailRegex = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/g;
+    const userNameRegex = /^(\w+)\[/;
+    const creditsRegex = /\[(\d+)\]/;
+    const emailRegex = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/;
 
     for (let line of input) {
         if (line.includes('email')) {
-            studentEmail = line.match(emailRegex)
-            userName = line.split(' ')[0];
+            studentEmail = line.match(emailRegex)[0];
+            userName = line.match(userNameRegex)[1];
+            credits = Number(line.match(creditsRegex)[1]);
             courseName = line.split(' ').pop();
 
+            if (courses.hasOwnProperty(courseName) && courses[courseName]['capacity'] > 0) {
+                courses[courseName]['capacity']--;
+                courses[courseName][userName] = {};
+                courses[courseName][userName]["credits"] = credits;
+                courses[courseName][userName]["email"] = studentEmail;
+            }
+
+        } else {
+            [courseName, capacity] = line.split(': ')
+            if (!courses[courseName]) {
+                courses[courseName] = {};
+                courses[courseName]['capacity'] = Number(capacity);
+            } else {
+                courses[courseName]['capacity'] += Number(capacity);
+            }
         }
     }
 
+    let sortedCoursesArr = Object.entries(courses)
+        .sort(([, a], [, b]) => {
+            const aUserCount = Object.keys(a).length - 1; // Exclude 'capacity'
+            const bUserCount = Object.keys(b).length - 1; // Exclude 'capacity'
+            return bUserCount - aUserCount; // Sort in descending order
+        })
+
+    const sortedCourses = Object.fromEntries(sortedCoursesArr);
+
+
+
+    console.log(sortedCourses);
 }
 
 solve([
