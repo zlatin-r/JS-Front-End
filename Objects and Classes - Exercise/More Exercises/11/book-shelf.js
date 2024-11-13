@@ -47,4 +47,4 @@ solve([
     'Losing Dreams: Gail Starr, sci-fi',
     'Name of Earth: Jo Bell, sci-fi',
     'Pilots of Stone: Brook Jay, history'
-])
+]);
