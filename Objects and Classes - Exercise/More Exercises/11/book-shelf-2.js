@@ -14,22 +14,22 @@ function solve(input) {
 
             if (!addedData.hasOwnProperty(shelfId)) {
                 addedData[shelfId] = shelfGenre;
-
-                if (!shelfData[shelfGenre]) {
-                    shelfData[shelfGenre] = {}
-                    shelfData[shelfGenre]["id"] = shelfId;
-                }
+                shelfData[shelfGenre] = {};
             }
         } else {
             [bookTitle, bookInfo] = line.split(': ');
             [bookAuthor, bookGenre] = bookInfo.split(', ');
-
-            if(shelfData.hasOwnProperty(bookGenre)) {
+            if (shelfData[bookGenre]) {
                 shelfData[bookGenre][bookTitle] = bookAuthor;
             }
         }
     }
-    Object.keys(addedData)
+    let sortedShelfData = Object.entries(shelfData)
+        .sort((a, b) => a[0].length - b[0].length);
+
+    for (let k in Object.keys(sortedShelfData)) {
+        console.log(k)
+    }
 }
 
 solve([
