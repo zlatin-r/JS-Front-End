@@ -43,7 +43,12 @@ function solve(input) {
 
     const sortedCourses = Object.fromEntries(sortedCoursesArr);
 
-
+    for (let [k, v] of Object.entries(sortedCourses)) {
+        console.log(`${k}: ${v['capacity']} places left`);
+        for (let [name, user] in Object.entries(v)) {
+            console.log(`${user[0]}: ${user[1]}`);
+        }
+    }
 
     console.log(sortedCourses);
 }
