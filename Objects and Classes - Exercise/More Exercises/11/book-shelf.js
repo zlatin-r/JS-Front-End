@@ -1,6 +1,6 @@
 function solve(input) {
-    let addedData = {};
     let shelfData = {};
+    let addedData = {};
     let shelfId = '';
     let shelfGenre = '';
     let bookTitle = '';
@@ -15,17 +15,21 @@ function solve(input) {
             if (!addedData.hasOwnProperty(shelfId)) {
                 addedData[shelfId] = shelfGenre;
 
-                if (!shelfData[shelfGenre]) shelfData[shelfGenre] = {};
+                if (!shelfData[shelfGenre]) {
+                    shelfData[shelfGenre] = {}
+                    shelfData[shelfGenre]["id"] = shelfId;
+                }
             }
         } else {
             [bookTitle, bookInfo] = line.split(': ');
-            [bookAuthor, bookGenre] = line.split(', ');
+            [bookAuthor, bookGenre] = bookInfo.split(', ');
+
             if(shelfData.hasOwnProperty(bookGenre)) {
                 shelfData[bookGenre][bookTitle] = bookAuthor;
             }
         }
     }
-
+    Object.keys(addedData)
 }
 
 solve([
