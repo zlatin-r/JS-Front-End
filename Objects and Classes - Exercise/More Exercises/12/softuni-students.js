@@ -24,7 +24,7 @@ function solve(input) {
             }
 
         } else {
-            [courseName, capacity] = line.split(': ')
+            [courseName, capacity] = line.split(': ');
             if (!courses[courseName]) {
                 courses[courseName] = {};
                 courses[courseName]['capacity'] = Number(capacity);
@@ -41,26 +41,25 @@ function solve(input) {
         });
     const sortedCoursesWithSortedUsers = sortedCoursesArray
         .map(([courseName, courseDetails]) => {
-        const users = Object.entries(courseDetails)
-            .filter(([key]) => key !== 'capacity')
-            .sort(([, a], [, b]) => b.credits - a.credits);
-        const sortedCourse = {
-            capacity: courseDetails.capacity,
-            ...Object.fromEntries(users)
-        };
-        return [courseName, sortedCourse];
-    });
+            const users = Object.entries(courseDetails)
+                .filter(([key]) => key !== 'capacity')
+                .sort(([, a], [, b]) => b.credits - a.credits);
+            const sortedCourse = {
+                capacity: courseDetails.capacity,
+                ...Object.fromEntries(users)
+            };
+            return [courseName, sortedCourse];
+        });
     const sortedCourses = Object.fromEntries(sortedCoursesWithSortedUsers);
 
-    console.log(sortedCourses);
-    // console.log(sortedCoursesWithSortedUsers)
-    // for (let [k, v] of Object.entries(sortedCoursesWithSortedUsers)) {
-    //     console.log(`${k}: ${v['capacity']} places left`);
-    //     Object.entries(v).forEach(([name, grade]) => {
-    //
-    //         console.log(`${name}`)
-    //     })
-
+    for (let [k, v] of Object.entries(sortedCourses)) {
+        console.log(`${k}: ${v['capacity']} places left`);
+        Object.entries(v).forEach(([name, grade]) => {
+            if (name !== 'capacity') {
+                console.log(`--- ${v[name]['credits']}: ${name}, ${v[name]['email']}`);
+            }
+        });
+    }
 }
 
 solve([
