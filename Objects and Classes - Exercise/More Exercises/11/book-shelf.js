@@ -18,6 +18,7 @@ function solve(input) {
         } else {
             [bookTitle, bookInfo] = line.split(': ');
             [bookAuthor, bookGenre] = line.split(', ');
+
         }
     }
 }
