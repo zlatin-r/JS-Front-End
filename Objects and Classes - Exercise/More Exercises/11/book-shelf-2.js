@@ -12,8 +12,8 @@ function solve(input) {
         if (line.includes('->')) {
             [shelfId, shelfGenre] = line.split(' -> ');
 
-            if (!addedData.hasOwnProperty(shelfId)) {
-                addedData[shelfId] = shelfGenre;
+            if (!Object.values(addedData).includes(shelfId)) {
+                addedData[shelfGenre] = shelfId;
                 shelfData[shelfGenre] = {};
             }
         } else {
@@ -26,9 +26,9 @@ function solve(input) {
     }
     let sortedShelfData = Object.entries(shelfData)
         .sort((a, b) => a[0].length - b[0].length);
-
-    for (let k in Object.keys(sortedShelfData)) {
-        console.log(k)
+    for (let [k, v] of sortedShelfData) {
+        console.log(`${addedData[k]} ${k}: ${Object.keys(v).length}`);
+        Object.entries(v).forEach(([title, author]) => console.log(`--> ${title}: ${author}`));
     }
 }
 
