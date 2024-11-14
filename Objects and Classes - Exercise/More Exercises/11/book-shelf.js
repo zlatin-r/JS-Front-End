@@ -26,6 +26,7 @@ function solve(input) {
     }
     let sortedShelfData = Object.entries(shelfData)
         .sort((a, b) => a[0].length - b[0].length);
+
     for (let [k, v] of sortedShelfData) {
         console.log(`${addedData[k]} ${k}: ${Object.keys(v).length}`);
         Object.entries(v).forEach(([title, author]) => console.log(`--> ${title}: ${author}`));
