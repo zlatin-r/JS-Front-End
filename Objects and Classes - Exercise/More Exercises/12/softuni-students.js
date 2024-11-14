@@ -26,20 +26,19 @@ function solve(input) {
             }
         }
     });
-    let filteredCourses = Object.entries(courses).sort(([, a], [, b]) => {
-        console.log(Object.entries(a)[1][1]);
-        console.log('a----')
-        console.log(Object.keys(b))
-        console.log('b----')
-        const aUserCount = Object.keys(a).length - 1;
-        const bUserCount = Object.keys(b).length - 1;
-        // console.log(aUserCount, bUserCount);
-        return bUserCount - aUserCount
+
+    const sortedCourses = Object.fromEntries(Object.entries(courses)
+        .sort((a, b) => b[1].students.length - a[1].students.length));
+
+    for (const course in sortedCourses) {
+        courses[course].students.sort((a, b) => b.credits - a.credits);
+    }
+    Object.entries(sortedCourses).forEach(course => {
+        console.log(`${course[0]}: ${course[1]['capacity']} places left`);
+        Object.entries(course[1]['students']).forEach(student => {
+            console.log(`--- ${student[1]['credits']}: ${student[1]['name']}, ${student[1]['email']}`);
+        });
     });
-    let sortedCourses = Object.entries(courses).sort(([, a], [, b]) =>
-        b.length - a.length
-    );
-    // console.log(courses);
 }
 
 solve([
