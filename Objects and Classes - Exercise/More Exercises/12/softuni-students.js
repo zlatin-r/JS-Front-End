@@ -16,7 +16,7 @@ function solve(input) {
             }
         } else {
             let userName = line.match(userNameRegex)[1];
-            let userCredits = line.match(creditsRegex)[1];
+            let userCredits = Number(line.match(creditsRegex)[1]);
             let userEmail = line.match(emailRegex)[0];
             let courseName = line.split(' ').pop();
 
@@ -26,6 +26,7 @@ function solve(input) {
             }
         }
     });
+
     console.log(courses);
 }
 
