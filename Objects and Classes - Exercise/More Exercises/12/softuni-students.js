@@ -26,8 +26,20 @@ function solve(input) {
             }
         }
     });
-
-    console.log(courses);
+    let filteredCourses = Object.entries(courses).sort(([, a], [, b]) => {
+        console.log(Object.entries(a)[1][1]);
+        console.log('a----')
+        console.log(Object.keys(b))
+        console.log('b----')
+        const aUserCount = Object.keys(a).length - 1;
+        const bUserCount = Object.keys(b).length - 1;
+        // console.log(aUserCount, bUserCount);
+        return bUserCount - aUserCount
+    });
+    let sortedCourses = Object.entries(courses).sort(([, a], [, b]) =>
+        b.length - a.length
+    );
+    // console.log(courses);
 }
 
 solve([
