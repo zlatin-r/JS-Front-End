@@ -1,16 +1,45 @@
 function solve() {
     const searchedElement = document.querySelector('#searchField').value;
-    const rowElements = document.querySelectorAll('table:not(tr:first-child) tr');
+    const rowElements = Array.from(document.querySelectorAll('tbody td'));
 
-    rowElements.forEach(row => row.classList.remove("select"));
+    const rows = Array.from(document.querySelectorAll('tbody tr'));
 
-    rowElements.forEach(row => {
-        if (row.textContent.includes(searchedElement)) {
-            row.classList.add("select");
+    rows.forEach(row => row.classList.remove("select"));
+
+    rowElements.forEach(cell => {
+        if (cell.textContent.includes(searchedElement)) {
+            cell.parentElement.classList.add("select");
         }
     });
-    document.querySelector('#searchField').value = '';
 }
+
+// function solve() {
+//     const searchedElement = document.querySelector('#searchField');
+//     const rowElements = document.querySelectorAll('table tr');
+//
+//     rowElements.forEach(row => row.classList.remove("select"));
+//
+//     rowElements.forEach(row => {
+//         if (row.textContent.includes(searchedElement.value)) {
+//             row.classList.add("select");
+//         }
+//     });
+//     searchedElement.value = '';
+// }
+
+// function solve() {
+//     const searchedElement = document.querySelector('#searchField').value;
+//     const rowElements = document.querySelectorAll('table:not(tr:first-child) tr');
+//
+//     rowElements.forEach(row => row.classList.remove("select"));
+//
+//     rowElements.forEach(row => {
+//         if (row.textContent.includes(searchedElement)) {
+//             row.classList.add("select");
+//         }
+//     });
+//     document.querySelector('#searchField').value = '';
+// }
 
 // function solve() {
 //     const searchedElement = document.querySelector('#searchField').value.toLowerCase().trim();
