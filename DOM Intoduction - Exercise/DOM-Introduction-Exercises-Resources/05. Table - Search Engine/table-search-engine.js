@@ -1,3 +1,17 @@
+function solve() {
+    const searchedElement = document.querySelector('#searchField').value;
+    const rowElements = document.querySelectorAll('table:not(tr:first-child) tr');
+
+    rowElements.forEach(row => row.classList.remove("select"));
+
+    rowElements.forEach(row => {
+        if (row.textContent.includes(searchedElement)) {
+            row.classList.add("select");
+        }
+    });
+    document.querySelector('#searchField').value = '';
+}
+
 // function solve() {
 //     const searchedElement = document.querySelector('#searchField').value.toLowerCase().trim();
 //     const rowElements = document.querySelectorAll('table:not(tr:first-child) tr');
