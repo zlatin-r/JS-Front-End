@@ -1,3 +1,5 @@
+// Only this one takes 100 points in judge
+//
 // function solve() {
 //    document.querySelector('#searchBtn').addEventListener('click', onClick);
 //
