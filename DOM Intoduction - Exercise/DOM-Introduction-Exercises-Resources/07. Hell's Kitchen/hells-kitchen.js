@@ -2,6 +2,8 @@ function solve() {
     const inputData = JSON.parse(document.querySelector("#inputs textarea").value);
     const restaurantsData = {};
     const bestRestaurant = {name: "", avrSalary: 0, highestSalary: 0, personal: {}};
+    const outputRestaurantDataElement = document.querySelector("#bestRestaurant > p")
+    const outputEmployeesDataElement = document.querySelector("#workers > p")
 
     inputData.forEach(element => {
         const [restaurantName, personalInfo] = element.split(' - ');
@@ -33,6 +35,14 @@ function solve() {
             bestRestaurant.personal = restaurantsData[restaurantName];
         }
     });
-    console.log(`Name: ${bestRestaurant.name} Average Salary: ${bestRestaurant.avrSalary} Best Salary: ${bestRestaurant.highestSalary}`);
 
+    // const sortedEmployees = Object.entries(bestRestaurant.personal).sort(([, a], [, b]) => b - a);
+    // const sortedEmployees = Object.entries(bestRestaurant.personal).sort((a, b) => b[1] - a[1]);
+
+    const sortedEmployees = Object.entries(bestRestaurant.personal).sort((a, b) => b - a);
+
+    outputRestaurantDataElement.textContent = `Name: ${bestRestaurant.name} Average Salary: ${bestRestaurant.avrSalary} Best Salary: ${bestRestaurant.highestSalary}`
+    outputEmployeesDataElement.textContent = sortedEmployees
+        .map(([name, salary]) => `Name: ${name} With Salary: ${salary}`)
+        .join(' ');
 }
