@@ -1,7 +1,7 @@
 function solve() {
     const inputData = JSON.parse(document.querySelector("#inputs textarea").value);
     const restaurantsData = {};
-    const bestRestaurant = {restaurantName: "", avrSalary: 0, highestSalary: 0, personal: {}};
+    const bestRestaurant = {name: "", avrSalary: 0, highestSalary: 0, personal: {}};
 
     inputData.forEach(element => {
         const [restaurantName, personalInfo] = element.split(' - ');
@@ -20,17 +20,19 @@ function solve() {
                 restaurantsData[restaurantName][name] += parseFloat(salary);
             }
         });
+
         const salaries = Object.values(restaurantsData[restaurantName]);
         const totalSalaries = salaries.reduce((sum, salary) => sum + salary, 0);
         const avrSalary = parseFloat(totalSalaries / salaries.length).toFixed(2);
-        const highestSalary = Math.max(...salaries)
+        const highestSalary = Math.max(...salaries).toFixed(2)
 
         if (bestRestaurant.avrSalary < avrSalary) {
-            bestRestaurant.restaurantName = restaurantName;
+            bestRestaurant.name = restaurantName;
             bestRestaurant.avrSalary = avrSalary;
             bestRestaurant.highestSalary = highestSalary;
             bestRestaurant.personal = restaurantsData[restaurantName];
         }
     });
-    console.log(bestRestaurant);
+    console.log(`Name: ${bestRestaurant.name} Average Salary: ${bestRestaurant.avrSalary} Best Salary: ${bestRestaurant.highestSalary}`);
+
 }
