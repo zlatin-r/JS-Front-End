@@ -9,28 +9,15 @@ function solve() {
 
         if (!restaurantsData.hasOwnProperty(restaurantName)) {
             restaurantsData[restaurantName] = {};
-
-            employeesData.forEach(employee => {
-                const [name, salary] = employee.split(' ');
-
-                if (!restaurantsData[restaurantName].hasOwnProperty(name)) {
-                    restaurantsData[restaurantName][name] = parseFloat(salary);
-                } else {
-                    restaurantsData[restaurantName][name] += parseFloat(salary);
-                }
-            })
-        } else {
-            employeesData.forEach(employee => {
-                const [name, salary] = employee.split(' ');
-
-                if (!restaurantsData[restaurantName].hasOwnProperty(name)) {
-                    restaurantsData[restaurantName][name] = parseFloat(salary);
-                } else {
-                    restaurantsData[restaurantName][name] += parseFloat(salary);
-                }
-            })
         }
-    })
+        employeesData.forEach(employee => {
+            const [name, salary] = employee.split(' ');
 
-    console.log(inputData);
+            if (!restaurantsData[restaurantName].hasOwnProperty(name)) {
+                restaurantsData[restaurantName][name] = parseFloat(salary);
+            } else {
+                restaurantsData[restaurantName][name] += parseFloat(salary);
+            }
+        });
+    });
 }
