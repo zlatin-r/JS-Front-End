@@ -26,8 +26,8 @@ function solve() {
         if (bestRestaurant.avrSalary < avrSalary) {
             bestRestaurant.name = restaurantName;
             bestRestaurant.avrSalary = avrSalary;
-            // bestRestaurant.highestSalary = highestSalary;
-            // bestRestaurant.personal = restaurantsData[restaurantName];
+            bestRestaurant.highestSalary = highestSalary;
+            bestRestaurant.personal = restaurantsData[restaurantName];
         }
     });
 
