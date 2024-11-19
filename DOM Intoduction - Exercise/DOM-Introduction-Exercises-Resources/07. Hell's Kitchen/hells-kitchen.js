@@ -6,7 +6,7 @@ function solve() {
     inputData.forEach(element => {
         const [restaurantName, personalInfo] = element.split(' - ');
         const employeesData = personalInfo.split(', ');
-
+        debugger
         if (!restaurantsData.hasOwnProperty(restaurantName)) {
             restaurantsData[restaurantName] = {};
         }
@@ -20,4 +20,5 @@ function solve() {
             }
         });
     });
+
 }
