@@ -1,16 +1,18 @@
 function solve() {
     const outputElement = document.querySelector('#output');
-    const newParagraphElement = document.createElement('p');
+
     const textElement = document.querySelector('#input').value;
-    let sentences = textElement
+     let sentences = textElement
+        .trim()
+        .replace(/\.+$/, '') // Премахва точки в края на текста
         .split(".")
-        .map(s => s.trim())
-        .filter(s => s.length > 0);
+        .filter(s => s.length > 0)
+        .map(s => `<p>${s.trim()}</p>`);
 
-    if (sentences.length <= 3) {
-
+    for (let i = 0; i < sentences.length; i += 3) {
+        const group = sentences.slice(i, i + 3);
+        const newParagraphElement = document.createElement('p');
+        newParagraphElement.textContent = group.join('. ')
+        outputElement.appendChild(newParagraphElement);
     }
-    console.log(sentences.length);
-    console.log(sentences);
-
 }
