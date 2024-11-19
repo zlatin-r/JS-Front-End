@@ -32,6 +32,14 @@ function solve() {
         //     // bestRestaurant.personal = restaurantsData[restaurantName];
         // }
     });
+    debugger
+    restaurantsData.forEach(restaurant => {
+        const salaries = Object.values(restaurant["employees"])
+        const totalSalaries = salaries.reduce((sum, salary) => sum + salary, 0);
+        const restAvgSalary = parseFloat(totalSalaries / salaries.length).toFixed(2);
+        console.log(restAvgSalary);
+        restaurant.avgSalary = restAvgSalary;
+    })
 
     // const sortedEmployees = Object.entries(bestRestaurant.personal).sort(([, a], [, b]) => b - a);
     // // const sortedEmployees = Object.entries(bestRestaurant.personal).sort((a, b) => b[1] - a[1]);
