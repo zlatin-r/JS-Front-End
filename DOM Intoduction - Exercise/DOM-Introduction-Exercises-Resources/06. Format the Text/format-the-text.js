@@ -1,13 +1,10 @@
 function solve() {
     const outputElement = document.querySelector('#output');
-
     const textElement = document.querySelector('#input').value;
-     let sentences = textElement
-        .trim()
-        .replace(/\.+$/, '') // Премахва точки в края на текста
+    let sentences = textElement
         .split(".")
-        .filter(s => s.length > 0)
-        .map(s => `<p>${s.trim()}</p>`);
+        .filter(s => s.trim().length > 0)
+        .map(s => `<p>${s}</p>`);
 
     for (let i = 0; i < sentences.length; i += 3) {
         const group = sentences.slice(i, i + 3);
