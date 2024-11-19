@@ -1,6 +1,11 @@
 function solve() {
     const textElement = document.querySelector('#input').value;
-    const sentences = textElement.split(".")
+    let sentences = textElement
+        .split(".")
+        .map(s => s.trim())
+        .filter(s => s.length > 0);
 
     console.log(sentences.length);
+    console.log(sentences);
+
 }
