@@ -12,7 +12,6 @@ function toggle() {
 
 
 // function toggle() {
-//
 //     const buttonEl = document.querySelector('#accordion .button');
 //     const contentEl = document.querySelector('#extra');
 //
