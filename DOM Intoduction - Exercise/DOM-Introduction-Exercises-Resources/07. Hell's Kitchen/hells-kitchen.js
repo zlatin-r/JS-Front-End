@@ -2,8 +2,8 @@ function solve() {
     const inputData = JSON.parse(document.querySelector("#inputs textarea").value);
     const restaurantsData = {};
     const bestRestaurant = {name: "", highestSalary: 0, personal: {}};
-    const outputRestaurantDataElement = document.querySelector("#bestRestaurant > p")
-    const outputEmployeesDataElement = document.querySelector("#workers > p")
+    const outputRestaurantDataElement = document.querySelector("#bestRestaurant > p");
+    const outputEmployeesDataElement = document.querySelector("#workers > p");
 
     inputData.forEach(element => {
         const [restaurantName, personalInfo] = element.split(' - ');
@@ -18,6 +18,7 @@ function solve() {
             restaurantsData[restaurantName]["employees"][name] = parseFloat(salary);
         });
     });
+
     Object.entries(restaurantsData).forEach(([restaurant, data]) => {
         const salaries = Object.values(data.employees);
         const totalSalaries = salaries.reduce((sum, salary) => sum + salary, 0);
