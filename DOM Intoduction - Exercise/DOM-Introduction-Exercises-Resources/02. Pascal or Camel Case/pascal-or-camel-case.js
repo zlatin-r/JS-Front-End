@@ -1,9 +1,11 @@
 function solve() {
     const namingConvention = document.querySelector('#naming-convention').value;
-    let text = document.querySelector('#text').value.toLowerCase().split(' ');
+    const text = document.querySelector('#text').value.toLowerCase().split(' ');
+    const resultElement = document.querySelector('#result');
     let result = "";
 
     function camelCase(text) {
+
         for (let word of text) {
             result += word.charAt(0).toUpperCase() + word.substring(1);
         }
@@ -18,13 +20,12 @@ function solve() {
     }
 
     if (namingConvention === 'Camel Case') {
-        result = camelCase(text);
+        resultElement.textContent = camelCase(text);
     } else if (namingConvention === 'Pascal Case') {
-        result = pascalCase(text);
+        resultElement.textContent = pascalCase(text);
     } else {
-        result = 'Error!'
+        resultElement.textContent = 'Error!'
     }
-    document.querySelector('#result').textContent = result;
 }
 
 
