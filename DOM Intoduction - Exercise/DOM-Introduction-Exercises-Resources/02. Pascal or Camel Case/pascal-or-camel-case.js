@@ -1,28 +1,29 @@
 function solve() {
     const namingConvention = document.querySelector('#naming-convention').value;
-    const text = document.querySelector('#text').value.toLowerCase().split(' ');
+    const textElement = document.querySelector('#text').value.toLowerCase().split(' ');
     const resultElement = document.querySelector('#result');
     let result = "";
 
-    function camelCase(text) {
-
+    function wordsToUpper(text) {
         for (let word of text) {
             result += word.charAt(0).toUpperCase() + word.substring(1);
         }
+        return result;
+    }
+
+    function camelCase(text) {
+        result = wordsToUpper(text);
         return result.charAt(0).toLowerCase() + result.slice(1);
     }
 
     function pascalCase(text) {
-        for (let word of text) {
-            result += word.charAt(0).toUpperCase() + word.substring(1);
-        }
-        return result
+        return wordsToUpper(text)
     }
 
     if (namingConvention === 'Camel Case') {
-        resultElement.textContent = camelCase(text);
+        resultElement.textContent = camelCase(textElement);
     } else if (namingConvention === 'Pascal Case') {
-        resultElement.textContent = pascalCase(text);
+        resultElement.textContent = pascalCase(textElement);
     } else {
         resultElement.textContent = 'Error!'
     }
