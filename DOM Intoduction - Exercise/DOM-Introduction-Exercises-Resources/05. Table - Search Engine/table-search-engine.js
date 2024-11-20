@@ -19,19 +19,41 @@
 //    };
 // }
 
+
+// Lector solution 100 points
+// function solve() {
+//     const searchStr = document.querySelector('#searchField').value.toLowerCase().trim();
+//     const students = document.querySelectorAll('table tbody tr');
+//
+//     if (searchStr == '') return;
+//
+//     students.forEach(student => {
+//
+//         console.log( student.textContent );
+//
+//         student.classList.remove('select');
+//
+//         if ( student.textContent.toLowerCase().includes(searchStr) ) {
+//             student.classList.add('select');
+//         }
+//     });
+// }
+
+
 function solve() {
-    const searchedElement = document.querySelector('#searchField').value;
+    const searchedString= document.querySelector('#searchField').value;
     const allCells = Array.from(document.querySelectorAll('tbody td'));
     const rows = Array.from(document.querySelectorAll('tbody tr'));
 
     rows.forEach(row => row.classList.remove("select"));
 
     allCells.forEach(cell => {
-        if (cell.textContent.includes(searchedElement)) {
+        if (cell.textContent.includes(searchedString)) {
             cell.parentElement.classList.add("select");
         }
     });
 }
+
 
 // function solve() {
 //     const searchedElement = document.querySelector('#searchField');
