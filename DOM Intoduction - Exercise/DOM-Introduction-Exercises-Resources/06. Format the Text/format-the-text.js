@@ -1,7 +1,7 @@
 function solve() {
     const textElement = document.querySelector('#input').value;
     const outputElement = document.querySelector('#output');
-    let sentences = textElement
+    const sentences = textElement
         .split(".")
         .filter(s => s.length > 0)
         .map(s => s + ".");
@@ -14,6 +14,7 @@ function solve() {
         outputElement.appendChild(newParagraphElement);
     }
 }
+
 
 // function solve() {
 //     const textElement = document.querySelector('#input').value;
