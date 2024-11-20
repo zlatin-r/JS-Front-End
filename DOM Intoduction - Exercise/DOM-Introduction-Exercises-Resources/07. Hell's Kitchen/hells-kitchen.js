@@ -1,7 +1,7 @@
 function solve() {
     const inputData = JSON.parse(document.querySelector("#inputs textarea").value);
     const restaurantsData = {};
-    const bestRestaurant = {name: "", avgSalary: 0, highestSalary: 0, personal: {}};
+    const bestRestaurant = {name: "", highestSalary: 0, personal: {}};
     const outputRestaurantDataElement = document.querySelector("#bestRestaurant > p")
     const outputEmployeesDataElement = document.querySelector("#workers > p")
 
