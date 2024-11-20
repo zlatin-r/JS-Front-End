@@ -41,3 +41,56 @@ function solve() {
         .map(([name, salary]) => `Name: ${name} With Salary: ${salary}`)
         .join(' ');
 }
+
+
+// function solve() {
+//
+//     const input = document.querySelector('#inputs textarea').value;
+//
+//     const outputBestRestEl = document.querySelector('#outputs #bestRestaurant p');
+//     const outputWorkersEl = document.querySelector('#outputs #workers p');
+//
+//     if ( ! input ) return;
+//
+//     console.log(input);
+//
+//     const restaurants = JSON.parse(input)
+//         .reduce((acc, entry) => {
+//
+//             const [ name, workersData ] = entry.split(' - ');
+//
+//             const workers = workersData.split(', ')
+//                 .map(workerData => {
+//
+//                     const [ name, salary ] = workerData.split(' ');
+//
+//                     return { name, salary: Number(salary) }
+//                 });
+//
+//             acc[name] ??= { workers: [] }
+//             acc[name].workers.push(...workers);
+//
+//             return acc;
+//
+//         }, {})
+//
+//     console.log(restaurants);
+//
+//     function getAvgSalary(restaurantsData) {
+//         const allSalaries = restaurantsData.workers.reduce((allSalaries, w) => allSalaries + w.salary, 0);
+//         return allSalaries / restaurantsData.workers.length;
+//     }
+//
+//     const [ bestRestaurantsKey ] = Object.keys(restaurants)
+//         .sort((a, b) => getAvgSalary(restaurants[b]) - getAvgSalary(restaurants[a]));
+//
+//     const bestWorkers = restaurants[bestRestaurantsKey].workers
+//         .toSorted((a, b) => b.salary - a.salary);
+//
+//     outputBestRestEl.textContent = `Name: ${bestRestaurantsKey} `;
+//     outputBestRestEl.textContent += `Average Salary: ${getAvgSalary(restaurants[bestRestaurantsKey]).toFixed(2)} `
+//     outputBestRestEl.textContent += `Best Salary: ${bestWorkers[0].salary.toFixed(2)}`;
+//
+//     outputWorkersEl.textContent = bestWorkers.map(w => `Name: ${w.name} With Salary: ${w.salary}`).join(' ');
+//
+// }
