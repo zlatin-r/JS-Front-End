@@ -19,6 +19,24 @@ function solve() {
 
 
 // function solve() {
+//     const townNameElements = document.querySelectorAll("#towns li");
+//     const searchedElementStr = document.querySelector("#searchText").value;
+//     const result = document.querySelector("#result");
+//
+//     townNameElements.forEach(town => {
+//         const townName = town.textContent.trim();
+//
+//         if (townName.includes(searchedElementStr)) {
+//             town.classList.add("match");
+//             town.style.fontWeight = "bold";
+//             town.style.textDecoration = "underline";
+//         }
+//     });
+//     result.textContent = `${document.querySelectorAll('.match').length} matches found`;
+// }
+
+
+// function solve() {
 //     const towns = document.querySelectorAll('#towns li');
 //     const searchStr = document.querySelector('#searchText').value.toLowerCase();
 //     const resultEl = document.querySelector('#result');
