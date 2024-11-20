@@ -33,10 +33,13 @@ function solve() {
         }
     });
 
-    const sortedEmployees = Object.entries(bestRestaurant.personal).sort(([, a], [, b]) => b - a);
-    // const sortedEmployees = Object.entries(bestRestaurant.personal).sort((a, b) => b[1] - a[1]);
+    const sortedEmployees = Object.entries(bestRestaurant.personal)
+        .sort(([, a], [, b]) => b - a);    // .sort((a, b) => b[1] - a[1]);
 
-    outputRestaurantDataElement.textContent = `Name: ${bestRestaurant.name} Average Salary: ${bestRestaurant.avgSalary} Best Salary: ${bestRestaurant.highestSalary}`;
+    outputRestaurantDataElement.textContent = `Name: ${bestRestaurant.name} `;
+    outputRestaurantDataElement.textContent += `Average Salary: ${bestRestaurant.avgSalary} `;
+    outputRestaurantDataElement.textContent += `Best Salary: ${bestRestaurant.highestSalary}`;
+
     outputEmployeesDataElement.textContent = sortedEmployees
         .map(([name, salary]) => `Name: ${name} With Salary: ${salary}`)
         .join(' ');
