@@ -53,20 +53,16 @@ function solve() {
     inputData.forEach(element => {
         const [restaurantName, personalInfo] = element.split(' - ');
         const employeesData = personalInfo.split(', ');
-
+        debugger
         if (!restaurantsData.hasOwnProperty(restaurantName)) {
             restaurantsData[restaurantName] = {};
             restaurantsData[restaurantName]["employees"] = {};
-            employeesData.forEach(employee => {                 // TODO write a function
-                const [name, salary] = employee.split(' ');
-                restaurantsData[restaurantName]["employees"][name] = parseFloat(salary);
-            });
-        } else {
-            employeesData.forEach(employee => {
-                const [name, salary] = employee.split(' ');
-                restaurantsData[restaurantName]["employees"][name] = parseFloat(salary);
-            });
         }
+        employeesData.forEach(employee => {
+            const [name, salary] = employee.split(' ');
+            restaurantsData[restaurantName]["employees"][name] = parseFloat(salary);
+        });
+
 
         // const salaries = Object.values(restaurantsData[restaurantName]);
         // const totalSalaries = salaries.reduce((sum, salary) => sum + salary, 0);
