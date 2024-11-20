@@ -1,17 +1,17 @@
 function solve() {
     const namingConvention = document.querySelector('#naming-convention').value;
-    let text = document.querySelector('#text').value.toLowerCase();
+    let text = document.querySelector('#text').value.toLowerCase().split(' ');
     let result = "";
 
     function camelCase(text) {
-        for (let word of text.split(' ')) {
+        for (let word of text) {
             result += word.charAt(0).toUpperCase() + word.substring(1);
         }
         return result.charAt(0).toLowerCase() + result.slice(1);
     }
 
     function pascalCase(text) {
-        for (let word of text.split(' ')) {
+        for (let word of text) {
             result += word.charAt(0).toUpperCase() + word.substring(1);
         }
         return result
