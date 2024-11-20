@@ -9,7 +9,7 @@ function solve() {
         const townName = town.textContent.trim();
 
         if (townName.includes(searchedElementStr)) {
-            matchesFound += 1;
+            matchesFound++;
             town.style.fontWeight = "bold";
             town.style.textDecoration = "underline";
         }
