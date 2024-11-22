@@ -14,7 +14,8 @@ function deleteByEmail() {
     if (flagFound) {
         resultElement.textContent = 'Deleted.';
     } else {
-        resultElement.textContent = 'Not Found.';
+        resultElement.textContent = 'Not found.';
     }
 
+    inputElement.value = '';
 }
