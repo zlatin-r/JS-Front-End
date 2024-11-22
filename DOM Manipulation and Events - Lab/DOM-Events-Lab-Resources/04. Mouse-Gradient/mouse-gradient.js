@@ -9,5 +9,5 @@ function attachGradientEvents() {
         const percentage = Math.floor((currentPosition / elementWidth) * 100);
 
         resultEl.textContent = `${percentage}%`;
-    })
+    });
 }
