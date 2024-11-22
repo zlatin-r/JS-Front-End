@@ -1,5 +1,18 @@
 document.addEventListener('DOMContentLoaded', solve);
 
 function solve() {
-    //TODO
+    function sectionFocusedEventHandler(event) {
+        event.target.parentElement.classList.add('focused');
+    }
+
+    function sectionBlurEventHandler(event) {
+        event.target.parentElement.classList.remove('focused');
+    }
+
+    const inputFields = document.querySelectorAll('section.panel input[type="text"]');
+
+    inputFields.forEach(el => {
+        el.addEventListener('focus', sectionFocusedEventHandler);
+        el.addEventListener('blur', sectionBlurEventHandler);
+    })
 }

@@ -87,7 +87,7 @@ input[type="button"] {
     &:hover {
         background: var(--accent-color-text);
         color: var(--accent-color);
-    }    
+    }
 }
 
 main {
