@@ -6,12 +6,12 @@ function addItem() {
 
     const listElement = document.querySelector('#items');
     const inputElement = document.querySelector('#newItemText');
-    const inputText = inputElement.value;
 
     const newListElement = document.createElement('li');
     const deleteButtonElement = document.createElement('a');
 
-    newListElement.textContent = inputText;
+    newListElement.textContent = inputElement.value;
+
     deleteButtonElement.textContent = '[Delete]';
     deleteButtonElement.setAttribute('href', '#');
 
