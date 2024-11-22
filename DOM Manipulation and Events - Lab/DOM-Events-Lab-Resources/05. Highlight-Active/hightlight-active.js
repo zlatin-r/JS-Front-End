@@ -9,10 +9,10 @@ function solve() {
         event.target.parentElement.classList.remove('focused');
     }
 
-    const inputFields = document.querySelectorAll('section.panel input[type="text"]');
+    const inputFields = document.querySelectorAll('input[type="text"]');
 
     inputFields.forEach(el => {
         el.addEventListener('focus', sectionFocusedEventHandler);
         el.addEventListener('blur', sectionBlurEventHandler);
-    })
+    });
 }
