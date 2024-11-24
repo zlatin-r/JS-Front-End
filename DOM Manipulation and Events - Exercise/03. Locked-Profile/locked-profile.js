@@ -1,5 +1,10 @@
 document.addEventListener('DOMContentLoaded', solve);
 
 function solve() {
-    //TODO
+    const allButtons = document.querySelectorAll('button');
+    allButtons.forEach(button => {
+        button.addEventListener('click', event => {
+
+        });
+    })
 }
