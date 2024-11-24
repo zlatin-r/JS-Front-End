@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', solve);
 
 function solve() {
     const allButtons = document.querySelectorAll('input[type="submit"]');
+
     const daysEl = document.querySelector('#days-input');
     const hoursEl = document.querySelector('#hours-input');
     const minutesEl = document.querySelector('#minutes-input');
@@ -15,7 +16,6 @@ function solve() {
             const timeType = event.target.parentElement.id;
             const timeValueEl = parentElement.querySelector('input[type="number"]');
             const timeValue = parseFloat(timeValueEl.value).toFixed(2);
-
 
             switch (timeType) {
                 case 'days':
