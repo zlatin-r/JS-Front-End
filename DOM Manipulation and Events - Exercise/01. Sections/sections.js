@@ -39,23 +39,26 @@ document.addEventListener('DOMContentLoaded', solve);
 // }
 
 function solve() {
-    const generateElement = document.querySelector('input[type="submit"]'); // the submit button
-    const contentElement = document.querySelector('#content'); // the div to append the new divs
+    const generateElement = document.querySelector('input[type="submit"]');
+    const contentElement = document.querySelector('#content');
 
     generateElement.addEventListener('click', (e) => {
-        e.preventDefault(); // Prevent the form from submitting
+        e.preventDefault();
+        generateElement.disabled = true;
 
-        const inputStrings = document.querySelector('input[type="text"]').value; // Get input value
-        const arrStrings = inputStrings.split(', '); // Split the input string into an array
+        const inputStrings = document.querySelector('input[type="text"]').value;
+        if (inputStrings.trim() !== "") {
+            const arrStrings = inputStrings.split(', ');
 
-        arrStrings.forEach((str) => {
-            const newDiv = document.createElement('div'); // Create new div
-            const newParagraph = document.createElement('p'); // Create new paragraph
+            arrStrings.forEach((str) => {
+                const newDiv = document.createElement('div');
+                const newParagraph = document.createElement('p');
 
-            newParagraph.textContent = str; // Set text content to the string
-            newDiv.appendChild(newParagraph); // Append the paragraph to the div
+                newParagraph.textContent = str;
+                newDiv.appendChild(newParagraph);
 
-            contentElement.appendChild(newDiv); // Append the div to the content section
-        });
+                contentElement.appendChild(newDiv);
+            });
+        }
     });
 }
