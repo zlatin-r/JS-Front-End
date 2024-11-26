@@ -6,28 +6,44 @@ function solve() {
     const tableEl = document.querySelector('table');
 
     matches.forEach(match => {
-        const strToJson = JSON.parse(match);
-
-        console.log(strToJson.name);
-        console.log(strToJson.img);
-        console.log(strToJson.price);
-        console.log(strToJson.decFactor);
+        const obj = JSON.parse(match);
 
         const newRow = document.createElement('tr');
-        const newTd = document.createElement('td');
+
+        const newTdImg = document.createElement('td');
         const newImg = document.createElement('img');
-        // newImg.setAttribute('src', match.img);
-        const newP = document.createElement('p');
+
+        newImg.setAttribute('src', obj.img);
+        newTdImg.appendChild(newImg);
+        newRow.appendChild(newTdImg);
+
+        const newTdName = document.createElement('td');
+        const newParagraphForName = document.createElement('p');
+        newParagraphForName.textContent = obj.name;
+
+        newTdName.appendChild(newParagraphForName);
+        newRow.appendChild(newTdName);
+
+        const newTdPrice = document.createElement('td');
+        const newParagraphForPrice = document.createElement('p');
+        newParagraphForPrice.textContent = obj.price;
+
+        newTdPrice.appendChild(newParagraphForPrice);
+        newRow.appendChild(newTdPrice);
+
+        const newTdDecFactor = document.createElement('td');
+        const newParagraphForDecFactor = document.createElement('p');
+        newParagraphForDecFactor.textContent = obj.decFactor;
+
+        newTdDecFactor.appendChild(newParagraphForDecFactor);
+        newRow.appendChild(newTdDecFactor);
+
+        const newTdCheckbox = document.createElement('td');
         const newInput = document.createElement('input');
         newInput.type = 'checkbox';
 
-
-        newTd.appendChild(newP);
-        newTd.appendChild(newP);
-        newTd.appendChild(newP);
-        newTd.appendChild(newImg);
-        newRow.appendChild(newTd);
-        tableEl.appendChild(newRow);
+        newTdCheckbox.appendChild(newInput);
+        newRow.appendChild(newTdCheckbox);
 
     });
 }
