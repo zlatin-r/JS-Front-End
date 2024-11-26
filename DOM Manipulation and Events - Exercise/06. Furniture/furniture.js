@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', solve);
 function solve() {
     const inputDataEl = document.querySelector('#input textarea');
     const matches = inputDataEl.value.match(/{.*?}/g);
-    const tableEl = document.querySelector('table');
+    const tableBodyEl = document.querySelector('table tbody');
     const generateEl = document.querySelector('input[value="Generate"]');
     const buyEl = document.querySelector('input[value="Buy"]');
 
@@ -11,6 +11,8 @@ function solve() {
     const broughtFurniture = [];
     let totalPrice = 0;
     let totalDecFactor = 0;
+
+    const resultTextArea = document.querySelector('#shop textarea')
 
     generateEl.addEventListener('click', (e) => {
         e.preventDefault();
@@ -55,13 +57,13 @@ function solve() {
             newTdCheckbox.appendChild(newInput);
             newRow.appendChild(newTdCheckbox);
 
-            tableEl.appendChild(newRow);
+            tableBodyEl.appendChild(newRow);
         });
     });
 
     buyEl.addEventListener('click', (e) => {
         e.preventDefault();
-
+        debugger
         tBodyRows.forEach(row => {
             const checkbox = row.querySelector('input[type="checkbox"]');
 
@@ -72,9 +74,10 @@ function solve() {
             }
         });
 
-        console.log(`Bought furniture: ${broughtFurniture.join(', ')}`);
-        console.log(`Total price: ${totalPrice}`);
-        console.log();
+        resultTextArea.textContent += `Bought furniture: ${broughtFurniture.join(', ')}\n`;
+        resultTextArea.textContent += `Total price: ${totalPrice}\n`;
+        resultTextArea.textContent += `Average decoration factor: ${totalDecFactor}\n`;
+
     });
 
 }
