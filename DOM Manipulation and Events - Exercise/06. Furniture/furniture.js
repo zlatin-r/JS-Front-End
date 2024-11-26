@@ -1,5 +1,11 @@
 document.addEventListener('DOMContentLoaded', solve);
 
+function solve() {
+
+}
+
+//---------------------------------------------------------------------------------------------------
+
 // function solve() {
 //     const inputDataEl = document.querySelector('#input textarea');
 //     const matches = inputDataEl.value.match(/{.*?}/g);
@@ -81,6 +87,8 @@ document.addEventListener('DOMContentLoaded', solve);
 //         resultTextArea.textContent += `Average decoration factor: ${avgDecFactor}`;
 //     });
 // }
+
+//---------------------------------------------------------------------------------------------------
 
 // function solve() {
 //     const generateButton = document.querySelector('#input input[value="Generate"]');
