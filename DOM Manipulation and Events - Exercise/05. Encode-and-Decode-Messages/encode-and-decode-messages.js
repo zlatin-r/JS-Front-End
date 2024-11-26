@@ -15,7 +15,7 @@ function solve() {
     decodeAndReadButton.addEventListener('click', (e) => {
         e.preventDefault();
         decodedMessageEL.value = decodeMessage(decodedMessageEL.value);
-    })
+    });
 
     function decodeMessage(encodedMessage) {
         return Array.from(encodedMessage)
