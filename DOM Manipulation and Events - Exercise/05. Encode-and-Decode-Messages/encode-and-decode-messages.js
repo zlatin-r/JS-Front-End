@@ -10,7 +10,6 @@ function solve() {
         e.preventDefault();
         decodedMessageEL.value = encodeMessage(encodedMessageEl.value);
         encodedMessageEl.value = '';
-        // console.log(decodeMessage(encodedMessageEl.value));
     });
 
     decodeAndReadButton.addEventListener('click', (e) => {
