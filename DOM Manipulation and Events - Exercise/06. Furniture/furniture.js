@@ -89,7 +89,8 @@ function solve() {
 // }
 
 //---------------------------------------------------------------------------------------------------
-
+// Chat GPT
+//
 // function solve() {
 //     const generateButton = document.querySelector('#input input[value="Generate"]');
 //     const buyButton = document.querySelector('#shop input[value="Buy"]');
