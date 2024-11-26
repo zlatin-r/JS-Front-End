@@ -4,46 +4,56 @@ function solve() {
     const inputDataEl = document.querySelector('#input textarea');
     const matches = inputDataEl.value.match(/{.*?}/g);
     const tableEl = document.querySelector('table');
+    const generateEl = document.querySelector('input[value="Generate"]');
+    const buyEl = document.querySelector('input[value="Buy"]');
 
-    matches.forEach(match => {
-        const obj = JSON.parse(match);
+    generateEl.addEventListener('click', (e) => {
+        e.preventDefault();
 
-        const newRow = document.createElement('tr');
+        matches.forEach(match => {
+            debugger
+            const obj = JSON.parse(match);
 
-        const newTdImg = document.createElement('td');
-        const newImg = document.createElement('img');
+            const newRow = document.createElement('tr');
 
-        newImg.setAttribute('src', obj.img);
-        newTdImg.appendChild(newImg);
-        newRow.appendChild(newTdImg);
+            const newTdImg = document.createElement('td');
+            const newImg = document.createElement('img');
 
-        const newTdName = document.createElement('td');
-        const newParagraphForName = document.createElement('p');
-        newParagraphForName.textContent = obj.name;
+            newImg.setAttribute('src', obj.img);
+            newTdImg.appendChild(newImg);
+            newRow.appendChild(newTdImg);
 
-        newTdName.appendChild(newParagraphForName);
-        newRow.appendChild(newTdName);
+            const newTdName = document.createElement('td');
+            const newParagraphForName = document.createElement('p');
+            newParagraphForName.textContent = obj.name;
 
-        const newTdPrice = document.createElement('td');
-        const newParagraphForPrice = document.createElement('p');
-        newParagraphForPrice.textContent = obj.price;
+            newTdName.appendChild(newParagraphForName);
+            newRow.appendChild(newTdName);
 
-        newTdPrice.appendChild(newParagraphForPrice);
-        newRow.appendChild(newTdPrice);
+            const newTdPrice = document.createElement('td');
+            const newParagraphForPrice = document.createElement('p');
+            newParagraphForPrice.textContent = obj.price;
 
-        const newTdDecFactor = document.createElement('td');
-        const newParagraphForDecFactor = document.createElement('p');
-        newParagraphForDecFactor.textContent = obj.decFactor;
+            newTdPrice.appendChild(newParagraphForPrice);
+            newRow.appendChild(newTdPrice);
 
-        newTdDecFactor.appendChild(newParagraphForDecFactor);
-        newRow.appendChild(newTdDecFactor);
+            const newTdDecFactor = document.createElement('td');
+            const newParagraphForDecFactor = document.createElement('p');
+            newParagraphForDecFactor.textContent = obj.decFactor;
 
-        const newTdCheckbox = document.createElement('td');
-        const newInput = document.createElement('input');
-        newInput.type = 'checkbox';
+            newTdDecFactor.appendChild(newParagraphForDecFactor);
+            newRow.appendChild(newTdDecFactor);
 
-        newTdCheckbox.appendChild(newInput);
-        newRow.appendChild(newTdCheckbox);
+            const newTdCheckbox = document.createElement('td');
+            const newInput = document.createElement('input');
+            newInput.type = 'checkbox';
 
-    });
+            newTdCheckbox.appendChild(newInput);
+            newRow.appendChild(newTdCheckbox);
+
+            tableEl.appendChild(newRow);
+        });
+    })
+
+
 }
