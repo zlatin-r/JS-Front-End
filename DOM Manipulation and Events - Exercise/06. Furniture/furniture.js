@@ -7,11 +7,15 @@ function solve() {
     const generateEl = document.querySelector('input[value="Generate"]');
     const buyEl = document.querySelector('input[value="Buy"]');
 
+    const tBodyRows = document.querySelectorAll('#shop tbody tr');
+    const broughtFurniture = [];
+    let totalPrice = 0;
+    let totalDecFactor = 0;
+
     generateEl.addEventListener('click', (e) => {
         e.preventDefault();
 
         matches.forEach(match => {
-            debugger
             const obj = JSON.parse(match);
 
             const newRow = document.createElement('tr');
@@ -53,7 +57,24 @@ function solve() {
 
             tableEl.appendChild(newRow);
         });
-    })
+    });
 
+    buyEl.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        tBodyRows.forEach(row => {
+            const checkbox = row.querySelector('input[type="checkbox"]');
+
+            if (checkbox.checked && checkbox) {
+                broughtFurniture.push(row.querySelector('td:nth-child(2) p').textContent);
+                totalPrice += parseFloat(row.querySelector('td:nth-child(3) p').textContent);
+                totalDecFactor += parseFloat(row.querySelector('td:nth-child(4) p').textContent);
+            }
+        });
+
+        console.log(`Bought furniture: ${broughtFurniture.join(', ')}`);
+        console.log(`Total price: ${totalPrice}`);
+        console.log();
+    });
 
 }
