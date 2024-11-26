@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', solve);
 
 function solve() {
     const encodeAndSendButton = document.querySelector('#encode button');
-    const decodeAndReadButton = document.querySelector('#decode textarea');
+    const decodeAndReadButton = document.querySelector('#decode button');
     const encodedMessageEl = document.querySelector('#encode textarea');
     const decodedMessageEL = document.querySelector('#decode textarea');
 
@@ -19,12 +19,13 @@ function solve() {
 
     function decodeMessage(encodedMessage) {
         return Array.from(encodedMessage)
-            .map(char => String.fromCharCode(char.charCodeAt(0) + 1))
+            .map(char => String.fromCharCode(char.charCodeAt(0) - 1))
             .join('');
     }
+
     function encodeMessage(decodedMessage) {
         return Array.from(decodedMessage)
-            .map(char => String.fromCharCode(char.charCodeAt(0) - 1))
+            .map(char => String.fromCharCode(char.charCodeAt(0) + 1))
             .join('');
     }
 }
