@@ -88,14 +88,11 @@ function solve() {
 //     const tableBody = document.querySelector('#shop tbody');
 //     const resultTextarea = document.querySelector('#shop textarea');
 //
-//     // Generate furniture rows
 //     generateButton.addEventListener('click', (event) => {
 //         event.preventDefault();
 //
-//         // Parse the furniture data from the input textarea
 //         const furnitureData = JSON.parse(document.querySelector('#input textarea').value);
 //
-//         // Add each furniture item to the table
 //         furnitureData.forEach(item => {
 //             const row = document.createElement('tr');
 //
@@ -111,7 +108,6 @@ function solve() {
 //         });
 //     });
 //
-//     // Buy selected furniture
 //     buyButton.addEventListener('click', (event) => {
 //         event.preventDefault();
 //
@@ -120,7 +116,6 @@ function solve() {
 //         let totalDecorationFactor = 0;
 //         let selectedCount = 0;
 //
-//         // Find all checked rows
 //         const rows = tableBody.querySelectorAll('tr');
 //         rows.forEach(row => {
 //             const checkbox = row.querySelector('input[type="checkbox"]');
@@ -136,7 +131,6 @@ function solve() {
 //             }
 //         });
 //
-//         // Calculate averages and display results
 //         const averageDecFactor = selectedCount > 0 ? (totalDecorationFactor / selectedCount) : 0;
 //         resultTextarea.value = `Bought furniture: ${selectedFurniture.join(', ')}\n`;
 //         resultTextarea.value += `Total price: ${totalPrice.toFixed(2)}\n`;
