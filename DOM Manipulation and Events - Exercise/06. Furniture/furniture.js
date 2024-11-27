@@ -9,6 +9,7 @@ function solve() {
 
     generateBtnEl.addEventListener('click', (e) => {
         e.preventDefault();
+
         inputData.forEach((obj) => {
             const row = document.createElement('tr');
 
