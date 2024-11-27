@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="08ec9ff9-1b89-4bbe-8939-63a8e514de47" name="Changes" comment="Initial Commit">
-      <change beforePath="$PROJECT_DIR$/../DOM Intoduction - Exercise/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../DOM Intoduction - Exercise/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/07. Shopping-Cart/shopping-cart.js" beforeDir="false" afterPath="$PROJECT_DIR$/07. Shopping-Cart/shopping-cart.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -38,8 +37,10 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
     "last_opened_file_path": "/home/zl/JS-Front-End/DOM Manipulation and Events - Lab",
     "node.js.detected.package.eslint": "true",
@@ -68,23 +69,7 @@
       <workItem from="1732207449324" duration="928000" />
       <workItem from="1732277421395" duration="12024000" />
       <workItem from="1732444477859" duration="5685000" />
-      <workItem from="1732711829778" duration="339000" />
-    </task>
-    <task id="LOCAL-00008" summary="Initial Commit">
-      <option name="closed" value="true" />
-      <created>1732207610021</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1732207610021</updated>
-    </task>
-    <task id="LOCAL-00009" summary="Initial Commit">
-      <option name="closed" value="true" />
-      <created>1732207615452</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1732207615452</updated>
+      <workItem from="1732711829778" duration="700000" />
     </task>
     <task id="LOCAL-00010" summary="Initial Commit">
       <option name="closed" value="true" />
@@ -462,7 +447,23 @@
       <option name="project" value="LOCAL" />
       <updated>1732450144338</updated>
     </task>
-    <option name="localTasksCounter" value="57" />
+    <task id="LOCAL-00057" summary="Initial Commit">
+      <option name="closed" value="true" />
+      <created>1732712400534</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1732712400534</updated>
+    </task>
+    <task id="LOCAL-00058" summary="Initial Commit">
+      <option name="closed" value="true" />
+      <created>1732712408108</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1732712408108</updated>
+    </task>
+    <option name="localTasksCounter" value="59" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

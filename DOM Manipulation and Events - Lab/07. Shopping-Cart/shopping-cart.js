@@ -50,8 +50,14 @@ function solve() {
 
         switch (e.target.getAttribute('class')) {
             case 'add-product':
-                console.log(checkoutBtnEl);
+
+                const productEl = e.target.closest('.product');
+                const name = productEl.querySelector('.product-title').textContent;
+                const price = Number(productEl.querySelector('.product-line-price').textContent);
+
+                resultEL.value += `Added ${name} for ${price.toFixed(2)} to the cart.`;
                 break;
+
             case 'checkout':
                 console.log(checkoutBtnEl);
                 break;
