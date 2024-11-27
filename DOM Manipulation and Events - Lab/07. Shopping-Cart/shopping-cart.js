@@ -56,9 +56,16 @@ function solve() {
                 const price = Number(productEl.querySelector('.product-line-price').textContent);
 
                 resultEL.value += `Added ${name} for ${price.toFixed(2)} to the cart.`;
+
+                products[name] ??= 0;
+                products[name] += price;
+
                 break;
 
             case 'checkout':
+
+
+
                 console.log(checkoutBtnEl);
                 break;
         }
