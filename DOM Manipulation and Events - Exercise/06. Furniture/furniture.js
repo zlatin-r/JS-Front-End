@@ -23,6 +23,7 @@ function solve() {
             tBody.appendChild(row);
         });
     });
+
     buyBtnEl.addEventListener('click', (e) => {
         e.preventDefault();
 
@@ -34,6 +35,7 @@ function solve() {
 
         allRows.forEach((row) => {
             const checkbox = row.querySelector('input[type="checkbox"]');
+
             if (checkbox && checkbox.checked) {
                 const name = row.querySelector('td:nth-child(2) p').textContent;
                 const price = parseFloat(row.querySelector('td:nth-child(3) p').textContent);
