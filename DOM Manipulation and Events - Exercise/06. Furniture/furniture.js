@@ -1,10 +1,57 @@
 document.addEventListener('DOMContentLoaded', solve);
 
 function solve() {
-    const inputTextEl = document.querySelector('#input textarea').value;
-    console.log(JSON.parse(inputTextEl));
-}
+    const inputData = JSON.parse(document.querySelector('#input textarea').value);
+    const generateBtnEl = document.querySelector('input[value="Generate"]');
+    const buyBtnEl = document.querySelector('input[value="Buy"]');
+    const tBody = document.querySelector('table tbody');
+    const resultTextarea = document.querySelector('#shop textarea');
 
+    generateBtnEl.addEventListener('click', (e) => {
+        e.preventDefault();
+        inputData.forEach((obj) => {
+            const row = document.createElement('tr');
+
+            row.innerHTML = `
+                <td><img src="${obj.img}" alt="${obj.name}"></td>
+                <td><p>${obj.name}</p></td>
+                <td><p>${obj.price}</p></td>
+                <td><p>${obj.decFactor}</p></td>
+                <td><input type="checkbox"></td>
+            `;
+
+            tBody.appendChild(row);
+        });
+    });
+    buyBtnEl.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        const allRows = document.querySelectorAll('tr');
+        const selectedFurniture = [];
+        let totalPrice = 0;
+        let totalDecorationFactor = 0;
+        let selectedCount = 0;
+
+        allRows.forEach((row) => {
+            const checkbox = row.querySelector('input[type="checkbox"]');
+            if (checkbox && checkbox.checked) {
+                const name = row.querySelector('td:nth-child(2) p').textContent;
+                const price = parseFloat(row.querySelector('td:nth-child(3) p').textContent);
+                const decorationFactor = parseFloat(row.querySelector('td:nth-child(4) p').textContent);
+
+                selectedFurniture.push(name);
+                totalPrice += price;
+                totalDecorationFactor += decorationFactor;
+                selectedCount++;
+            }
+        });
+
+        const averageDecFactor = selectedCount > 0 ? (totalDecorationFactor / selectedCount) : 0;
+        resultTextarea.value = `Bought furniture: ${selectedFurniture.join(', ')}\n`;
+        resultTextarea.value += `Total price: ${totalPrice.toFixed(2)}\n`;
+        resultTextarea.value += `Average decoration factor: ${averageDecFactor.toFixed(2)}`;
+    });
+}
 
 
 //---------------------------------------------------------------------------------------------------
