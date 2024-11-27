@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="08ec9ff9-1b89-4bbe-8939-63a8e514de47" name="Changes" comment="Initial Commit">
-      <change beforePath="$PROJECT_DIR$/07. Shopping-Cart/shopping-cart.js" beforeDir="false" afterPath="$PROJECT_DIR$/07. Shopping-Cart/shopping-cart.js" afterDir="false" />
-    </list>
+    <list default="true" id="08ec9ff9-1b89-4bbe-8939-63a8e514de47" name="Changes" comment="Solution" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -69,23 +67,7 @@
       <workItem from="1732207449324" duration="928000" />
       <workItem from="1732277421395" duration="12024000" />
       <workItem from="1732444477859" duration="5685000" />
-      <workItem from="1732711829778" duration="1180000" />
-    </task>
-    <task id="LOCAL-00011" summary="Initial Commit">
-      <option name="closed" value="true" />
-      <created>1732207626551</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1732207626551</updated>
-    </task>
-    <task id="LOCAL-00012" summary="Initial Commit">
-      <option name="closed" value="true" />
-      <created>1732207634089</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1732207634089</updated>
+      <workItem from="1732711829778" duration="1607000" />
     </task>
     <task id="LOCAL-00013" summary="Initial Commit">
       <option name="closed" value="true" />
@@ -463,7 +445,23 @@
       <option name="project" value="LOCAL" />
       <updated>1732712645867</updated>
     </task>
-    <option name="localTasksCounter" value="60" />
+    <task id="LOCAL-00060" summary="Initial Commit">
+      <option name="closed" value="true" />
+      <created>1732713139569</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1732713139569</updated>
+    </task>
+    <task id="LOCAL-00061" summary="Solution">
+      <option name="closed" value="true" />
+      <created>1732713436353</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1732713436353</updated>
+    </task>
+    <option name="localTasksCounter" value="62" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -471,8 +469,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Destination folder changed" />
-    <MESSAGE value="Solution" />
     <MESSAGE value="Initial Commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Initial Commit" />
+    <MESSAGE value="Solution" />
+    <option name="LAST_COMMIT_MESSAGE" value="Solution" />
   </component>
 </project>

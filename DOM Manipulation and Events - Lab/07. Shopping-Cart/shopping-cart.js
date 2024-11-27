@@ -40,7 +40,6 @@ document.addEventListener('DOMContentLoaded', solve);
 
 function solve() {
     const resultEL = document.querySelector('textarea[disabled]');
-    const checkoutBtnEl = document.querySelector('button.checkout');
     const prodCatalogEl = document.querySelector('.shopping-cart');
 
     const products = {};
@@ -69,7 +68,11 @@ function solve() {
 
                 resultEL.value += `You brought ${productNames.join(', ')} for ${totalPrice.toFixed(2)}.`;
 
+                prodCatalogEl.querySelectorAll('button').forEach(el => {
+                    el.setAttribute('disabled', 'disabled');
+                });
+
                 break;
         }
-    })
+    });
 }
