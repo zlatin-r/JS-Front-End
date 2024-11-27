@@ -64,9 +64,11 @@ function solve() {
 
             case 'checkout':
 
+                const productNames = Object.keys(products);
+                const totalPrice = productNames.reduce((price, name) => price + products[name], 0)
 
+                resultEL.value += `You brought ${productNames.join(', ')} for ${totalPrice.toFixed(2)}.`;
 
-                console.log(checkoutBtnEl);
                 break;
         }
     })
