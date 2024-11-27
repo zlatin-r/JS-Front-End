@@ -19,12 +19,12 @@
     &quot;assignee&quot;: &quot;zlatin-r&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/zlatin-r/JS-Front-End.git",
-    "accountId": "9c4542d2-26b9-4c6d-b7a0-211ad0ea9cdd"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/zlatin-r/JS-Front-End.git&quot;,
+    &quot;accountId&quot;: &quot;9c4542d2-26b9-4c6d-b7a0-211ad0ea9cdd&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 4
 }</component>
@@ -90,6 +90,7 @@
       <workItem from="1732110145963" duration="8458000" />
       <workItem from="1732207435521" duration="13000" />
       <workItem from="1732277405148" duration="6000" />
+      <workItem from="1732711327203" duration="22000" />
     </task>
     <task id="LOCAL-00016" summary="Solution">
       <option name="closed" value="true" />
