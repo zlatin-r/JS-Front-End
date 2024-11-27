@@ -202,12 +202,12 @@ document.addEventListener('DOMContentLoaded', solve);
 
 
 function solve() {
-    const formEl = document.querySelector('#input');
+    const inputFormEl = document.querySelector('#input');
 
-    formEl.addEventListener('submit', (e) => {
+    inputFormEl.addEventListener('submit', (e) => {
         e.preventDefault();
 
-        const inputEl = formEl.querySelector('textarea');
+        const inputEl = e.target.querySelector('textarea');
         const data = JSON.parse(inputEl.value);
         const productLisEl = document.querySelector('table tbody');
 
@@ -243,6 +243,25 @@ function solve() {
 
             productLisEl.append(product)
         });
+    });
+
+    const shopFormEl = document.querySelector('#shop');
+
+    shopFormEl.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const outputEl = e.target.querySelector('textarea');
+        const data = [...document.querySelectorAll('table tbody tr:has(input:checked)')].map((el) => ({
+            name: el.children[1].textContent.trim(),
+            price: Number(el.children[2].textContent),
+            decFactor: Number(el.children[3].textContent)
+        }));
+
+        let output = `Bought furniture: ${data.map(el => el.name).join(', ')}\n`;
+        output += `Total price: ${data.reduce((total, el) => total + el.price, 0)}\n`
+        output += `Average decoration factor: ${data.reduce((factor, el) => factor + el.decFactor, 0) / data.length}\n`
+
+        outputEl.value = output;
     });
 }
 
