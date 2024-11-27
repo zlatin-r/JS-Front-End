@@ -1,60 +1,60 @@
 document.addEventListener('DOMContentLoaded', solve);
 
-function solve() {
-    const inputData = JSON.parse(document.querySelector('#input textarea').value);
-    const generateBtnEl = document.querySelector('input[value="Generate"]');
-    const buyBtnEl = document.querySelector('input[value="Buy"]');
-    const tBody = document.querySelector('table tbody');
-    const resultTextarea = document.querySelector('#shop textarea');
-
-    generateBtnEl.addEventListener('click', (e) => {
-        e.preventDefault();
-
-        inputData.forEach((obj) => {
-            const row = document.createElement('tr');
-
-            row.innerHTML = `
-                <td><img src="${obj.img}" alt="${obj.name}"></td>
-                <td><p>${obj.name}</p></td>
-                <td><p>${obj.price}</p></td>
-                <td><p>${obj.decFactor}</p></td>
-                <td><input type="checkbox"></td>
-            `;
-
-            tBody.appendChild(row);
-        });
-    });
-
-    buyBtnEl.addEventListener('click', (e) => {
-        e.preventDefault();
-
-        const allRows = document.querySelectorAll('tr');
-        const selectedFurniture = [];
-        let totalPrice = 0;
-        let totalDecorationFactor = 0;
-        let selectedCount = 0;
-
-        allRows.forEach((row) => {
-            const checkbox = row.querySelector('input[type="checkbox"]');
-
-            if (checkbox && checkbox.checked) {
-                const name = row.querySelector('td:nth-child(2) p').textContent;
-                const price = parseFloat(row.querySelector('td:nth-child(3) p').textContent);
-                const decorationFactor = parseFloat(row.querySelector('td:nth-child(4) p').textContent);
-
-                selectedFurniture.push(name);
-                totalPrice += price;
-                totalDecorationFactor += decorationFactor;
-                selectedCount++;
-            }
-        });
-
-        const averageDecFactor = selectedCount > 0 ? (totalDecorationFactor / selectedCount) : 0;
-        resultTextarea.value = `Bought furniture: ${selectedFurniture.join(', ')}\n`;
-        resultTextarea.value += `Total price: ${totalPrice.toFixed(2)}\n`;
-        resultTextarea.value += `Average decoration factor: ${averageDecFactor.toFixed(2)}`;
-    });
-}
+// function solve() {
+//     const inputData = JSON.parse(document.querySelector('#input textarea').value);
+//     const generateBtnEl = document.querySelector('input[value="Generate"]');
+//     const buyBtnEl = document.querySelector('input[value="Buy"]');
+//     const tBody = document.querySelector('table tbody');
+//     const resultTextarea = document.querySelector('#shop textarea');
+//
+//     generateBtnEl.addEventListener('click', (e) => {
+//         e.preventDefault();
+//
+//         inputData.forEach((obj) => {
+//             const row = document.createElement('tr');
+//
+//             row.innerHTML = `
+//                 <td><img src="${obj.img}" alt="${obj.name}"></td>
+//                 <td><p>${obj.name}</p></td>
+//                 <td><p>${obj.price}</p></td>
+//                 <td><p>${obj.decFactor}</p></td>
+//                 <td><input type="checkbox"></td>
+//             `;
+//
+//             tBody.appendChild(row);
+//         });
+//     });
+//
+//     buyBtnEl.addEventListener('click', (e) => {
+//         e.preventDefault();
+//
+//         const allRows = document.querySelectorAll('tr');
+//         const selectedFurniture = [];
+//         let totalPrice = 0;
+//         let totalDecorationFactor = 0;
+//         let selectedCount = 0;
+//
+//         allRows.forEach((row) => {
+//             const checkbox = row.querySelector('input[type="checkbox"]');
+//
+//             if (checkbox && checkbox.checked) {
+//                 const name = row.querySelector('td:nth-child(2) p').textContent;
+//                 const price = parseFloat(row.querySelector('td:nth-child(3) p').textContent);
+//                 const decorationFactor = parseFloat(row.querySelector('td:nth-child(4) p').textContent);
+//
+//                 selectedFurniture.push(name);
+//                 totalPrice += price;
+//                 totalDecorationFactor += decorationFactor;
+//                 selectedCount++;
+//             }
+//         });
+//
+//         const averageDecFactor = selectedCount > 0 ? (totalDecorationFactor / selectedCount) : 0;
+//         resultTextarea.value = `Bought furniture: ${selectedFurniture.join(', ')}\n`;
+//         resultTextarea.value += `Total price: ${totalPrice.toFixed(2)}\n`;
+//         resultTextarea.value += `Average decoration factor: ${averageDecFactor.toFixed(2)}`;
+//     });
+// }
 
 
 //---------------------------------------------------------------------------------------------------
@@ -199,4 +199,50 @@ function solve() {
 //         resultTextarea.value += `Average decoration factor: ${averageDecFactor.toFixed(2)}`;
 //     });
 // }
+
+
+function solve() {
+    const formEl = document.querySelector('#input');
+
+    formEl.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const inputEl = formEl.querySelector('textarea');
+        const data = JSON.parse(inputEl.value);
+        const productLisEl = document.querySelector('table tbody');
+
+        data.forEach((item) => {
+            const product = document.createElement('tr');
+
+            const productImgCell = document.createElement('td');
+            const productImgEl = document.createElement('img');
+            productImgEl.setAttribute('src', item.img)
+            productImgCell.append(productImgEl);
+
+            const productNameCell = document.createElement('td');
+            productNameCell.textContent = item.name;
+
+            const productPriceCell = document.createElement('td');
+            productPriceCell.textContent = item.price;
+
+            const productDecFactorCell = document.createElement('td');
+            productDecFactorCell.textContent = item.decFactor;
+
+            const productCheckCell = document.createElement('td');
+            const productCheckInput = document.createElement('input');
+            productCheckInput.setAttribute('type', 'checkbox');
+            productCheckCell.append(productCheckInput);
+
+            product.append(
+                productImgCell,
+                productNameCell,
+                productPriceCell,
+                productDecFactorCell,
+                productCheckCell
+            );
+
+            productLisEl.append(product)
+        });
+    });
+}
 
