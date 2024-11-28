@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', solve);
 
 function solve() {
     const convertBtnEl = document.querySelector('#convert');
+    const resultAreaEl = document.querySelector('#outputDistance');
     const values = {
         mm: 1,
         cm: 10,
@@ -18,16 +19,12 @@ function solve() {
 
         const distanceValueEl = Number(document.querySelector('#inputDistance').value);
 
-        if (distanceValueEl < 1) return;
-
         const inputUnitEl = document.querySelector('#inputUnits');
         const outputUnitEl = document.querySelector('#outputUnits');
 
-        const result = Number(values[inputUnitEl.value]) * distanceValueEl;
+        const valueInMm = distanceValueEl * values[inputUnitEl.value];
+        const result = valueInMm / values[outputUnitEl.value];
 
+        resultAreaEl.value = result;
     });
-
-    function convertTo(millimeters, unit) {
-
-    }
 }
