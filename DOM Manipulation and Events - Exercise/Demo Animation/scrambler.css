@@ -32,13 +32,23 @@ body {
 }
 
 .original {
-    text-transform: uppercase;
+    display: none;
 }
 
 .text {
     display: flex;
     overflow: hidden;
     height: 2pc;
+    opacity: 0.3;
+    transition: opacity 0.3s;
+
+    &:hover {
+        opacity: 1;
+
+        .characters {
+            translate: 0 -2490%;
+        }
+    }
 
     .space {
         width: 1ch;
@@ -59,5 +69,3 @@ body {
         }
     }
 }
-
-.text .word:first-child .letter:nth-child(2) .characters {translate: 0 -2300%;}
