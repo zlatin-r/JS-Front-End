@@ -30,7 +30,7 @@ function solve() {
                 });
                 return column;
             });
-            debugger
+
             if (areArraysUnique(allRowsData) && areArraysUnique(allColsData)) {
                 resultMessageEl.textContent = 'Success!';
             } else {
