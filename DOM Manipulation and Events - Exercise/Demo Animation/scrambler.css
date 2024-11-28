@@ -22,3 +22,42 @@ select,
 option {
     font: inherit;
 }
+
+body {
+    min-height: 100dvh;
+    display: grid;
+    place-items: center;
+    font-size: 2em;
+    font-family: monospace;
+}
+
+.original {
+    text-transform: uppercase;
+}
+
+.text {
+    display: flex;
+    overflow: hidden;
+    height: 2pc;
+
+    .space {
+        width: 1ch;
+    }
+
+    .word {
+        display: flex;
+
+        .letter {
+            display: flex;
+
+            .characters {
+                width: 1ch;
+                word-break: break-word;
+                white-space: break-spaces;
+                transition: translate 0.3s steps(20);
+            }
+        }
+    }
+}
+
+.text .word:first-child .letter:nth-child(2) .characters {translate: 0 -2300%;}
