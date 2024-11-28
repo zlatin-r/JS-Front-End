@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', solve);
 //         });
 //     }
 // }
-
+//
 //---------------------------------------------------------------------------------------------------------------------
 
 //Lector's Solution
@@ -72,9 +72,7 @@ function solve() {
             const values = [...row.children].map(el => el.children[0].value);
             const duplicates = values.filter((item, index) => values.indexOf(item) !== index);
 
-            if (duplicates.length > 0) {
-                status += '0';
-            } else {
+            if (!duplicates.length > 0) {
                 status += '1';
             }
         });
@@ -85,9 +83,7 @@ function solve() {
             const column = [...e.target.querySelectorAll(`tbody tr td:nth-child(${i})`)].map(el => el.children[0].value);
             const duplicates = column.filter((item, index) => column.indexOf(item) !== index);
 
-            if (duplicates.length > 0) {
-                status += '0';
-            } else {
+            if (!duplicates.length > 0) {
                 status += '1';
             }
         }
