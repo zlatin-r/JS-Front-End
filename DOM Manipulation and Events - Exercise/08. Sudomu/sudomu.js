@@ -39,11 +39,17 @@ function solve() {
 
         } else if (e.target.value === 'Clear') {
             document.querySelector('form').reset();
+            resultMessageEl.textContent = '';
         }
     });
+
     function areArraysUnique(arrays) {
-        return arrays.every((array, index, self) =>
-            self.findIndex(a => JSON.stringify(a) === JSON.stringify(array)) === index
-        );
+        return arrays.every((array, index, self) => {
+
+            const isUniqueElements = new Set(array).size === array.length;
+            const isUniqueArray = self.findIndex(a => JSON.stringify(a) === JSON.stringify(array)) === index;
+
+            return isUniqueElements && isUniqueArray;
+        });
     }
 }
