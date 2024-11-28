@@ -3,16 +3,16 @@ document.addEventListener('DOMContentLoaded', solve);
 function solve() {
     const convertBtnEl = document.querySelector('#convert');
     const resultAreaEl = document.querySelector('#outputDistance');
-    const values = {
-        mm: 1,
-        cm: 10,
-        in: 25.4,
-        ft: 304.8,
-        yrd: 914.4,
-        m: 1000,
-        km: 1000000,
-        mi: 1609344
-    }
+    const toMeters = {
+        km: 1000,
+        m: 1,
+        cm: 0.01,
+        mm: 0.001,
+        mi: 1609.34,
+        yrd: 0.9144,
+        ft: 0.3048,
+        in: 0.0254
+    };
 
     convertBtnEl.addEventListener('click', (e) => {
         e.preventDefault();
@@ -22,9 +22,8 @@ function solve() {
         const inputUnitEl = document.querySelector('#inputUnits');
         const outputUnitEl = document.querySelector('#outputUnits');
 
-        const valueInMm = distanceValueEl * values[inputUnitEl.value];
-        const result = valueInMm / values[outputUnitEl.value];
+        const valueInMm = distanceValueEl * toMeters[inputUnitEl.value];
 
-        resultAreaEl.value = result;
+        resultAreaEl.value = valueInMm / toMeters[outputUnitEl.value];
     });
 }
