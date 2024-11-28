@@ -59,6 +59,7 @@ document.addEventListener('DOMContentLoaded', solve);
 function solve() {
     const formEl = document.querySelector('#solutionCheck');
     const outputEl = document.querySelector('#check');
+
     let status = '';
     let size = 3;
 
@@ -81,7 +82,7 @@ function solve() {
         status += 'x';
 
         for (let i = 1; i <= size; i++) {
-            const column = [...e.target.querySelectorAll(`tbody tr td:nth-child(${i})`)].map(el => el.children[0].value)
+            const column = [...e.target.querySelectorAll(`tbody tr td:nth-child(${i})`)].map(el => el.children[0].value);
             const duplicates = column.filter((item, index) => column.indexOf(item) !== index);
 
             if (duplicates.length > 0) {
