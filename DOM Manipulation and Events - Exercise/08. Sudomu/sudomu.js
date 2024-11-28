@@ -1,35 +1,49 @@
 document.addEventListener('DOMContentLoaded', solve);
 
 function solve() {
+    const resultMessageEl = document.querySelector('#check');
+
     document.querySelector('.buttons').addEventListener('click', (e) => {
         e.preventDefault();
 
         if (e.target.value === 'Quick Check') {
             const allRows = document.querySelectorAll('tr');
             const allRowsData = [];
-            const allColsData = [];
 
-            debugger
-            allRows.forEach((row, index) => {
+            allRows.forEach((row) => {
                 const cells = row.querySelectorAll('td');
                 const rowData = [];
-                const colData = [];
 
-                cells.forEach((cell, colIndex) => {
+                cells.forEach((cell) => {
                     const input = cell.querySelector('input');
                     if (input) {
                         rowData.push(input.value);
-                        if (colIndex % 3 === 0) {
-                            colData.push(input.value);
-                        }
                     }
                 });
                 allRowsData.push(rowData);
             });
-            allColsData.push(colData);
+
+            const allColsData = [0, 1, 2].map(colIndex => {
+                const column = []
+                allRowsData.forEach(row => {
+                    column.push(row[colIndex]);
+                });
+                return column;
+            });
+            debugger
+            if (areArraysUnique(allRowsData) && areArraysUnique(allColsData)) {
+                resultMessageEl.textContent = 'Success!';
+            } else {
+                resultMessageEl.textContent = 'Keep trying ...';
+            }
 
         } else if (e.target.value === 'Clear') {
-
+            document.querySelector('form').reset();
         }
     });
+    function areArraysUnique(arrays) {
+        return arrays.every((array, index, self) =>
+            self.findIndex(a => JSON.stringify(a) === JSON.stringify(array)) === index
+        );
+    }
 }
