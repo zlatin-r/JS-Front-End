@@ -38,7 +38,7 @@ body {
 .text {
     display: flex;
     overflow: hidden;
-    height: 2pc;
+    height: 2ch;
     opacity: 0.3;
     transition: opacity 0.3s;
 

@@ -32,5 +32,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelectorAll('.characters').forEach((el, i) => {
         el.style.transitionDelay = (0.02 * i) + 's';
-    })
-})
+    });
+});
