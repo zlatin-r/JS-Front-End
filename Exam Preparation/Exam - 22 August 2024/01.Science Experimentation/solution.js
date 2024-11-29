@@ -10,50 +10,48 @@ function solve(array) {
     for (let row of array) {
         const data = row.split(' # ');
 
-        let action = '';
-        let chemOne = '';
-        let chemTwo = '';
-        let chem = '';
-        let amount = 0;
+        if (data[0] === 'Mix') {
+            const [action, chemOne, chemTwo, amount] = data;
+            const numAmount = Number(amount);
 
-        if (data.length > 3) {
-            [action, chemOne, chemTwo, amount] = data;
-        } else {
-            [action, chem, formula] = data;
-        }
-        if (action === 'Mix') {
             let chemOneQuantity = chemicals[chemOne].quantity;
             let chemTwoQuantity = chemicals[chemTwo].quantity;
 
-            if (chemOneQuantity >= amount && chemTwoQuantity >= amount) {
-                chemOneQuantity -= amount;
-                chemTwoQuantity -= amount;
-                console.log(`${chemOne} and ${chemTwo} have been mixed. ${amount} units of each were used.`);
+            if (chemOneQuantity >= numAmount && chemTwoQuantity >= numAmount) {
+                chemOneQuantity -= numAmount;
+                chemTwoQuantity -= numAmount;
+                console.log(`${chemOne} and ${chemTwo} have been mixed. ${numAmount} units of each were used.`);
             } else {
                 console.log(`Insufficient quantity of ${chemOne}/${chemTwo} to mix.`)
             }
-        } else if (action === 'Replenish') {
+        } else if (data[0] === 'Replenish') {
+            const [action, chem, amount] = data;
             let currQuantity = chemicals[chem].quantity;
 
-            if (chemicals.includes(chem)) {
-                currQuantity += amount;
+            if (chemicals.hasOwnProperty(chem)) {
+                currQuantity += Number(amount);
 
                 if (currQuantity > 500) {
                     currQuantity = 500;
                     console.log(`${chem} quantity increased by ${currQuantity} units, reaching maximum capacity of 500 units!`);
                 } else {
-                    console.log(`${chem} quantity increased by {amount} units!`);
+                    console.log(`${chem} quantity increased by ${amount} units!`);
                 }
             } else {
                 console.log(`The Chemical ${chem} is not available in the lab.`);
             }
-        } else {
-            if (chemicals.includes(chem)) {
+        } else if (data[0] === 'Add Formula'){
+            const [action, chem, formula] = data;
+
+            if (chemicals.hasOwnProperty(chem)) {
                 chemicals[chem].formula = formula;
                 console.log(`${chem} has been assigned the formula ${formula}.`);
             } else {
                 console.log(`The Chemical ${chem} is not available in the lab.`);
             }
+        } else {
+            chemicals.forEach(c => {
+                console.log(`Chemical:, Quantity: ${c.quantity}`)})
         }
     }
 }
