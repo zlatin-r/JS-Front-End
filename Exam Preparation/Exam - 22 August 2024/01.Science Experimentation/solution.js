@@ -14,33 +14,31 @@ function solve(array) {
             const [action, chemOne, chemTwo, amount] = data;
             const numAmount = Number(amount);
 
-            let chemOneQuantity = chemicals[chemOne].quantity;
-            let chemTwoQuantity = chemicals[chemTwo].quantity;
-
-            if (chemOneQuantity >= numAmount && chemTwoQuantity >= numAmount) {
-                chemOneQuantity -= numAmount;
-                chemTwoQuantity -= numAmount;
+            if (chemicals[chemOne].quantity >= numAmount && chemicals[chemTwo].quantity >= numAmount) {
+                chemicals[chemOne].quantity -= numAmount;
+                chemicals[chemTwo].quantity -= numAmount;
                 console.log(`${chemOne} and ${chemTwo} have been mixed. ${numAmount} units of each were used.`);
             } else {
                 console.log(`Insufficient quantity of ${chemOne}/${chemTwo} to mix.`)
             }
         } else if (data[0] === 'Replenish') {
             const [action, chem, amount] = data;
-            let currQuantity = chemicals[chem].quantity;
 
             if (chemicals.hasOwnProperty(chem)) {
-                currQuantity += Number(amount);
+                const currQuantity = chemicals[chem].quantity;
+                chemicals[chem].quantity += Number(amount);
 
-                if (currQuantity > 500) {
-                    currQuantity = 500;
-                    console.log(`${chem} quantity increased by ${currQuantity} units, reaching maximum capacity of 500 units!`);
+                if (chemicals[chem].quantity > 500) {
+                    const increased = 500 - currQuantity
+                    chemicals[chem].quantity = 500;
+                    console.log(`${chem} quantity increased by ${increased} units, reaching maximum capacity of 500 units!`);
                 } else {
                     console.log(`${chem} quantity increased by ${amount} units!`);
                 }
             } else {
                 console.log(`The Chemical ${chem} is not available in the lab.`);
             }
-        } else if (data[0] === 'Add Formula'){
+        } else if (data[0] === 'Add Formula') {
             const [action, chem, formula] = data;
 
             if (chemicals.hasOwnProperty(chem)) {
@@ -51,26 +49,28 @@ function solve(array) {
             }
         } else {
             for (const [name, details] of Object.entries(chemicals)) {
-                const { quantity, formula } = details;
+                const {quantity, formula} = details;
                 if (formula) {
                     console.log(`Chemical: ${name}, Quantity: ${quantity}, Formula: ${formula}`);
                 } else {
                     console.log(`Chemical: ${name}, Quantity: ${quantity}`);
                 }
             }
+            break;
         }
     }
 }
 
 
 solve([
-    '4',
-    'Water # 200',
-    'Salt # 100',
-    'Acid # 50',
-    'Base # 80',
-    'Mix # Water # Salt # 50',
-    'Replenish # Salt # 150',
-    'Add Formula # Acid # H2SO4',
-    'End']
-)
+    '3',
+    'Sodium # 300',
+    'Chlorine # 100',
+    'Hydrogen # 200',
+    'Mix # Sodium # Chlorine # 200',
+    'Replenish # Sodium # 250',
+    'Add Formula # Sulfuric Acid # H2SO4',
+    'Add Formula # Sodium # Na',
+    'End',
+    'Mix # Hydrogen # Chlorine # 50'
+])
