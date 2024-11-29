@@ -1,12 +1,10 @@
 function solve(array) {
     const n = Number(array.shift());
-    let chemicals = {};
-
+    const chemicals = {};
 
     for (let i = 0; i < n; i++) {
         const [chemical, quantity] = array.shift().split(' # ');
-        chemicals[chemical] = {quantity: Number(quantity), formula: ''}
-
+        chemicals[chemical] = {quantity: Number(quantity), formula: ''};
     }
 
     for (let row of array) {
@@ -24,7 +22,38 @@ function solve(array) {
             [action, chem, formula] = data;
         }
         if (action === 'Mix') {
-            if ()
+            let chemOneQuantity = chemicals[chemOne].quantity;
+            let chemTwoQuantity = chemicals[chemTwo].quantity;
+
+            if (chemOneQuantity >= amount && chemTwoQuantity >= amount) {
+                chemOneQuantity -= amount;
+                chemTwoQuantity -= amount;
+                console.log(`${chemOne} and ${chemTwo} have been mixed. ${amount} units of each were used.`);
+            } else {
+                console.log(`Insufficient quantity of ${chemOne}/${chemTwo} to mix.`)
+            }
+        } else if (action === 'Replenish') {
+            let currQuantity = chemicals[chem].quantity;
+
+            if (chemicals.includes(chem)) {
+                currQuantity += amount;
+
+                if (currQuantity > 500) {
+                    currQuantity = 500;
+                    console.log(`${chem} quantity increased by ${currQuantity} units, reaching maximum capacity of 500 units!`);
+                } else {
+                    console.log(`${chem} quantity increased by {amount} units!`);
+                }
+            } else {
+                console.log(`The Chemical ${chem} is not available in the lab.`);
+            }
+        } else {
+            if (chemicals.includes(chem)) {
+                chemicals[chem].formula = formula;
+                console.log(`${chem} has been assigned the formula ${formula}.`);
+            } else {
+                console.log(`The Chemical ${chem} is not available in the lab.`);
+            }
         }
     }
 }
