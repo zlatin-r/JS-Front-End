@@ -50,8 +50,14 @@ function solve(array) {
                 console.log(`The Chemical ${chem} is not available in the lab.`);
             }
         } else {
-            chemicals.forEach(c => {
-                console.log(`Chemical:, Quantity: ${c.quantity}`)})
+            for (const [name, details] of Object.entries(chemicals)) {
+                const { quantity, formula } = details;
+                if (formula) {
+                    console.log(`Chemical: ${name}, Quantity: ${quantity}, Formula: ${formula}`);
+                } else {
+                    console.log(`Chemical: ${name}, Quantity: ${quantity}`);
+                }
+            }
         }
     }
 }
