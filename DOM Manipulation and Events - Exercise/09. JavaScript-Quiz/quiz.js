@@ -32,10 +32,10 @@ function solve() {
 
         if (correctAnswers === 3) {
             resultsEl.textContent = 'You are recognized as top JavaScript fan!';
-        } else if (correctAnswers === 2) {
-            resultsEl.textContent = `You have 2 right answers`;
+        } else if (correctAnswers === 1) {
+            resultsEl.textContent = `You have 1 right answer`;
         } else {
-            resultsEl.textContent = 'You have 1 right answer';
+            resultsEl.textContent = `You have ${correctAnswers} right answers`;
         }
     });
 }
