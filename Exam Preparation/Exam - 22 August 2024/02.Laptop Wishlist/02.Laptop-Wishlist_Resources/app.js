@@ -14,6 +14,12 @@ function solve() {
         const memory = addLaptopFormInputEl[1].value.trim();
         const price = addLaptopFormInputEl[2].value.trim();
 
+        if (model === "" ||
+            memory === "" ||
+            price === "") {
+            return
+        }
+
         checkListEl.innerHTML = `
           <li class="laptop-item">
             <article>
