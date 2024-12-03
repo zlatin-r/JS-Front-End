@@ -7,15 +7,17 @@ function solve() {
 
     addBtnEl.addEventListener('click', (e) => {
         e.preventDefault();
+
         const model = addLaptopFormInputEl[0].value
-        const memory =
+        const memory = addLaptopFormInputEl[1].value
+        const price = addLaptopFormInputEl[2].value
 
         checkListEl.innerHTML = `
           <li class="laptop-item">
             <article>
-                <p>${addLaptopFormInputEl[0].value}</p>
-                <p>Memory: ${addLaptopFormInputEl[1].value}</p>
-                <p>Price: ${addLaptopFormInputEl[2].value}</p>
+                <p>${model}</p>
+                <p>Memory: ${memory}</p>
+                <p>Price: ${price}</p>
             </article>
             <button class="btn edit">edit</button>
             <button class="btn ok">ok</button>
@@ -30,16 +32,22 @@ function solve() {
 
     checkListEl.addEventListener('click', (e) => {
         if (e.target.classList.contains('edit')) {
-            const model = document.querySelector('.laptop-item article p:nth-of-type(1)');
-            const storage = document.querySelector('.laptop-item article p:nth-of-type(2)').textContent;
-            const price = document.querySelector('.laptop-item article p:nth-of-type(3)').textContent;
 
-            console.log(model.textContent, storage.textContent, price.textContent);
+            const laptopItem = e.target.closest('.laptop-item');
+            const article = laptopItem.querySelector('article');
+            const model = article.querySelector('p:nth-of-type(1)').textContent;
+            const memory = article.querySelector('p:nth-of-type(2)').textContent
+                .replace('Memory: ', '');
+            const price = article.querySelector('p:nth-of-type(3)').textContent
+                .replace('Price: ', '');
 
-            addLaptopFormInputEl[0].value = model.textContent;
-            addLaptopFormInputEl[1].value = storage;
+            addLaptopFormInputEl[0].value = model;
+            addLaptopFormInputEl[1].value = memory;
             addLaptopFormInputEl[2].value = price;
         }
+        addBtnEl.disabled = false;
+        const laptopItem = e.target.closest('.laptop-item');
+        laptopItem.remove();
     });
 }
   
