@@ -6,8 +6,8 @@ function solve() {
     let descriptionEl = document.querySelector('#description');
     let addBtnEl = document.querySelector('#add-btn');
 
-    addBtnEl.addEventListener('click', (event) => {
-        event.preventDefault();
+    addBtnEl.addEventListener('click', (e) => {
+        e.preventDefault();
         publish()
     });
 
@@ -18,6 +18,13 @@ function solve() {
             return;
         }
 
-        console.log(eventNameEl.value, dateTimeEl.value, descriptionEl.value);
+        let previewListEl = document.getElementById('preview-list');
+
+        let eventLiEl = document.createElement('li');
+        let eventArticleEl = document.createElement('article');
+        let eventTitleParagraphEl = document.createElement('p');
+        let eventDateParagraphEl = document.createElement('p');
+        let eventDescriptionParagraphEl = document.createElement('p');
+
     }
 }
