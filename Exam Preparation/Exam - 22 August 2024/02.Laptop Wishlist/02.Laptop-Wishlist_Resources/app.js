@@ -7,6 +7,8 @@ function solve() {
 
     addBtnEl.addEventListener('click', (e) => {
         e.preventDefault();
+        const model = addLaptopFormInputEl[0].value
+        const memory =
 
         checkListEl.innerHTML = `
           <li class="laptop-item">
