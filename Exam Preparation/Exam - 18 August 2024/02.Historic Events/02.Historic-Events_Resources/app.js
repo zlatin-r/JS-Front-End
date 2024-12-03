@@ -19,6 +19,7 @@ function solve() {
         }
 
         let previewListEl = document.getElementById('preview-list');
+        let archiveListEl = document.getElementById('archive-list');
 
         let eventLiEl = document.createElement('li');
         let eventArticleEl = document.createElement('article');
@@ -28,6 +29,7 @@ function solve() {
         let eventDivEl = document.createElement('div');
         let eventBtnEditEl = document.createElement('button');
         let eventBtnNextEl = document.createElement('button');
+        let archiveBtnEl = document.createElement('button');
 
         eventDivEl.classList.add('buttons');
         eventBtnEditEl.classList.add('edit-btn');
@@ -35,6 +37,9 @@ function solve() {
         eventBtnEditEl.addEventListener('click', edit);
         eventBtnNextEl.classList.add('next-btn');
         eventBtnNextEl.textContent = 'Next';
+        eventBtnNextEl.addEventListener('click', next);
+        archiveBtnEl.classList.add('archive-btn')
+        archiveBtnEl.textContent = 'Archive';
 
         eventTitleParagraphEl.textContent = eventNameEl.value;
         eventDateParagraphEl.textContent = dateTimeEl.value;
@@ -70,6 +75,14 @@ function solve() {
             previewListEl.removeChild(eventLiEl);
 
             addBtnEl.disabled = false;
+        }
+
+        function next() {
+            previewListEl.removeChild(eventLiEl);
+
+            eventLiEl.removeChild(eventDivEl);
+            eventLiEl.appendChild(archiveBtnEl);
+            archiveListEl.appendChild(eventLiEl);
         }
 
     }
