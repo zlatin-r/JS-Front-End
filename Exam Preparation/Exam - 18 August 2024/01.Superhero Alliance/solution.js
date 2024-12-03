@@ -11,17 +11,36 @@ function solve(arr) {
         if (!row.includes('Evil Defeated!')) {
             if (row.includes('Use Power')) {
                 let [action, name, power, energy] = row.split(' * ');
-                    if (heroes[name].powers.includes(power) && heroes[name].energy >= Number(energy)) {
-                        heroes[name].energy -= Number(energy);
-                        console.log(`${name} has used ${power} and now has ${heroes[name].energy} energy!`);
-                    } else {
-                        console.log(`${name} is unable to use ${power} or lacks energy!`);
-                    }
+                if (heroes[name].powers.includes(power) && heroes[name].energy >= Number(energy)) {
+                    heroes[name].energy -= Number(energy);
+                    console.log(`${name} has used ${power} and now has ${heroes[name].energy} energy!`);
+                } else {
+                    console.log(`${name} is unable to use ${power} or lacks energy!`);
+                }
             } else if (row.includes('Train')) {
                 let [action, name, energy] = row.split(' * ');
                 const currEnergy = heroes[name].energy;
-                heroes[name].energy = Math.min(100, currEnergy + energy);
+                if (currEnergy === 100) {
+                    console.log(`${name} is already at full energy!`);
+                } else {
+                    heroes[name].energy = Math.min(100, currEnergy + Number(energy));
+                    const gainedEnergy = heroes[name].energy - currEnergy;
+                    console.log(`${name} has trained and gained ${gainedEnergy} energy!`);
+                }
+            } else if (row.includes('Learn')) {
+                let [action, name, power] = row.split(' * ');
+                if (heroes[name].powers.includes(power)) {
+                    console.log(`${name} already knows ${power}.`);
+                } else {
+                    heroes[name].powers.push(power);
+                    console.log(`${name} has learned ${power}!`);
+                }
             }
+        } else {
+            for (const [hero, data] of Object.entries(heroes)) {
+                console.log(`Superhero: ${hero}\n- Superpowers: ${data.powers.join(', ')}\n- Energy: ${data.energy}`);
+            }
+            break;
         }
     }
 }
