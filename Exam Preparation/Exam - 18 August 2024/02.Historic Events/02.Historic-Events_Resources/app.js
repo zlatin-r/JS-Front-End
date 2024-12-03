@@ -32,14 +32,18 @@ function solve() {
         let archiveBtnEl = document.createElement('button');
 
         eventDivEl.classList.add('buttons');
+
         eventBtnEditEl.classList.add('edit-btn');
         eventBtnEditEl.textContent = 'Edit';
         eventBtnEditEl.addEventListener('click', edit);
+
         eventBtnNextEl.classList.add('next-btn');
         eventBtnNextEl.textContent = 'Next';
         eventBtnNextEl.addEventListener('click', next);
+
         archiveBtnEl.classList.add('archive-btn')
         archiveBtnEl.textContent = 'Archive';
+        archiveBtnEl.addEventListener('click', archive);
 
         eventTitleParagraphEl.textContent = eventNameEl.value;
         eventDateParagraphEl.textContent = dateTimeEl.value;
@@ -85,5 +89,10 @@ function solve() {
             archiveListEl.appendChild(eventLiEl);
         }
 
+        function archive() {
+            archiveListEl.removeChild(eventLiEl);
+
+            addBtnEl.disabled = false;
+        }
     }
 }
