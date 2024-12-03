@@ -4,6 +4,7 @@ function solve() {
     const addLaptopFormInputEl = document.querySelectorAll('.laptop-info input');
     const addBtnEl = document.querySelector('.laptop-info button');
     const checkListEl = document.querySelector('#check-list');
+    const laptopsListEl = document.querySelector('#laptops-list');
 
     addBtnEl.addEventListener('click', (e) => {
         e.preventDefault();
@@ -44,10 +45,14 @@ function solve() {
             addLaptopFormInputEl[0].value = model;
             addLaptopFormInputEl[1].value = memory;
             addLaptopFormInputEl[2].value = price;
+
+            addBtnEl.disabled = false;
+            laptopItem.remove();
+        } else if (e.target.classList.contains('ok')) {
+            checkListEl.remove();
+            laptopsListEl.append(checkListEl);
         }
-        addBtnEl.disabled = false;
-        const laptopItem = e.target.closest('.laptop-item');
-        laptopItem.remove();
+
     });
 }
   
