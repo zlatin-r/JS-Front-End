@@ -11,10 +11,37 @@ function solve() {
 
     function depart() {
         const url = `http://localhost:3030/jsonstore/bus/schedule/${currentStop.next}`;
+
+        let responsePromise = fetch(url);
+
+        responsePromise
+            .then(response => response.json())
+            .then(data => {
+                currentStop.name = data.name;
+                currentStop.next = data.next;
+
+                infoBox.textContent = `Next stop ${currentStop.name}`;
+
+                departButton.disabled = true;
+                arriveButton.disabled = false;
+            })
+            .catch(() => handleError());
     }
 
     async function arrive() {
-        // TODO:
+        try {
+            infoBox.textContent = `Arriving at ${currentStop.name}`;
+            departButton.disabled = false;
+            arriveButton.disabled = true;
+        } catch (error) {
+            handleError();
+        }
+    }
+
+    function handleError() {
+        infoBox.textContent = "Error";
+        departButton.disabled = true;
+        arriveButton.disabled = true;
     }
 
     return {
