@@ -1,3 +1,4 @@
 function getInfo() {
-    // TODO:
+    const stopId = document.getElementById('stopId').value;
+
 }
