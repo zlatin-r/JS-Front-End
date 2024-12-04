@@ -5,10 +5,7 @@ function loadRepos() {
     fetch(url)
         .then((response) => response.text()) // Преобразуваме отговорът в текст
         .then((data) => {
-            resultDiv.textContent = data; // Заместваме съдържанието на div-а
+            resultDiv.textContent = data
         })
-        .catch((error) => {
-            console.error("Error fetching repos:", error);
-            resultDiv.textContent = "Error loading repositories.";
-        });
+        .catch((error) => console.log(error));
 }
