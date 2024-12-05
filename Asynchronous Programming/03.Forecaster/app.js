@@ -5,6 +5,15 @@ function attachEvents() {
     const upcomingEl = document.getElementById('upcoming');
 
     const baseUrl = "http://localhost:3030/jsonstore/forecaster";
+
+    getWeatherBtnEl.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        const requestedLocation = document.querySelector('#location').value;
+
+        console.log(requestedLocation);
+    })
+
 }
 
 attachEvents();
