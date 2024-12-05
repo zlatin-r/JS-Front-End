@@ -58,7 +58,44 @@ function attachEvents() {
 
         const forecastSpan = document.createElement('span');
         forecastSpan.className = 'forecast-data';
-        forecastSpan.textContent = `${todayData.name}`;
+        forecastSpan.textContent = `${todayData.forecast.condition}`;
+
+        conditionSpan.appendChild(locationSpan);
+        conditionSpan.appendChild(degreeSpan);
+        conditionSpan.appendChild(forecastSpan);
+
+        todayElement.appendChild(conditionSymbolSpan);
+        todayElement.appendChild(conditionSpan);
+
+        currentDiv.appendChild(todayElement);
+
+        const forecastInfoDiv = document.createElement('div');
+        forecastInfoDiv.className = 'forecast-info';
+
+        upcomingData.forecast.forEach(day => {
+            debugger
+            const upcomingSpan = document.createElement('span');
+            upcomingSpan.className = 'upcoming';
+
+            const symbolSpan = document.createElement('span');
+            symbolSpan.className = 'symbol';
+            symbolSpan.textContent = `${symbols[day.condition]}`;
+
+            const degreeSpan = document.createElement('span');
+            degreeSpan.className = 'forecast-data';
+            degreeSpan.textContent = `${day.low}${symbols.Degrees}/${day.high}${symbols.Degrees}`;
+
+            const forecastSpan = document.createElement('span');
+            forecastSpan.className = 'forecast-data';
+            forecastSpan.textContent = `${day.condition}`;
+
+            upcomingSpan.appendChild(symbolSpan);
+            upcomingSpan.appendChild(degreeSpan);
+            upcomingSpan.appendChild(forecastSpan);
+
+            forecastInfoDiv.appendChild(upcomingSpan);
+        })
+        upcomingDiv.appendChild(forecastInfoDiv);
     }
 }
 
