@@ -1,5 +1,5 @@
 function attachEvents() {
-    const textAreaEl = getElementByTag("#textarea");
+    const textAreaEl = getElementByTag("#messages");
     const authorNameEl = getElementByTag('input[name="author"]');
     const messageContentEl = getElementByTag('input[name="content"]');
     const sendBtnEl = getElementByTag('#submit')
@@ -16,8 +16,8 @@ function attachEvents() {
 
         const message = {
             author: authorName,
-            message: messageContent
-        };
+            content: messageContent
+        }
 
         try {
             const response = await fetch(baseUrl, {
@@ -31,9 +31,15 @@ function attachEvents() {
     }
 
     async function refreshPage() {
+        const response = await fetch(baseUrl);
+        const data = await response.json();
 
+        const messages = Object.values(data)
+            .map(msg => `${msg.author}: ${msg.content}`)
+            .join('\n');
+
+        textAreaEl.value = messages;
     }
-
 }
 
 function getElementByTag(tag) {
