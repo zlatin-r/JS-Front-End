@@ -12,6 +12,7 @@ function attachEvents() {
         Rain: '☂',
         Degrees: '°'
     };
+
     submitButton.addEventListener('click', async () => {
         const locationName = locationInput.value;
 
@@ -29,6 +30,7 @@ function attachEvents() {
             const upcomingData = await upcomingResponse.json();
 
             displayForecast(todayData, upcomingData);
+
         } catch (error) {
             forecastDiv.style.display = 'block';
             forecastDiv.innerHTML = '<div class="label">Error</div>';
@@ -43,7 +45,7 @@ function attachEvents() {
 
         const conditionSymbolSpan = document.createElement('span');
         conditionSymbolSpan.className = 'condition symbol';
-        conditionSymbolSpan.textContent = `${symbols[todayData.forecast.condition]}`
+        conditionSymbolSpan.textContent = `${symbols[todayData.forecast.condition]}`;
 
         const conditionSpan = document.createElement('span');
         conditionSpan.className = 'condition';
@@ -54,7 +56,7 @@ function attachEvents() {
 
         const degreeSpan = document.createElement('span');
         degreeSpan.className = 'forecast-data';
-        degreeSpan.textContent = `${todayData.forecast.low}${symbols.Degrees}/${todayData.forecast.high}${symbols.Degrees}`
+        degreeSpan.textContent = `${todayData.forecast.low}${symbols.Degrees}/${todayData.forecast.high}${symbols.Degrees}`;
 
         const forecastSpan = document.createElement('span');
         forecastSpan.className = 'forecast-data';
