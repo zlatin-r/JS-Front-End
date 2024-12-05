@@ -35,7 +35,14 @@ function attachEvents() {
         const allCommentsResponse = await fetch(commentsUrl);
         const allComments = await allCommentsResponse.json();
 
+        const allPostsResponse = await fetch(postUrl);
+        const posts = await allPostsResponse.json();
+
+        const currentPost = posts[selectedPostValue];
         const comments = Object.values(allComments).filter(obj => obj.postId === selectedPostValue);
+
+        console.log(currentPost);
+        console.log(comments);
 
         postTitleEl.textContent = selectedPostEl.options[selectedPostEl.selectedIndex].text;
 
