@@ -19,15 +19,11 @@ function attachEvents() {
             content: messageContent
         }
 
-        try {
-            const response = await fetch(baseUrl, {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(message),
-            });
-        } catch (error) {
-            console.error(error);
-        }
+        const response = await fetch(baseUrl, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(message),
+        });
     }
 
     async function refreshPage() {
