@@ -14,8 +14,18 @@ function attachEvents() {
         const response = await fetch(baseUrl);
         const data = await response.json();
 
+        Object.values(data).forEach(contact => {
+            const newLiEl = createElement('li');
+            const textNode = document.createTextNode(`${contact.person}: ${contact.phone}`);
 
+            const newDelBtnEl = createElement('button');
+            newDelBtnEl.textContent = 'Delete';
 
+            newLiEl.appendChild(textNode);
+            newLiEl.appendChild(newDelBtnEl);
+
+            phoneBookEl.appendChild(newLiEl);
+        });
     }
 
     async function createContact() {
