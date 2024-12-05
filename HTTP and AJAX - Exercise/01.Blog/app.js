@@ -19,16 +19,6 @@ function attachEvents() {
         const response = await fetch(postUrl);
         const postsData = await response.json();
 
-        // Object.entries(postsData).forEach(([objectKey, post]) => {
-        //     postDetails[post.id] = {};
-        //     postDetails[post.id]["title"] = post.title;
-        //     postDetails[post.id]["body"] = post.body;
-        //     const optionEl = createEl("option");
-        //     optionEl.value = post.id;
-        //     optionEl.textContent = post.title;
-        //     selectPostsEl.appendChild(optionEl);
-        // });
-
         Object.entries(postsData).forEach(([key, data]) => {
             const newOptionEl = createEl('option');
 
@@ -75,8 +65,10 @@ function attachEvents() {
     }
 
 //---------------------------------------------------------------------------------------------------------------------
+    // Down - First try solution 50/100 points // Up - Second try solution 100/100 // Bottom - Not my solution
+    // I can't Find the error                  //                                  //
 //---------------------------------------------------------------------------------------------------------------------
-
+//
 //     const loadPostBtnEl = document.getElementById('btnLoadPosts');
 //     const viewBtnEl = document.getElementById('btnViewPost');
 //     const postsEl = document.getElementById('posts');
@@ -96,7 +88,7 @@ function attachEvents() {
 //
 //             const newOption = document.createElement('option');
 //
-//             newOption.value = post;
+//             newOption.value = data.id;
 //             newOption.text = data.title;
 //
 //             postsEl.appendChild(newOption);
