@@ -1,114 +1,61 @@
 function lockedProfile() {
     const mainEl = document.querySelector('#main');
-
     const url = 'http://localhost:3030/jsonstore/advanced/profiles'
 
-    fetch(url).then(response => response.json()).then((data) => {
-        Object.values(data).forEach((profile) => {
-            const userName = profile.username;
-            const userEmail = profile.email;
-            const userAge = profile.age;
+    let counter = 0;
 
-            const newProfileDiv = createEl('div');
-            newProfileDiv.classList.add('profile');
+    mainEl.innerHTML = '';
 
+    fetch(url)
+        .then(response => response.json())
+        .then((profiles) => {
+            Object.values(profiles).forEach((profile) => {
+                const newProfileDivEl = document.createElement('div');
+                newProfileDivEl.className = 'profile';
+                counter++;
 
-            const profileImg = createEl('img');
-            profileImg.src = './iconProfile2.png';
-            profileImg.classList.add('userIcon');
+                newProfileDivEl.innerHTML = `
+                <img src="./iconProfile2.png" class="userIcon" />
+                <label>Lock</label>
+                <input type="radio" name="user${counter}Locked" value="lock" checked>
+                <label>Unlock</label>
+                <input type="radio" name="user${counter}Locked" value="unlock"><br>
+                <hr>
+                <label>Username</label>
+                <input type="text" name="user${counter}Username" value="${profile.username}" disabled readonly />
+                <div class="user${counter}HiddenFields">
+                    <hr>
+                    <label>Email:</label>
+                    <input type="email" name="user${counter}Email" value="${profile.email}" disabled readonly />
+                    <label>Age:</label>
+                    <input type="email" name="user${counter}Age" value="${profile.age}" disabled readonly />
+                </div>
+                <button>Show more</button>
+                `
 
-            const labelLock = createEl('label');
-            labelLock.textContent = 'Lock';
-
-            const radioInputLock = createEl('input');
-            radioInputLock.type = 'radio';
-            radioInputLock.name = `${userName}Locked`;
-            radioInputLock.value = 'lock';
-            radioInputLock.checked = true;
-
-            const labelUnlock = createEl('label');
-            labelUnlock.textContent = 'Unlock';
-
-            const radioInputUnlock = createEl('input');
-            radioInputUnlock.type = 'radio';
-            radioInputUnlock.name = `${userName}Locked`;
-            radioInputUnlock.value = 'unlock';
-
-            const lineBreak = createEl('br');
-            const horizontalRule = createEl('hr');
-
-            const labelUserName = createEl('label');
-            labelUserName.textContent = 'Username';
-
-            const inputUserName = createEl('input');
-            inputUserName.type = 'text';
-            inputUserName.name = userName + 'Username';
-            inputUserName.value = userName;
-            inputUserName.disabled = true;
-            inputUserName.readOnly = true;
-
-            const divHiddenFields = createEl('div');
-            divHiddenFields.classList.add(userName + 'HiddenFields');
-
-            const labelEmail = createEl('label');
-            labelEmail.textContent = 'Email';
-
-            const inputEmail = createEl('input');
-            inputEmail.type = 'email';
-            inputEmail.name = userName + 'Email';
-            inputEmail.value = userEmail;
-            inputEmail.disabled = true;
-            inputEmail.readOnly = true;
-
-            const labelAge = createEl('label');
-            labelAge.textContent = 'Age';
-
-            const inputAge = createEl('input');
-            inputAge.type = 'number';
-            inputAge.name = userName + 'Age';
-            inputAge.value = userAge;
-            inputAge.disabled = true;
-            inputAge.readOnly = true;
-
-            const btnShowMore = createEl('button');
-            btnShowMore.textContent = 'Show More';
-
-            divHiddenFields.appendChild(horizontalRule);
-            divHiddenFields.appendChild(labelEmail);
-            divHiddenFields.appendChild(inputEmail);
-            divHiddenFields.appendChild(labelAge);
-            divHiddenFields.appendChild(inputAge);
-
-            newProfileDiv.appendChild(profileImg);
-            newProfileDiv.appendChild(labelLock);
-            newProfileDiv.appendChild(radioInputLock);
-            newProfileDiv.appendChild(labelUnlock);
-            newProfileDiv.appendChild(radioInputUnlock);
-
-            newProfileDiv.appendChild(lineBreak);
-            newProfileDiv.appendChild(horizontalRule);
-
-            newProfileDiv.appendChild(labelUserName);
-            newProfileDiv.appendChild(inputUserName);
-            newProfileDiv.appendChild(divHiddenFields);
-
-            newProfileDiv.appendChild(btnShowMore);
-
-            mainEl.appendChild(newProfileDiv);
-
-            btnShowMore.addEventListener('click', () => {
-                // Toggle visibility of the hidden fields
-                divHiddenFields.style.display = divHiddenFields.style.display === 'none' ? 'block' : 'none';
-                btnShowMore.textContent = btnShowMore.textContent === 'Show More' ? 'Show Less' : 'Show More';
+                newProfileDivEl.querySelector('div').style.display = 'none';
+                mainEl.appendChild(newProfileDivEl);
             });
 
+            const showMoreButtons = mainEl.querySelectorAll('button');
+
+            showMoreButtons.forEach((button, index) => {
+                button.addEventListener('click', () => {
+                    const profileDivEl = button.parentElement;
+                    const hiddenFields = profileDivEl.querySelector('div');
+                    const lockBtnName = `${hiddenFields.className.replace('HiddenFields', 'Locked')}`;
+                    const lockRadioBtn = profileDivEl.querySelector(`input[name="${lockBtnName}"][value="lock"]`);
+
+                    if (!lockRadioBtn.checked) {
+                        if (hiddenFields.style.display === 'none') {
+                            hiddenFields.style.display = 'block';
+                            button.textContent = 'Hide';
+                        } else {
+                            hiddenFields.style.display = 'none';
+                            button.textContent = 'Show more';
+                        }
+                    }
+                })
+            })
         });
-
-
-    });
-
-    function createEl(tag) {
-        return document.createElement(tag);
-    }
-
 }
