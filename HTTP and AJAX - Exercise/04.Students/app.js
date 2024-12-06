@@ -1,55 +1,47 @@
 function attachEvents() {
-    const tableBodyEl = takeElementByTag('#results tbody');
-    const submitBtnEl = takeElementByTag('#submit');
-    const firstName = takeElementByTag('input[name="firstName"]').value.trim();
-    const lastName = takeElementByTag('input[name="lastName"]').value.trim();
-    const facultyNumber = takeElementByTag('input[name="facultyNumber"]').value.trim();
-    const grade = takeElementByTag('input[name="grade"]').value.trim();
+    const url = "http://localhost:3030/jsonstore/collections/students"
+    const submitBtn = document.querySelector("#submit")
+    const [firstName, lastName, facultyNumber, grade] = document.querySelectorAll("input")
+    const tbody = document.querySelector("table > tbody")
 
-    const baseUrl = 'http://localhost:3030/jsonstore/collections/students';
+    submitBtn.addEventListener("click", addStudent)
 
-    submitBtnEl.addEventListener('click', createStudent);
+    function addStudent() {
+        if ([firstName, lastName, facultyNumber, grade].some(element => element.value.length === 0)) {
+            return
+        }
 
-    async function createStudent() {
+        const studentData = {
+            firstName: firstName.value,
+            lastName: lastName.value,
+            facultyNumber: facultyNumber.value,
+            grade: grade.value,
+        }
 
-        const studentInfo = {
-            firstName,
-            lastName,
-            facultyNumber,
-            grade,
-        };
-
-        await fetch(baseUrl, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(studentInfo),
-        });
+        fetch(url, {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(studentData)
+        })
     }
 
-    fetch(baseUrl)
-        .then(res => res.json())
-        .then(data => {
-            Object.values(data).forEach((student) => {
-                const newTrEl = createElementWithTextContent('tr');
+    fetch(url).then(response => response.json()).then(data => {
+        Object.values(data).forEach(student => {
+            const newRow = document.createElement("tr")
+            newRow.appendChild(createElementWithTextContent("td", student.firstName))
+            newRow.appendChild(createElementWithTextContent("td", student.lastName))
+            newRow.appendChild(createElementWithTextContent("td", student.facultyNumber))
+            newRow.appendChild(createElementWithTextContent("td", student.grade))
 
-                newTrEl.appendChild(createElementWithTextContent('td', student.firstName));
-                newTrEl.appendChild(createElementWithTextContent('td', student.lastName));
-                newTrEl.appendChild(createElementWithTextContent('td', student.facultyNumber));
-                newTrEl.appendChild(createElementWithTextContent('td', student.grade));
+            tbody.appendChild(newRow)
+        })
+    })
 
-                tableBodyEl.appendChild(newTrEl);
-            });
-        });
-}
-
-function takeElementByTag(tag) {
-    return document.querySelector(tag);
-}
-
-function createElementWithTextContent(tag, text) {
-    const element = document.createElement(tag);
-    element.textContent = text;
-    return element;
+    function createElementWithTextContent(element, text) {
+        const item = document.createElement(element)
+        item.textContent = text
+        return item
+    }
 }
 
 attachEvents();
