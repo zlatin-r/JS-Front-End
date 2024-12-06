@@ -30,16 +30,16 @@ function lockedProfile() {
                     <label>Age:</label>
                     <input type="email" name="user${counter}Age" value="${profile.age}" disabled readonly />
                 </div>
+                
                 <button>Show more</button>
                 `
-
                 newProfileDivEl.querySelector('div').style.display = 'none';
                 mainEl.appendChild(newProfileDivEl);
             });
 
             const showMoreButtons = mainEl.querySelectorAll('button');
 
-            showMoreButtons.forEach((button, index) => {
+            showMoreButtons.forEach((button) => {
                 button.addEventListener('click', () => {
                     const profileDivEl = button.parentElement;
                     const hiddenFields = profileDivEl.querySelector('div');
@@ -55,9 +55,9 @@ function lockedProfile() {
                             button.textContent = 'Show more';
                         }
                     }
-                })
-            })
+                });
+            });
         }).catch(error => {
-        console.log(error);
+            console.log(error);
     })
 }
