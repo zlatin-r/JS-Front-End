@@ -15,7 +15,7 @@ function attachEvents() {
             const response = await fetch(`${baseUrl}/${e.target.id}`, {method: 'DELETE'});
             e.target.parentElement.remove();
         }
-    })
+    });
 
     async function loadAllContacts() {
 
