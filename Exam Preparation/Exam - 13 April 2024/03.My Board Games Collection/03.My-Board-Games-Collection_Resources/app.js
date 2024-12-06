@@ -1,16 +1,23 @@
 const baseUrl = 'http://localhost:3030/jsonstore/games'
 const gameListEl = document.querySelector('#games-list');
+const loadGamesBtnEl = document.querySelector('#load-games');
 const addBtnEl = document.querySelector('#add-game');
 const editBtnEl = document.querySelector('#edit-game');
+
+const newGameNameEl = document.querySelector('#g-name');
+const newGameTypeEl = document.querySelector('#type');
+const newGamePlayersEl = document.querySelector('#players');
+
 const allChangeBtnEl = document.querySelectorAll('#change-btn');
 const allDeleteBtnEl = document.querySelectorAll('#delete-btn');
 
-loadRecords();
+clearHTML(gameListEl);
 
+loadGamesBtnEl.addEventListener('click', loadRecords);
 addBtnEl.addEventListener('click', addNewGame);
+gameListEl.addEventListener('click', handleChangeClick);
 
 async function loadRecords() {
-    clearHTML(gameListEl);
 
     const response = await fetch(baseUrl);
     const data = await response.json();
@@ -53,13 +60,10 @@ async function loadRecords() {
         newGameDivEl.appendChild(buttonsContainerEl);
 
         gameListEl.appendChild(newGameDivEl);
-    })
+    });
 }
 
 function addNewGame() {
-    const newGameNameEl = document.querySelector('#g-name');
-    const newGameTypeEl = document.querySelector('#type');
-    const newGamePlayersEl = document.querySelector('#players');
 
     const newGame = {
         name: newGameNameEl.value,
@@ -69,7 +73,6 @@ function addNewGame() {
 
     fetch(baseUrl, {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(newGame)
     });
 
@@ -77,15 +80,22 @@ function addNewGame() {
     loadRecords();
 }
 
-allDeleteBtnEl.forEach((btnEl) => {
-    btnEl.addEventListener('click', () => {
-        const parentEl = btnEl.target.parentElement;
-    })
+function handleChangeClick(event) {
+    if (event.target.classList.contains('change-btn')) {
+        const boardGameEl = event.target.closest('.board-game');
 
-})
+        const gameName = boardGameEl.querySelector('.content p:nth-of-type(1)').textContent;
+        const gamePlayers = boardGameEl.querySelector('.content p:nth-of-type(2)').textContent;
+        const gameType = boardGameEl.querySelector('.content p:nth-of-type(3)').textContent;
 
+        newGameNameEl.value = gameName;
+        newGameTypeEl.value = gameType;
+        newGamePlayersEl.value = gamePlayers;
 
-
+        editBtnEl.disabled = false;
+        addBtnEl.disabled = true;
+    }
+}
 
 function createEl(tag) {
     return document.createElement(tag);
