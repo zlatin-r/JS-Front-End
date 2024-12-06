@@ -28,7 +28,7 @@ function solution() {
             mainEl.appendChild(newDivEl);
         });
 
-        const buttons = mainEl.querySelectorAll('.button');
+        const buttons = mainEl.querySelectorAll('button');
         buttons.forEach((button) => {
             button.addEventListener('click', toggleContent);
         });
@@ -44,7 +44,7 @@ function solution() {
             const article = await response.json();
 
             extraDiv.innerHTML = `<p>${article.content}</p>`
-            extraDiv.style.display = 'block';
+            extraDiv.style.display = 'inline-block';
             button.textContent = 'Less';
         } else {
             extraDiv.style.display = 'none';
