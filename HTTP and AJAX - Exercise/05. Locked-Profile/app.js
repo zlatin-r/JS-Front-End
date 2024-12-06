@@ -23,7 +23,7 @@ function lockedProfile() {
                 <hr>
                 <label>Username</label>
                 <input type="text" name="user${counter}Username" value="${profile.username}" disabled readonly />
-                <div class="user${counter}HiddenFields">
+                <div class="user${counter}HiddenFields hiddenInfo">
                     <hr>
                     <label>Email:</label>
                     <input type="email" name="user${counter}Email" value="${profile.email}" disabled readonly />
@@ -33,7 +33,6 @@ function lockedProfile() {
                 
                 <button>Show more</button>
                 `
-                newProfileDivEl.querySelector('div').style.display = 'none';
                 mainEl.appendChild(newProfileDivEl);
             });
 
@@ -41,17 +40,17 @@ function lockedProfile() {
 
             showMoreButtons.forEach((button) => {
                 button.addEventListener('click', () => {
+
                     const profileDivEl = button.parentElement;
-                    const hiddenFields = profileDivEl.querySelector('div');
-                    const lockBtnName = `${hiddenFields.className.replace('HiddenFields', 'Locked')}`;
-                    const lockRadioBtn = profileDivEl.querySelector(`input[name="${lockBtnName}"][value="lock"]`);
+                    const hiddenFields = profileDivEl.querySelector('.hiddenInfo');
+                    const lockRadioBtn = profileDivEl.querySelector(`input[value="lock"]`);
 
                     if (!lockRadioBtn.checked) {
-                        if (hiddenFields.style.display === 'none') {
-                            hiddenFields.style.display = 'block';
-                            button.textContent = 'Hide';
+                        if (hiddenFields.classList.contains('hiddenInfo')) {
+                            hiddenFields.classList.remove('hiddenInfo');
+                            button.textContent = 'Hide it';
                         } else {
-                            hiddenFields.style.display = 'none';
+                            hiddenFields.classList.add('hiddenInfo');
                             button.textContent = 'Show more';
                         }
                     }
