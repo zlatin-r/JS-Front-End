@@ -9,67 +9,68 @@ function lockedProfile() {
             const userEmail = profile.email;
             const userAge = profile.age;
 
-            const newProfileDiv = createElWithTextContAndClass('div', '', 'profile')
+            const newProfileDiv = createEl('div');
+            newProfileDiv.classList.add('profile');
 
-            const profileImg = document.createElement('img');
-            profileImg.setAttribute('src', './iconProfile2.png');
+
+            const profileImg = createEl('img');
+            profileImg.src = './iconProfile2.png';
             profileImg.classList.add('userIcon');
 
-            const labelLock = createElWithTextContAndClass('label', 'Lock', 'label-lock')
+            const labelLock = createEl('label');
+            labelLock.textContent = 'Lock';
 
-            const radioInputLock = document.createElement('input');
+            const radioInputLock = createEl('input');
             radioInputLock.type = 'radio';
             radioInputLock.name = `${userName}Locked`;
             radioInputLock.value = 'lock';
             radioInputLock.checked = true;
 
-            const labelUnlock = document.createElement('label');
+            const labelUnlock = createEl('label');
             labelUnlock.textContent = 'Unlock';
 
-            const radioInputUnlock = document.createElement('input');
+            const radioInputUnlock = createEl('input');
             radioInputUnlock.type = 'radio';
-            radioInputUnlock.name =  `${userName}Locked`;
+            radioInputUnlock.name = `${userName}Locked`;
             radioInputUnlock.value = 'unlock';
 
-            const lineBreak = document.createElement('br');
-            const horizontalRule = document.createElement('hr');
+            const lineBreak = createEl('br');
+            const horizontalRule = createEl('hr');
 
-            const labelUserName = document.createElement('label');
+            const labelUserName = createEl('label');
             labelUserName.textContent = 'Username';
 
-            const inputUserName = document.createElement('input');
+            const inputUserName = createEl('input');
             inputUserName.type = 'text';
             inputUserName.name = userName + 'Username';
             inputUserName.value = userName;
             inputUserName.disabled = true;
             inputUserName.readOnly = true;
 
-            const divHiddenFields = document.createElement('div');
-            divHiddenFields.id = userName + 'HiddenFields';
+            const divHiddenFields = createEl('div');
+            divHiddenFields.classList.add(userName + 'HiddenFields');
 
-            // TODO append <hr>
-
-            const labelEmail = document.createElement('label');
+            const labelEmail = createEl('label');
             labelEmail.textContent = 'Email';
 
-            const inputEmail = document.createElement('input');
+            const inputEmail = createEl('input');
             inputEmail.type = 'email';
             inputEmail.name = userName + 'Email';
             inputEmail.value = userEmail;
             inputEmail.disabled = true;
             inputEmail.readOnly = true;
 
-            const labelAge = document.createElement('label');
+            const labelAge = createEl('label');
             labelAge.textContent = 'Age';
 
-            const inputAge = document.createElement('input');
+            const inputAge = createEl('input');
             inputAge.type = 'number';
             inputAge.name = userName + 'Age';
             inputAge.value = userAge;
             inputAge.disabled = true;
             inputAge.readOnly = true;
 
-            const btnShowMore = document.createElement('button');
+            const btnShowMore = createEl('button');
             btnShowMore.textContent = 'Show More';
 
             divHiddenFields.appendChild(horizontalRule);
@@ -82,10 +83,9 @@ function lockedProfile() {
             newProfileDiv.appendChild(labelLock);
             newProfileDiv.appendChild(radioInputLock);
             newProfileDiv.appendChild(labelUnlock);
-
-            radioInputUnlock.appendChild(lineBreak);
-
             newProfileDiv.appendChild(radioInputUnlock);
+
+            newProfileDiv.appendChild(lineBreak);
             newProfileDiv.appendChild(horizontalRule);
 
             newProfileDiv.appendChild(labelUserName);
@@ -96,16 +96,19 @@ function lockedProfile() {
 
             mainEl.appendChild(newProfileDiv);
 
+            btnShowMore.addEventListener('click', () => {
+                // Toggle visibility of the hidden fields
+                divHiddenFields.style.display = divHiddenFields.style.display === 'none' ? 'block' : 'none';
+                btnShowMore.textContent = btnShowMore.textContent === 'Show More' ? 'Show Less' : 'Show More';
+            });
+
         });
 
 
     });
 
-    function createElWithTextContAndClass(element, text, className) {
-        const item = document.createElement(element);
-        item.textContent = text;
-        item.classList.add(className);
-        return item
+    function createEl(tag) {
+        return document.createElement(tag);
     }
 
 }
