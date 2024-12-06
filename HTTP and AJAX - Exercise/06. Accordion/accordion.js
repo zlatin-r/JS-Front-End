@@ -22,7 +22,7 @@ function solution() {
                     <button class="button" id="${article._id}">More</button>
                 </div>
                 <div class="extra">
-                    <p>Scalable Vector Graphics .....</p>
+                    <p></p>
                 </div>
             `
             mainEl.appendChild(newDivEl);
