@@ -8,6 +8,7 @@ function solve() {
     const addBtnEl = document.querySelector('#add-btn');
 
     const checkListEl = document.querySelector('#check-list');
+    const contactListEl = document.querySelector('#contact-list');
 
     addBtnEl.addEventListener('click', addBtnHandler);
 
@@ -15,6 +16,10 @@ function solve() {
         nameInputEl.value = '';
         phoneInputEl.value = '';
         categoryInputEl.value = '';
+    }
+
+    function takeArticle() {
+        return document.querySelector('#check-list li article');
     }
 
     function addBtnHandler() {
@@ -26,24 +31,41 @@ function solve() {
             return;
         }
 
-        const newContact = document.createElement('li');
+        const tempContactLiEl = document.createElement('li');
 
-        newContact.innerHTML = `
-            <article>
-                <p>Name: ${name}</p>
-                <p>Phone: ${phone}</p>
-                <p>Category: ${category}</p>
-            </article>
-            <div class="buttons">
-                <button class="edit-btn">Edit</button>
-                <button class="save-btn">Save</button>
-            </div>
-        `;
+        const newArticleEl = document.createElement('article');
 
-        checkListEl.append(newContact);
+        const namePEl = document.createElement('p');
+        namePEl.textContent = `name:${name}`;
 
-        const editBtnEl = newContact.querySelector('.edit-btn');
+        const phonePEl = document.createElement('p');
+        phonePEl.textContent = `phone:${phone}`;
+
+        const categoryPEl = document.createElement('p');
+        categoryPEl.textContent = `category:${category}`;
+
+        const buttonsDivEl = document.createElement('div');
+        buttonsDivEl.className = 'buttons';
+
+        const editBtnEl = document.createElement('button');
+        editBtnEl.className = 'edit-btn';
         editBtnEl.addEventListener('click', editBtnHandler);
+
+        const saveBtnEl = document.createElement('button');
+        saveBtnEl.className = 'save-btn';
+        saveBtnEl.addEventListener('click', saveBtnHandler);
+
+        buttonsDivEl.appendChild(editBtnEl);
+        buttonsDivEl.appendChild(saveBtnEl);
+
+        newArticleEl.appendChild(namePEl);
+        newArticleEl.appendChild(phonePEl);
+        newArticleEl.appendChild(categoryPEl);
+
+        tempContactLiEl.appendChild(newArticleEl);
+        tempContactLiEl.appendChild(buttonsDivEl);
+
+        checkListEl.appendChild(tempContactLiEl);
 
         clearInput();
 
@@ -52,8 +74,28 @@ function solve() {
             phoneInputEl.value = phone;
             categoryInputEl.value = category;
 
-            checkListEl.removeChild(newContact);
+            checkListEl.removeChild(tempContactLiEl);
         }
     }
 
+    function saveBtnHandler() {
+        const articleData = takeArticle();
+        const newContact = document.createElement('li');
+        const newDeleteBtnEl = document.createElement('button');
+        newDeleteBtnEl.className = 'del-btn';
+        newDeleteBtnEl.addEventListener('click', deleteBtnHandler);
+
+        newContact.appendChild(articleData);
+        newContact.appendChild(newDeleteBtnEl);
+
+        contactListEl.appendChild(newContact);
+
+        checkListEl.innerHTML = '';
+    }
+
+    function deleteBtnHandler(event) {
+        const clickedContactEl = event.target.parentElement;
+
+        contactListEl.removeChild(clickedContactEl);
+    }
 }
