@@ -1,60 +1,52 @@
 const baseUrl = 'http://localhost:3030/jsonstore/games'
-const gameListEl = document.querySelector('#games-list');
-const loadGamesBtnEl = document.querySelector('#load-games');
-const addBtnEl = document.querySelector('#add-game');
-const editBtnEl = document.querySelector('#edit-game');
 
-const newGameNameEl = document.querySelector('#g-name');
-const newGameTypeEl = document.querySelector('#type');
-const newGamePlayersEl = document.querySelector('#players');
+const gamesListEl = document.querySelector('#games-list');
 
-const allChangeBtnEl = document.querySelectorAll('#change-btn');
-const allDeleteBtnEl = document.querySelectorAll('#delete-btn');
+const nameElement = document.getElementById("g-name");
+const typeElement = document.getElementById("type");
+const playersElement = document.getElementById("players");
 
-let selectedTaskId = null;
+const addBtn = document.getElementById("add-game");
+const editBtn = document.getElementById("edit-game");
+const loadBtnEl = document.querySelector('#load-games');
+const clearBtn = document.querySelector(".clear-btn");
 
-const endPoints = {
-    update: (id) => `${BASE_URL}/${id}`,
-    delete: (id) => `${BASE_URL}/${id}`,
+function attachEvents() {
+    loadBtnEl.addEventListener('click', loadGamesEvHandler);
+    addBtn.addEventListener('click', createTaskEventHandler);
 }
 
-clearHTML(gameListEl);
-
-loadGamesBtnEl.addEventListener('click', loadRecords);
-addBtnEl.addEventListener('click', addNewGame);
-gameListEl.addEventListener('click', handleChangeClick);
-editBtnEl.addEventListener('click', editBtnHandler);
-
-async function loadRecords() {
+async function loadGamesEvHandler() {
+    clearAllSections();
 
     try {
         const response = await fetch(baseUrl);
         const data = await response.json();
 
         Object.values(data).forEach(game => {
-            const newGameDivEl = createEl('div');
+            const newGameDivEl = createElement('div');
             newGameDivEl.className = 'board-game';
 
-            const contentEl = createEl('div');
+            const contentEl = createElement('div');
             contentEl.className = 'content';
 
-            const gameNameEl = createEl('p');
+            const gameNameEl = createElement('p');
             gameNameEl.textContent = game.name;
 
-            const playersCountEl = createEl('p');
+            const playersCountEl = createElement('p');
             playersCountEl.textContent = game.players;
 
-            const gameTypeEl = createEl('p');
+            const gameTypeEl = createElement('p');
             gameTypeEl.textContent = game.type;
 
-            const buttonsContainerEl = createEl('div');
+            const buttonsContainerEl = createElement('div');
             buttonsContainerEl.className = 'buttons-container';
 
-            const changeBtnEl = createEl('button');
+            const changeBtnEl = createElement('button');
             changeBtnEl.className = 'change-btn';
             changeBtnEl.textContent = 'Change';
 
-            const deleteBtnEl = createEl('button');
+            const deleteBtnEl = createElement('button');
             deleteBtnEl.className = 'delete-btn';
             deleteBtnEl.textContent = 'Delete';
 
@@ -68,90 +60,97 @@ async function loadRecords() {
             newGameDivEl.appendChild(contentEl);
             newGameDivEl.appendChild(buttonsContainerEl);
 
-            gameListEl.appendChild(newGameDivEl);
+            gamesListEl.appendChild(newGameDivEl);
         });
+        attachEventListeners();
     } catch (error) {
         console.error(error);
     }
 }
 
-function addNewGame() {
+function createTaskEventHandler(ev) {
+    ev.preventDefault();
+    if (nameElement.value !== '' && playerslement.value !== '' && typeElement.value !== '') {
+        const headers = {
+            method: 'POST',
+            body: JSON.stringify({
+                name: nameElement.value,
+                type: typeElement.value,
+                players: playerslement.value,
+            }),
+        };
 
-    const newGame = {
-        name: newGameNameEl.value,
-        type: newGameTypeEl.value,
-        players: newGamePlayersEl.value
+        fetch(BASE_URL, headers)
+            .then(loadBoardEventHandler)
+            .catch(console.error);
+
+        clearAllInputs();
     }
+}
 
-    fetch(baseUrl, {
-        method: 'POST',
-        body: JSON.stringify(newGame)
-    })
-        .catch(error => {
-            console.error(error);
+//-----------------Helpers--------------------------------------------------------------
+function attachEventListeners() {
+    const changeButtons = document.querySelectorAll('.change-btn');
+    const deleteButtons = document.querySelectorAll('.delete-btn');
+
+    changeButtons.forEach(changeButton => {
+        changeButton.addEventListener('click', (event) => {
+            const taskElement = event.target.closest('.board-game');
+            const name = taskElement.querySelector('.content p:nth-of-type(1)').textContent;
+            const players = taskElement.querySelector('.content p:nth-of-type(2)').textContent;
+            const type = taskElement.querySelector('.content p:nth-of-type(3)').textContent;
+
+            editTask(name, type, players);
+            enableEditBtn();
         });
+    });
 
-    clearValues(newGameNameEl, newGameTypeEl, newGamePlayersEl);
-    loadRecords();
+    deleteButtons.forEach((doneButton) => {
+        doneButton.addEventListener('click', (event) => {
+            const taskElement = event.target.closest('.board-game');
+            const name = taskElement.querySelector('p').textContent;
+            deleteTask(name);
+        });
+    });
 }
 
-function handleChangeClick(event) {
-    if (event.target.classList.contains('change-btn')) {
-        const boardGameEl = event.target.closest('.board-game');
+async function editTask(name, type, players) {
+    selectedTaskId = await getIdByName(name);
 
-        const gameName = boardGameEl.querySelector('.content p:nth-of-type(1)').textContent;
-        const gamePlayers = boardGameEl.querySelector('.content p:nth-of-type(2)').textContent;
-        const gameType = boardGameEl.querySelector('.content p:nth-of-type(3)').textContent;
-
-        newGameNameEl.value = gameName;
-        newGameTypeEl.value = gameType;
-        newGamePlayersEl.value = gamePlayers;
-
-        editBtnEl.disabled = false;
-        addBtnEl.disabled = true;
-    }
+    nameElement.value = name;
+    typeElement.value = type;
+    playersElement.value = players;
 }
 
-async function editBtnHandler() {
-    selectedTaskId = await getIdByName(newGameNameEl.value);
-    debugger
-
-    const data = {
-        name: newGameNameEl.value,
-        type: newGameTypeEl.value,
-        players: newGamePlayersEl.value,
-        _id: selectedTaskId,
-    }
-    fetch(endPoints.update(data._id), {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    })
-        .then(() => {
-            clearAllInputs()
-        })
-}
 
 function getIdByName(name) {
     return fetch(baseUrl)
         .then(res => res.json())
-        .then(data => Object.entries(data).find(e => e[1].name === name)[1]._id);
+        .then(res => Object.entries(res).find(e => e[1].name === name)[1]._id);
 }
 
-function createEl(tag) {
+function clearAllSections() {
+    gamesListEl.innerHTML = '';
+}
+
+function clearAllInputs() {
+    nameElement.value = '';
+    playersElement.value = '';
+    typeElement.value = '';
+}
+
+function enableEditBtn() {
+    addBtn.disabled = true;
+    editBtn.disabled = false;
+}
+
+function enableAddBtn() {
+    addBtn.disabled = false;
+    editBtn.disabled = true;
+}
+
+function createElement(tag) {
     return document.createElement(tag);
 }
 
-function clearHTML(...args) {
-    args.forEach((el) => {
-        el.innerHTML = '';
-    });
-}
-
-function clearValues(...args) {
-    args.forEach((el) => {
-        el.value = '';
-    })
-}
+attachEvents();
