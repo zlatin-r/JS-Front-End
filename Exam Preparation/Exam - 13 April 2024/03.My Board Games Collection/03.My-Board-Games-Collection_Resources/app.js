@@ -74,7 +74,10 @@ function addNewGame() {
     fetch(baseUrl, {
         method: 'POST',
         body: JSON.stringify(newGame)
-    });
+    })
+        .catch(error => {
+            console.error(error);
+        });
 
     clearValues(newGameNameEl, newGameTypeEl, newGamePlayersEl);
     loadRecords();
