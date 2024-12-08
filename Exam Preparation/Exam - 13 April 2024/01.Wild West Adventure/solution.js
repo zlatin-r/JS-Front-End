@@ -6,7 +6,7 @@ function solve(arr) {
 
     for (let i = 0; i < n; i++) {
         const [name, hp, bullets] = arr.shift().split(' ');
-        charactersList[name] = {hp: hp, bullets: Number(bullets)};
+        charactersList[name] = {hp: parseInt(hp), bullets: parseInt(bullets)};
     }
 
     for (let command of arr) {
@@ -26,11 +26,12 @@ function solve(arr) {
                     }
                 } else if (action === 'PatchUp') {
                     if (currCharacter.hp === maxHp) {
-                        console.log(`${charName} is in full health!`)
+                        console.log(`${charName} is in full health!`);
                     } else {
-                        const hpRecovered = maxHp - currCharacter.hp;
-                        currCharacter.hp = Math.min(currCharacter.hp + target, maxHp);
-                        console.log(`${charName} patched up and recovered ${hpRecovered} HP!`)
+                        const currHp = currCharacter.hp;
+                        currCharacter.hp = Math.min(currCharacter.hp + Number(target), maxHp);
+                        const hpRecovered = currCharacter.hp - currHp;
+                        console.log(`${charName} patched up and recovered ${hpRecovered} HP!`);
                     }
                 }
 
@@ -38,10 +39,12 @@ function solve(arr) {
                 const [action, charName, damage, attacker] = data;
                 const currCharacter = charactersList[charName];
 
-                currCharacter.hp -= damage;
-                if (currCharacter.hp) {
+                currCharacter.hp -= Number(damage);
+
+                if (currCharacter.hp > 0) {
                     console.log(`${charName} took a hit for ${damage} HP from ${attacker} and now has ${currCharacter.hp} HP!`);
                 } else {
+                    delete charactersList[charName];
                     console.log(`${charName} was gunned down by ${attacker}!`)
                 }
             } else if (data.length === 2) {
@@ -49,23 +52,31 @@ function solve(arr) {
                 const currCharacter = charactersList[charName];
 
                 if (currCharacter.bullets < maxBullets) {
+                    const currBullets = currCharacter.bullets;
                     currCharacter.bullets = maxBullets;
-                    const reloadedBullets = maxBullets - currCharacter.bullets;
+                    const reloadedBullets = maxBullets - currBullets;
                     console.log(`${charName} reloaded ${reloadedBullets} bullets!`);
                 } else {
                     console.log(`${charName}'s pistol is fully loaded!`);
                 }
             }
+        } else {
+            break;
         }
     }
+
+    Object.entries(charactersList).forEach(([name, data]) => {
+        console.log(`${name}\n HP: ${data.hp}\n Bullets: ${data.bullets}`);
+    });
 }
 
 solve([
     "2",
     "Gus 100 0",
     "Walt 100 6",
+    "Ride Off Into Sunset",
     "FireShot - Gus - Bandit",
     "TakeHit - Gus - 100 - Bandit",
-    "Reload - Walt",
-    "Ride Off Into Sunset"
+    "Reload - Walt"
 ]);
+
