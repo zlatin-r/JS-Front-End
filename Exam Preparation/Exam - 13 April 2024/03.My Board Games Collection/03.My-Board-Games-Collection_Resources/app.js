@@ -1,6 +1,10 @@
 const baseUrl = 'http://localhost:3030/jsonstore/games'
+const endpoints = {
+    update: (id) => `${baseUrl}/${id}`,
+    delete: (id) => `${baseUrl}/${id}`,
+};
 
-const gamesListEl = document.querySelector('#games-list');
+const gamesListEl = document.getElementById('games-list');
 
 const nameElement = document.getElementById("g-name");
 const typeElement = document.getElementById("type");
@@ -8,8 +12,7 @@ const playersElement = document.getElementById("players");
 
 const addBtn = document.getElementById("add-game");
 const editBtn = document.getElementById("edit-game");
-const loadBtnEl = document.querySelector('#load-games');
-const clearBtn = document.querySelector(".clear-btn");
+const loadBtnEl = document.getElementById('load-games');
 
 let selectedTaskId = null;
 
@@ -73,13 +76,13 @@ async function loadBoardEventHandler() {
 
 function createTaskEventHandler(ev) {
     ev.preventDefault();
-    if (nameElement.value !== '' && playerslement.value !== '' && typeElement.value !== '') {
+    if (nameElement.value !== '' && playersElement.value !== '' && typeElement.value !== '') {
         const headers = {
             method: 'POST',
             body: JSON.stringify({
                 name: nameElement.value,
                 type: typeElement.value,
-                players: playerslement.value,
+                players: playersElement.value,
             }),
         };
 
@@ -96,7 +99,7 @@ function editTaskEventHandler(ev) {
     const data = {
         name: nameElement.value,
         type: typeElement.value,
-        players: playerslement.value,
+        players: playersElement.value,
         _id: selectedTaskId,
     };
 
@@ -109,6 +112,23 @@ function editTaskEventHandler(ev) {
     })
         .then(() => {
             clearAllInputs();
+            loadBoardEventHandler();
+            selectedTaskId = null;
+            enableAddBtn();
+        })
+        .catch(console.error);
+}
+
+function deleteTask(taskLoacation) {
+    getIdByName(taskLoacation)
+        .then((id) =>
+            fetch(endpoints.delete(id), {
+                method: 'DELETE',
+                headers: {'Content-Type': 'application/json'},
+            })
+        )
+        .then(() => {
+            clearAllSections();
             loadBoardEventHandler();
             selectedTaskId = null;
             enableAddBtn();
