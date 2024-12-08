@@ -11,12 +11,15 @@ const editBtn = document.getElementById("edit-game");
 const loadBtnEl = document.querySelector('#load-games');
 const clearBtn = document.querySelector(".clear-btn");
 
+let selectedTaskId = null;
+
 function attachEvents() {
-    loadBtnEl.addEventListener('click', loadGamesEvHandler);
+    loadBtnEl.addEventListener('click', loadBoardEventHandler);
     addBtn.addEventListener('click', createTaskEventHandler);
+    editBtn.addEventListener('click', editTaskEventHandler);
 }
 
-async function loadGamesEvHandler() {
+async function loadBoardEventHandler() {
     clearAllSections();
 
     try {
@@ -80,7 +83,7 @@ function createTaskEventHandler(ev) {
             }),
         };
 
-        fetch(BASE_URL, headers)
+        fetch(baseUrl, headers)
             .then(loadBoardEventHandler)
             .catch(console.error);
 
@@ -88,10 +91,35 @@ function createTaskEventHandler(ev) {
     }
 }
 
+function editTaskEventHandler(ev) {
+    ev.preventDefault();
+    const data = {
+        name: nameElement.value,
+        type: typeElement.value,
+        players: playerslement.value,
+        _id: selectedTaskId,
+    };
+
+    fetch(endpoints.update(data._id), {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+        .then(() => {
+            clearAllInputs();
+            loadBoardEventHandler();
+            selectedTaskId = null;
+            enableAddBtn();
+        })
+        .catch(console.error);
+}
+
 //-----------------Helpers--------------------------------------------------------------
 function attachEventListeners() {
     const changeButtons = document.querySelectorAll('.change-btn');
-    const deleteButtons = document.querySelectorAll('.delete-btn');
+    const doneButtons = document.querySelectorAll('.delete-btn');
 
     changeButtons.forEach(changeButton => {
         changeButton.addEventListener('click', (event) => {
@@ -105,7 +133,7 @@ function attachEventListeners() {
         });
     });
 
-    deleteButtons.forEach((doneButton) => {
+    doneButtons.forEach((doneButton) => {
         doneButton.addEventListener('click', (event) => {
             const taskElement = event.target.closest('.board-game');
             const name = taskElement.querySelector('p').textContent;
