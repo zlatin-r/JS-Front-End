@@ -11,56 +11,68 @@ const newGamePlayersEl = document.querySelector('#players');
 const allChangeBtnEl = document.querySelectorAll('#change-btn');
 const allDeleteBtnEl = document.querySelectorAll('#delete-btn');
 
+let selectedTaskId = null;
+
+const endPoints = {
+    update: (id) => `${BASE_URL}/${id}`,
+    delete: (id) => `${BASE_URL}/${id}`,
+}
+
 clearHTML(gameListEl);
 
 loadGamesBtnEl.addEventListener('click', loadRecords);
 addBtnEl.addEventListener('click', addNewGame);
 gameListEl.addEventListener('click', handleChangeClick);
+editBtnEl.addEventListener('click', editBtnHandler);
 
 async function loadRecords() {
 
-    const response = await fetch(baseUrl);
-    const data = await response.json();
+    try {
+        const response = await fetch(baseUrl);
+        const data = await response.json();
 
-    Object.values(data).forEach(game => {
-        const newGameDivEl = createEl('div');
-        newGameDivEl.className = 'board-game';
+        Object.values(data).forEach(game => {
+            const newGameDivEl = createEl('div');
+            newGameDivEl.className = 'board-game';
 
-        const contentEl = createEl('div');
-        contentEl.className = 'content';
+            const contentEl = createEl('div');
+            contentEl.className = 'content';
 
-        const gameNameEl = createEl('p');
-        gameNameEl.textContent = game.name;
+            const gameNameEl = createEl('p');
+            gameNameEl.textContent = game.name;
 
-        const playersCountEl = createEl('p');
-        playersCountEl.textContent = game.players;
+            const playersCountEl = createEl('p');
+            playersCountEl.textContent = game.players;
 
-        const gameTypeEl = createEl('p');
-        gameTypeEl.textContent = game.type;
+            const gameTypeEl = createEl('p');
+            gameTypeEl.textContent = game.type;
 
-        const buttonsContainerEl = createEl('div');
-        buttonsContainerEl.className = 'buttons-container';
+            const buttonsContainerEl = createEl('div');
+            buttonsContainerEl.className = 'buttons-container';
 
-        const changeBtnEl = createEl('button');
-        changeBtnEl.className = 'change-btn';
-        changeBtnEl.textContent = 'Change';
+            const changeBtnEl = createEl('button');
+            changeBtnEl.className = 'change-btn';
+            changeBtnEl.textContent = 'Change';
 
-        const deleteBtnEl = createEl('button');
-        deleteBtnEl.className = 'delete-btn';
-        deleteBtnEl.textContent = 'Delete';
+            const deleteBtnEl = createEl('button');
+            deleteBtnEl.className = 'delete-btn';
+            deleteBtnEl.textContent = 'Delete';
 
-        contentEl.appendChild(gameNameEl);
-        contentEl.appendChild(playersCountEl);
-        contentEl.appendChild(gameTypeEl);
+            contentEl.appendChild(gameNameEl);
+            contentEl.appendChild(playersCountEl);
+            contentEl.appendChild(gameTypeEl);
 
-        buttonsContainerEl.appendChild(changeBtnEl);
-        buttonsContainerEl.appendChild(deleteBtnEl);
+            buttonsContainerEl.appendChild(changeBtnEl);
+            buttonsContainerEl.appendChild(deleteBtnEl);
 
-        newGameDivEl.appendChild(contentEl);
-        newGameDivEl.appendChild(buttonsContainerEl);
+            newGameDivEl.appendChild(contentEl);
+            newGameDivEl.appendChild(buttonsContainerEl);
 
-        gameListEl.appendChild(newGameDivEl);
-    });
+            gameListEl.appendChild(newGameDivEl);
+        });
+    } catch (error) {
+        console.error(error);
+    }
 }
 
 function addNewGame() {
@@ -98,6 +110,34 @@ function handleChangeClick(event) {
         editBtnEl.disabled = false;
         addBtnEl.disabled = true;
     }
+}
+
+async function editBtnHandler() {
+    selectedTaskId = await getIdByName(newGameNameEl.value);
+    debugger
+
+    const data = {
+        name: newGameNameEl.value,
+        type: newGameTypeEl.value,
+        players: newGamePlayersEl.value,
+        _id: selectedTaskId,
+    }
+    fetch(endPoints.update(data._id), {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+        .then(() => {
+            clearAllInputs()
+        })
+}
+
+function getIdByName(name) {
+    return fetch(baseUrl)
+        .then(res => res.json())
+        .then(data => Object.entries(data).find(e => e[1].name === name)[1]._id);
 }
 
 function createEl(tag) {
