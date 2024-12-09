@@ -6,6 +6,7 @@ function solve() {
     const genderInputEl = document.querySelector('#gender');
 
     const adoptionInfoEl = document.querySelector('#adoption-info');
+    const adoptedListEl = document.querySelector('#adopted-list');
 
     const adoptBtnEl = document.querySelector('#adopt-btn');
 
@@ -37,7 +38,7 @@ function solve() {
 
             const doneButtonEl = document.createElement('button');
             doneButtonEl.className = 'done-btn';
-            editButtonEl.textContent = 'Done';
+            doneButtonEl.textContent = 'Done';
 
             buttonWrapperEl.appendChild(editButtonEl);
             buttonWrapperEl.appendChild(doneButtonEl);
@@ -50,8 +51,36 @@ function solve() {
             newListEl.appendChild(buttonWrapperEl);
 
             adoptionInfoEl.appendChild(newListEl);
-        }
-    }
 
+            editButtonEl.addEventListener('click', () => {
+                typeInputEl.value = animalTypeParagraphEl.textContent;
+                ageInputEl.value = animalAgeParagraphEl.textContent;
+                genderInputEl.value = animalGenderParagraphEl.textContent;
+
+                adoptionInfoEl.removeChild(newListEl);
+            });
+
+            doneButtonEl.addEventListener('click', () => {
+                adoptionInfoEl.removeChild(newListEl);
+                newListEl.removeChild(buttonWrapperEl);
+
+                const clearButtonEl = document.createElement('button');
+                clearButtonEl.className = 'clear-btn';
+                clearButtonEl.textContent = 'Clear';
+
+                newListEl.appendChild(clearButtonEl);
+                adoptedListEl.appendChild(newListEl);
+
+                clearButtonEl.addEventListener('click', (e) => {
+                    const record = e.target.parentElement;
+                    adoptedListEl.removeChild(record);
+                });
+            });
+        }
+
+        typeInputEl.value = '';
+        ageInputEl.value = '';
+        genderInputEl.value = '';
+    }
 }
   
