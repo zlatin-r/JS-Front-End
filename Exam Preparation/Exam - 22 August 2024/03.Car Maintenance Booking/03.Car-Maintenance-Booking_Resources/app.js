@@ -24,12 +24,12 @@ addAppointmentBtnEl.addEventListener('click', addAppointment);
 
 editAppointmentBtnEl.addEventListener('click', editAppointment);
 
-async function addAppointment() {
-    if (carModel.value || carService.value || serviceDate.value) {
+async function addAppointment(event) {
+    event.preventDefault();
+
+    if (carModel.value !== '' && carService.value !== '' && serviceDate.value !== '') {
 
         try {
-            appointmentsListEl.innerHTML = '';
-
             const headers = {
                 method: 'POST',
                 body: JSON.stringify({
@@ -40,7 +40,7 @@ async function addAppointment() {
             }
 
             fetch(baseUrl, headers)
-                .then(loadAppointments)
+                .then(() => loadAppointments)
                 .catch(error => console.log(error));
 
             clearAllInputs();
