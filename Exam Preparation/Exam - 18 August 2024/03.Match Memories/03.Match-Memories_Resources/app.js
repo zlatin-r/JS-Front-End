@@ -13,6 +13,7 @@ const guestTeamEl = document.querySelector('#guest');
 function attachEvents() {
     loadBtn.addEventListener('click', loadMatchesHandler);
     addBtn.addEventListener('click', addMatchHandler);
+
 }
 
 async function loadMatchesHandler() {
@@ -60,6 +61,7 @@ async function loadMatchesHandler() {
 
         matchesList.appendChild(newMatchLiEl);
     });
+    attachEventListeners();
 }
 
 function addMatchHandler() {
@@ -83,7 +85,34 @@ function addMatchHandler() {
     }
 }
 
+function attachEventListeners() {
+    const changeButtons = document.querySelectorAll('.change-btn');
+    const deleteButtons = document.querySelectorAll('.delete-btn');
+
+    changeButtons.forEach(changeButton => {
+        changeButton.addEventListener('click', (e) => {
+            const currentMatch = e.target.closest('.match');
+            const currHostTeam = currentMatch.querySelector('p');
+            const currScore = currentMatch.querySelector('p:nth-child(2)');
+            const currGuestTeam = currentMatch.querySelector('p:nth-child(3)');
+            changeMatchData(currHostTeam.value, currScore.value, currGuestTeam.value);
+            activateEditBtn();
+        })
+    })
+}
+
 //---------- Helpers ---------------------
+
+function activateEditBtn() {
+    editBtn.disabled = false;
+    addBtn.disabled = true;
+}
+
+function changeMatchData(host, score, guest) {
+    hostTeamNameEl.value = host;
+    scoreEl.value = score;
+    guestTeamEl.value = guest;
+}
 
 function clearMatchesList() {
     matchesList.innerHTML = '';
