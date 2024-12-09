@@ -1,4 +1,8 @@
 const baseUrl = 'http://localhost:3030/jsonstore/matches';
+const endpoints = {
+    update: (id) => `${baseUrl}/${id}`,
+    delete: (id) => `${baseUrl}/${id}`,
+}
 
 const matchesList = document.querySelector('#list');
 
@@ -10,10 +14,12 @@ const hostTeamNameEl = document.querySelector('#host');
 const scoreEl = document.querySelector('#score');
 const guestTeamEl = document.querySelector('#guest');
 
+let selectedMatchId = null;
+
 function attachEvents() {
     loadBtn.addEventListener('click', loadMatchesHandler);
     addBtn.addEventListener('click', addMatchHandler);
-
+    editBtn.addEventListener('click', editMatchHandler);
 }
 
 async function loadMatchesHandler() {
@@ -95,23 +101,83 @@ function attachEventListeners() {
             const currHostTeam = currentMatch.querySelector('p');
             const currScore = currentMatch.querySelector('p:nth-child(2)');
             const currGuestTeam = currentMatch.querySelector('p:nth-child(3)');
-            changeMatchData(currHostTeam.value, currScore.value, currGuestTeam.value);
+            changeMatchData(currHostTeam.textContent, currScore.textContent, currGuestTeam.textContent);
             activateEditBtn();
+        });
+    });
+
+    deleteButtons.forEach(deleteButton => {
+        deleteButton.addEventListener('click', (e) => {
+            const currentMatch = e.target.closest('.match');
+            const currHostTeam = currentMatch.querySelector('p');
+            deleteMatch(currHostTeam.textContent);
         })
     })
 }
 
+async function editMatchHandler() {
+    const data = {
+        host: hostTeamNameEl.value,
+        score: scoreEl.value,
+        guest: guestTeamEl.value,
+        _id: selectedMatchId,
+    };
+
+    fetch(endpoints.update(data._id), {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data),
+    }).then(() => {
+            loadMatchesHandler();
+            clearInputFields();
+            selectedMatchId = null;
+            activateAddBtn();
+        }
+    );
+}
+
 //---------- Helpers ---------------------
+function deleteMatch(host) {
+    getMatchByHost(host)
+        .then((id) =>
+            fetch(endpoints.delete(id), {
+                method: 'DELETE',
+                headers: {'Content-Type': 'application/json'},
+
+            })
+        )
+        .then(() => {
+            clearInputFields();
+            loadMatchesHandler();
+            selectedMatchId = null;
+            activateAddBtn();
+        }).catch(error => {
+        console.log(error);
+    })
+}
+
+function getMatchByHost(hostName) {
+    return fetch(baseUrl)
+        .then(res => res.json())
+        .then(res => Object.entries(res).find(m => m[1].host === hostName)[1]._id);
+}
+
+async function changeMatchData(host, score, guest) {
+    selectedMatchId = await getMatchByHost(host);
+
+    hostTeamNameEl.value = host;
+    scoreEl.value = score;
+    guestTeamEl.value = guest;
+}
 
 function activateEditBtn() {
     editBtn.disabled = false;
     addBtn.disabled = true;
 }
 
-function changeMatchData(host, score, guest) {
-    hostTeamNameEl.value = host;
-    scoreEl.value = score;
-    guestTeamEl.value = guest;
+function activateAddBtn() {
+    addBtn.disabled = false;
+    editBtn.disabled = true;
 }
 
 function clearMatchesList() {
@@ -119,9 +185,9 @@ function clearMatchesList() {
 }
 
 function clearInputFields() {
-    hostTeamNameEl.innerHTML = '';
-    scoreEl.innerHTML = '';
-    guestTeamEl.innerHTML = '';
+    hostTeamNameEl.value = '';
+    scoreEl.value = '';
+    guestTeamEl.value = '';
 }
 
 attachEvents();
