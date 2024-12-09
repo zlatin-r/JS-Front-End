@@ -3,9 +3,16 @@ const baseUrl = 'http://localhost:3030/jsonstore/matches';
 const matchesList = document.querySelector('#list');
 
 const loadBtn = document.querySelector('#load-matches');
+const addBtn = document.querySelector('#add-match');
+const editBtn = document.querySelector('#edit-match');
+
+const hostTeamNameEl = document.querySelector('#host');
+const scoreEl = document.querySelector('#score');
+const guestTeamEl = document.querySelector('#guest');
 
 function attachEvents() {
     loadBtn.addEventListener('click', loadMatchesHandler);
+    addBtn.addEventListener('click', addMatchHandler);
 }
 
 async function loadMatchesHandler() {
@@ -18,8 +25,8 @@ async function loadMatchesHandler() {
         const newMatchLiEl = document.createElement('li');
         newMatchLiEl.className = 'match';
 
-        const newInfoDiv = document.createElement('div');
-        newInfoDiv.className = 'info';
+        const infoDiv = document.createElement('div');
+        infoDiv.className = 'info';
 
         const hostParagraph = document.createElement('p');
         hostParagraph.textContent = match.host;
@@ -41,18 +48,51 @@ async function loadMatchesHandler() {
         deleteButton.className = 'delete-btn';
         deleteButton.textContent = 'Delete';
 
+        infoDiv.appendChild(hostParagraph);
+        infoDiv.appendChild(scoreParagraph);
+        infoDiv.appendChild(guestParagraph);
 
+        buttonWrapper.appendChild(changeButton);
+        buttonWrapper.appendChild(deleteButton);
 
-    })
+        newMatchLiEl.appendChild(infoDiv);
+        newMatchLiEl.appendChild(buttonWrapper);
 
+        matchesList.appendChild(newMatchLiEl);
+    });
+}
 
+function addMatchHandler() {
+    if (hostTeamNameEl.value !== '' && scoreEl.value !== '' && guestTeamEl.value !== '') {
 
+        const header = {
+            method: 'POST',
+            body: JSON.stringify({
+                host: hostTeamNameEl.value,
+                score: scoreEl.value,
+                guest: guestTeamEl.value,
+            }),
+        }
+        fetch(baseUrl, header)
+            .then(loadMatchesHandler)
+            .catch(error => {
+                console.log(error)
+            });
+
+        clearInputFields();
+    }
 }
 
 //---------- Helpers ---------------------
 
-function clearMatchesList () {
+function clearMatchesList() {
     matchesList.innerHTML = '';
+}
+
+function clearInputFields() {
+    hostTeamNameEl.innerHTML = '';
+    scoreEl.innerHTML = '';
+    guestTeamEl.innerHTML = '';
 }
 
 attachEvents();
