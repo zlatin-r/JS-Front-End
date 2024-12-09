@@ -62,14 +62,16 @@ function solve() {
 
         taskListEl.appendChild(newTaskEl);
 
-        clearInputs();
+        placeInputEl.value = "";
+        actionInputEl.value = "";
+        personInputEl.value = "";
 
         function editTask() {
             placeInputEl.value = place;
             actionInputEl.value = action;
             personInputEl.value = person;
 
-            taskListEl.removeChild(newTaskEl)
+            taskListEl.removeChild(newTaskEl);
         }
 
         function doneTask() {
@@ -89,11 +91,5 @@ function solve() {
                 doneListEl.removeChild(newTaskEl);
             }
         }
-    }
-
-    function clearInputs() {
-        placeInputEl.value = "";
-        actionInputEl.value = "";
-        personInputEl.value = "";
     }
 }
