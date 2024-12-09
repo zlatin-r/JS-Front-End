@@ -126,8 +126,7 @@ function attachEventListeners() {
 
 function editAppointment(ev) {
     ev.preventDefault();
-    debugger
-    const taskmodel = carModel.value;
+
     const data = {
         model: carModel.value,
         service: carService.value,
@@ -161,7 +160,6 @@ function deleteTask(taskLocation) {
         )
         .then(() => {
             clearAllInputs();
-
             selectedTaskId = null;
             enableAddBtn();
             return loadAppointments();
