@@ -14,6 +14,8 @@ const presentInputEl = document.querySelector('#gift');
 const forInputEl = document.querySelector('#for');
 const priceInputEl = document.querySelector('#price');
 
+let giftId = null;
+
 function attachEvents() {
     loadPresentsBtnEl.addEventListener('click', loadPresents);
     addPresentBtnEl.addEventListener('click', addPresent);
@@ -64,6 +66,7 @@ async function loadPresents() {
 
         giftListEl.appendChild(newGiftSock);
     });
+    attachEventListeners();
 }
 
 async function addPresent() {
@@ -77,12 +80,60 @@ async function addPresent() {
     }
     fetch(baseUrl, headers)
         .then(loadPresents);
+
+    clearInputFields();
+}
+
+function attachEventListeners() {
+    const changeButtons = document.querySelectorAll('.change-btn');
+    const deleteButtons = document.querySelectorAll('.delete-btn');
+
+    changeButtons.forEach((button) => {
+        button.addEventListener('click', (e) => {
+            const currGiftSock = e.target.closest('.content');
+            const gift = currGiftSock.querySelector('p:nth-child(1)');
+            const giftFor = currGiftSock.querySelector('p:nth-child(2)');
+            const price = currGiftSock.querySelector('p:nth-child(3)');
+
+            populateInputField(gift, giftFor, price);
+            enableEditBtn();
+        })
+    })
 }
 
 //--------------------- helpers ---------------------------------------
+async function populateInputField(gift, giftFor, price) {
+    giftId = await getIdByGift(gift);
+
+    presentInputEl.value = gift;
+    forInputEl.value = giftFor;
+    priceInputEl.value = price;
+}
+
+function getIdByGift(gift) {
+    return fetch(baseUrl)
+        .then(res => res.json())
+        .then(data => Object.entries(data).find(g => g[1].gift === gift)[1]._id)
+}
+
+function enableEditBtn () {
+    editPresentBtnEl.disabled = false;
+    addPresentBtnEl.disabled = true;
+}
+
+function enableAddBtn() {
+    addPresentBtnEl.disabled = false;
+    editPresentBtnEl.disabled = true;
+}
 
 function clearPresentsList() {
     giftListEl.innerHTML = '';
+}
+
+function clearInputFields() {
+    presentInputEl.value = '';
+    forInputEl.value = '';
+    priceInputEl.value = '';
 }
 
 attachEvents();
