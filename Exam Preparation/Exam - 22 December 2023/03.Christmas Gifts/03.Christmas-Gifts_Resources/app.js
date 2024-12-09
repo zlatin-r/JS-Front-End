@@ -71,18 +71,22 @@ async function loadPresents() {
 }
 
 async function addPresent() {
-    const headers = {
-        method: 'POST',
-        body: JSON.stringify({
-            gift: presentInputEl.value,
-            for: forInputEl.value,
-            price: priceInputEl.value,
-        }),
-    }
-    fetch(baseUrl, headers)
-        .then(loadPresents);
+    if (presentInputEl.value !== '' && forInputEl.value !== '' && priceInputEl.value !== '') {
 
-    clearInputFields();
+        const headers = {
+            method: 'POST',
+            body: JSON.stringify({
+                gift: presentInputEl.value,
+                for: forInputEl.value,
+                price: priceInputEl.value,
+            }),
+        }
+        fetch(baseUrl, headers)
+            .then(loadPresents);
+
+        clearInputFields();
+
+    }
 }
 
 function attachEventListeners() {
@@ -91,19 +95,57 @@ function attachEventListeners() {
 
     changeButtons.forEach((button) => {
         button.addEventListener('click', (e) => {
-            const currGiftSock = e.target.closest('.content');
-            const gift = currGiftSock.querySelector('p:nth-child(1)');
-            const giftFor = currGiftSock.querySelector('p:nth-child(2)');
-            const price = currGiftSock.querySelector('p:nth-child(3)');
+
+            const currGiftSock = e.target.closest('.gift-sock');
+            const currContent = currGiftSock.querySelector('.content');
+            const gift = currContent.querySelector('p:nth-child(1)').textContent;
+            const giftFor = currContent.querySelector('p:nth-child(2)').textContent;
+            const price = currContent.querySelector('p:nth-child(3)').textContent;
 
             populateInputField(gift, giftFor, price);
             enableEditBtn();
+        });
+    });
+    deleteButtons.forEach((button) => {
+        button.addEventListener('click', (e) => {
+            const currGiftSock = e.target.closest('.gift-sock');
+            const currContent = currGiftSock.querySelector('.content');
+            const gift = currContent.querySelector('p:nth-child(1)').textContent;
+            deletePresent(gift);
         })
     })
 }
 
 function editPresent() {
 
+    const data = {
+        gift: presentInputEl.value,
+        for: forInputEl.value,
+        price: priceInputEl.value,
+        _id: giftId,
+    }
+    fetch(endpoints.update(data._id), {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data),
+    }).then(() => {
+        clearInputFields();
+        loadPresents();
+        enableAddBtn();
+        giftId = null;
+    });
+}
+
+function deletePresent(gift) {
+    getIdByGift(gift)
+        .then((id) =>
+            fetch(endpoints.delete(id), {
+                method: 'DELETE',
+                headers: {'Content-Type': 'application/json'},
+            }))
+        .then(() => {
+            loadPresents();
+            })
 }
 
 //--------------------- helpers ---------------------------------------
@@ -121,7 +163,7 @@ function getIdByGift(gift) {
         .then(data => Object.entries(data).find(g => g[1].gift === gift)[1]._id)
 }
 
-function enableEditBtn () {
+function enableEditBtn() {
     editPresentBtnEl.disabled = false;
     addPresentBtnEl.disabled = true;
 }
