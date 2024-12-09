@@ -19,6 +19,7 @@ let giftId = null;
 function attachEvents() {
     loadPresentsBtnEl.addEventListener('click', loadPresents);
     addPresentBtnEl.addEventListener('click', addPresent);
+    editPresentBtnEl.addEventListener('click', editPresent);
 }
 
 async function loadPresents() {
@@ -99,6 +100,10 @@ function attachEventListeners() {
             enableEditBtn();
         })
     })
+}
+
+function editPresent() {
+
 }
 
 //--------------------- helpers ---------------------------------------
