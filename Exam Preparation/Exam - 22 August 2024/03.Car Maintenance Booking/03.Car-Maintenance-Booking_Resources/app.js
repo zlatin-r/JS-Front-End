@@ -52,6 +52,8 @@ async function addAppointment() {
 }
 
 async function loadAppointments() {
+    appointmentsListEl.innerHTML = '';
+
     try {
         const response = await fetch(baseUrl);
         const appointments = await response.json();
@@ -108,7 +110,7 @@ function attachEventListeners() {
             const model = appointmentEl.querySelector('h2').textContent;
             const serviceDate = appointmentEl.querySelector('h3:first-of-type').textContent;
             const serviceDescription = appointmentEl.querySelector('h3:last-of-type').textContent;
-            editTask(model, serviceDate, serviceDescription);
+            editTask(model, serviceDescription, serviceDate);
             enableEditBtn();
         });
     });
@@ -124,6 +126,7 @@ function attachEventListeners() {
 
 function editAppointment(ev) {
     ev.preventDefault();
+    debugger
     const taskmodel = carModel.value;
     const data = {
         model: carModel.value,
@@ -153,7 +156,7 @@ function deleteTask(taskLocation) {
         .then((id) =>
             fetch(endpoints.delete(id), {
                 method: 'DELETE',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {'Content-Type': 'application/json'},
             })
         )
         .then(() => {
@@ -174,11 +177,12 @@ function getIdByModel(task) {
         .then(res => Object.entries(res).find(e => e[1].model === task)[1]._id);
 }
 
-async function editTask(taskModel, taskDate, taskService) {
+async function editTask(taskModel, taskService, taskDate) {
     selectedTaskId = await getIdByModel(taskModel);
+
     carModel.value = taskModel;
-    serviceDate.value = taskDate;
     carService.value = taskService;
+    serviceDate.value = taskDate;
 }
 
 function enableEditBtn() {
