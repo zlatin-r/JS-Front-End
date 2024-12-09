@@ -21,13 +21,13 @@ function solve() {
             const newArticleEl = document.createElement('article');
 
             const animalTypeParagraphEl = document.createElement('p');
-            animalTypeParagraphEl.textContent = typeInputEl.value;
+            animalTypeParagraphEl.textContent = `Pet:${typeInputEl.value}`;
 
             const animalGenderParagraphEl = document.createElement('p');
-            animalGenderParagraphEl.textContent = genderInputEl.value;
+            animalGenderParagraphEl.textContent = `Gender:${genderInputEl.value}`;
 
             const animalAgeParagraphEl = document.createElement('p');
-            animalAgeParagraphEl.textContent = ageInputEl.value;
+            animalAgeParagraphEl.textContent = `Age:${ageInputEl.value}`;
 
             const buttonWrapperEl = document.createElement('div');
             buttonWrapperEl.className = 'buttons'
@@ -53,9 +53,9 @@ function solve() {
             adoptionInfoEl.appendChild(newListEl);
 
             editButtonEl.addEventListener('click', () => {
-                typeInputEl.value = animalTypeParagraphEl.textContent;
-                ageInputEl.value = animalAgeParagraphEl.textContent;
-                genderInputEl.value = animalGenderParagraphEl.textContent;
+                typeInputEl.value = animalTypeParagraphEl.textContent.replace('Pet:', '');
+                ageInputEl.value = animalAgeParagraphEl.textContent.replace('Age:', '');
+                genderInputEl.value = animalGenderParagraphEl.textContent.replace('Gender:', '');
 
                 adoptionInfoEl.removeChild(newListEl);
             });
