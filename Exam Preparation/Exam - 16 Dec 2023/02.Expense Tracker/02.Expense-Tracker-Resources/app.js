@@ -14,10 +14,11 @@ function solve() {
     addBtnEl.addEventListener("click", addBtnClickHandler);
 
     function addBtnClickHandler() {
+
         if (expenseInputEl.value === "" || amountInputEl.value === "" || dateInputEl.value === "") {
             return;
         }
-        
+
         const newExpenseItem = document.createElement("li");
         newExpenseItem.className = "expense-item";
 
@@ -69,6 +70,7 @@ function solve() {
 
             previewListEl.removeChild(newExpenseItem);
             enableAddBtn();
+
         }
 
         function saveRecord() {
@@ -94,9 +96,9 @@ function solve() {
     }
 
     function clearInputs() {
+        expenseInputEl.value = "";
         amountInputEl.value = "";
         dateInputEl.value = "";
-        expenseInputEl.value = "";
     }
 }
 
