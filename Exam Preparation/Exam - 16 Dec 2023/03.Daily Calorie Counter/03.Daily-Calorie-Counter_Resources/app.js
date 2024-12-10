@@ -86,7 +86,8 @@ function addEventListeners() {
     deleteButtonsEl.forEach(button => {
         button.addEventListener('click', (e) => {
             const currMealEl = e.target.closest('.meal');
-
+            const food = currMealEl.querySelector('h2').textContent;
+            deleteMeal(food);
         })
     })
 }
@@ -129,8 +130,15 @@ function editMeal() {
     });
 }
 
-function deleteMeal() {
-
+function deleteMeal(food) {
+    getIdByName(food)
+        .then((id) =>
+            fetch(endpoints.delete(id), {
+                method: 'DELETE',
+                headers: {'Content-Type': 'application/json'},
+    })).then(() => {
+        loadAllMeals();
+    })
 }
 
 
