@@ -23,8 +23,36 @@ async function loadAllMeals() {
         const newMealEl = document.createElement('div');
         newMealEl.className = "meal";
 
-        const foodType = document.querySelector('#food');
-        foodType.innerText = meal.name;
+        const foodTypeEl = document.createElement('h2');
+        foodTypeEl.textContent = meal.food;
+
+        const timeEl = document.createElement('h3');
+        timeEl.textContent = meal.time;
+
+        const caloriesEl = document.createElement('h3');
+        caloriesEl.textContent = meal.calories;
+
+        const buttonWrapperEl = document.createElement('div');
+        buttonWrapperEl.id = 'meal-buttons';
+
+        const changeBtnEl = document.createElement('button');
+        changeBtnEl.className = 'change-meal';
+        changeBtnEl.textContent = 'Change';
+
+        const deleteBtnEl = document.createElement('button');
+        deleteBtnEl.className = 'delete-meal';
+        deleteBtnEl.textContent = 'Delete';
+
+        newMealEl.appendChild(foodTypeEl);
+        newMealEl.appendChild(timeEl);
+        newMealEl.appendChild(caloriesEl);
+
+        buttonWrapperEl.appendChild(changeBtnEl);
+        buttonWrapperEl.appendChild(deleteBtnEl);
+
+        newMealEl.appendChild(buttonWrapperEl);
+
+        mealListEl.appendChild(newMealEl);
     });
 }
 
