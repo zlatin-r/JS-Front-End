@@ -64,7 +64,6 @@ async function loadAllMeals() {
 
         mealListEl.appendChild(newMealEl);
     });
-
     addEventListeners();
 }
 
@@ -118,7 +117,7 @@ function editMeal() {
         _id: mealId,
     }
 
-    fetch (endpoints.update(data._id), {
+    fetch(endpoints.update(data._id), {
         method: 'PUT',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(data),
@@ -136,23 +135,13 @@ function deleteMeal(food) {
             fetch(endpoints.delete(id), {
                 method: 'DELETE',
                 headers: {'Content-Type': 'application/json'},
-    })).then(() => {
+            })).then(() => {
         loadAllMeals();
-    })
+    });
 }
 
 
 //---------------------------- Helpers ---------------------------------------------------
-function enableEditBtn() {
-    editMealBtnEl.disabled = false;
-    addMealBtnEl.disabled = true;
-}
-
-function enableAddBtn() {
-    addMealBtnEl.disabled = false;
-    editMealBtnEl.disabled = true;
-}
-
 function getIdByName(name) {
     return fetch(baseUrl)
         .then(res => res.json())
@@ -165,6 +154,16 @@ async function populateInputFields(f, t, c) {
     foodInputEl.value = f;
     timeInputEl.value = t;
     caloriesInputEl.value = c;
+}
+
+function enableEditBtn() {
+    editMealBtnEl.disabled = false;
+    addMealBtnEl.disabled = true;
+}
+
+function enableAddBtn() {
+    addMealBtnEl.disabled = false;
+    editMealBtnEl.disabled = true;
 }
 
 function clearInputFields() {
