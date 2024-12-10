@@ -3,21 +3,21 @@ window.addEventListener("load", solve);
 //Functionality - all works! // In Judge - not working! ------------------------------------------------------------
 
 function solve() {
-    const expenseInputEl = document.querySelector("#expense");
-    const amountInputEl = document.querySelector("#amount");
-    const dateInputEl = document.querySelector("#date");
+    const expenseInputEl = document.getElementById("expense");
+    const amountInputEl = document.getElementById("amount");
+    const dateInputEl = document.getElementById("date");
 
-    let previewListEl = document.querySelector("#preview-list");
-    let expensesListEL = document.querySelector("#expenses-list");
+    let previewListEl = document.getElementById("preview-list");
+    let expensesListEL = document.getElementById("expenses-list");
 
-    const addBtnEl = document.querySelector("#add-btn");
+    const addBtnEl = document.getElementById("add-btn");
     const deleteBtnEl = document.querySelector(".delete");
 
-    addBtnEl.addEventListener("click", addBtnClickHandler);
+    addBtnEl.addEventListener('click', addBtnClickHandler);
 
     function addBtnClickHandler() {
 
-        if (expenseInputEl.value === "" || amountInputEl.value === "" || dateInputEl.value === "") {
+        if (expenseInputEl.value === '' || amountInputEl.value === '' || dateInputEl.value === '') {
             return;
         }
 
@@ -43,12 +43,12 @@ function solve() {
 
         const editBtnEl = document.createElement("button");
         editBtnEl.className = "btn edit";
-        editBtnEl.textContent = `edit`;
+        editBtnEl.textContent = 'edit';
         editBtnEl.addEventListener('click', editPreview);
 
         const okBtnEl = document.createElement("button");
         okBtnEl.className = "btn ok";
-        okBtnEl.textContent = `ok`;
+        okBtnEl.textContent = 'ok';
         okBtnEl.addEventListener('click', saveRecord);
 
         buttonWrapperEl.append(editBtnEl);
