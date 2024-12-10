@@ -1,6 +1,6 @@
 window.addEventListener("load", solve);
 
-//Functionality - works! // In Judge - not working! ------------------------------------------------------------
+//Functionality - all works! // In Judge - not working! ------------------------------------------------------------
 
 function solve() {
     const expenseInputEl = document.querySelector("#expense");
@@ -62,6 +62,7 @@ function solve() {
         newExpenseItem.append(buttonWrapperEl);
 
         previewListEl.append(newExpenseItem);
+
         clearInputs();
         disableAddBtn();
 
@@ -72,7 +73,6 @@ function solve() {
 
             previewListEl.removeChild(newExpenseItem);
             enableAddBtn();
-
         }
 
         function saveRecord() {
@@ -80,12 +80,13 @@ function solve() {
             newExpenseItem.removeChild(buttonWrapperEl);
 
             expensesListEL.append(newExpenseItem);
+
             enableAddBtn();
-            deleteBtnEl.addEventListener("click", deleteAll);
+            deleteBtnEl.addEventListener("click", reloadApp);
         }
     }
 
-    function deleteAll() {
+    function reloadApp() {
         location.reload();
     }
 
