@@ -1,5 +1,7 @@
 window.addEventListener("load", solve);
 
+//Authors Solution-----------------------------------------------------------------------------
+
 function solve() {
     let formElement = document.querySelector("form");
     let expenseElement = document.getElementById("expense");

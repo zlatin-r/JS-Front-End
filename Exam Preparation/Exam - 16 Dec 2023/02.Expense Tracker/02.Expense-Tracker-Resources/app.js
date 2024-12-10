@@ -1,5 +1,7 @@
 window.addEventListener("load", solve);
 
+//Functionality - works! // In Judge - not working! ------------------------------------------------------------
+
 function solve() {
     const expenseInputEl = document.querySelector("#expense");
     const amountInputEl = document.querySelector("#amount");
