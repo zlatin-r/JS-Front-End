@@ -1,56 +1,50 @@
-function solution() {
-    const mainEl = document.querySelector('#main');
+function initializeArticles() {
+    fetch('http://localhost:3030/jsonstore/advanced/articles/list')
+        .then(response =>  response.json())
+        .then(articles => {
 
-    const urlTitles = 'http://localhost:3030/jsonstore/advanced/articles/list'
-    const urlArticles = 'http://localhost:3030/jsonstore/advanced/articles/details/'
+            const mainContainer = document.getElementById('main');
 
-    mainEl.innerHTML = ``
+            articles.forEach(article => {
 
-    loadArticles()
+                const articleElement = document.createElement('div');
+                articleElement.classList.add('accordion');
+                articleElement.innerHTML = `
+                    <div class="head">
+                        <span>${article.title}</span>
+                        <button class="button" id="${article._id}">More</button>
+                    </div>
+                    <div class="extra" style="display: none;" id="content-${article._id}"></div>
+                `;
+                mainContainer.appendChild(articleElement);
 
-    async function loadArticles() {
-        const response = await fetch(urlTitles);
-        const articles = await response.json();
+                const button = articleElement.querySelector('.button');
+                button.addEventListener('click', () => toggleArticleContent(article._id, button));
+            });
+        })
+        .catch(error => console.error('Error fetching articles:', error));
+}
 
-        Object.values(articles).forEach(article => {
-            const newDivEl = document.createElement('div');
-            newDivEl.className = 'accordion';
+function toggleArticleContent(articleId, button) {
+    const contentDiv = document.getElementById(`content-${articleId}`);
 
-            newDivEl.innerHTML = `
-                <div class="head">
-                    <span>${article.title}</span>
-                    <button class="button" id="${article._id}">More</button>
-                </div>
-                <div class="extra">
-                    <p></p>
-                </div>
-            `
-            mainEl.appendChild(newDivEl);
-        });
 
-        const buttons = mainEl.querySelectorAll('button');
-        buttons.forEach((button) => {
-            button.addEventListener('click', toggleContent);
-        });
-    }
+    if (contentDiv.style.display === 'none') {
 
-    async function toggleContent(e) {
-        const button = e.target;
-        const articleId = button.id
-        const extraDiv = button.parentElement.nextElementSibling;
+        fetch(`http://localhost:3030/jsonstore/advanced/articles/details/${articleId}`)
+            .then(response => response.json())
+            .then(articleDetails => {
 
-        if (button.textContent === 'More') {
-            const response = await fetch(`${urlArticles}${articleId}`);
-            const article = await response.json();
+                contentDiv.innerHTML = `<p>${articleDetails.content}</p>`;
+                contentDiv.style.display = 'block';
+                button.textContent = 'Less';
+            })
+            .catch(error => console.error(`Error fetching details for article ${articleId}:`, error));
+    } else {
 
-            extraDiv.innerHTML = `<p>${article.content}</p>`
-            extraDiv.style.display = 'inline-block';
-            button.textContent = 'Less';
-        } else {
-            extraDiv.style.display = 'none';
-            button.textContent = 'More';
-        }
+        contentDiv.style.display = 'none';
+        button.textContent = 'More';
     }
 }
 
-solution();
+initializeArticles();
