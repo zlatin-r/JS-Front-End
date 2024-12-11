@@ -1,6 +1,10 @@
+// import { chromium } from 'playwright-chromium';
+// import { expect } from 'chai';
+
 const { chromium } = require('playwright-chromium');
 const { expect } = require('chai');
 
+// const host = 'http://localhost:63342/03.Weather%20Tracker%20%E2%80%93%20Resources/index.html?_ijt=r6ik0nnegusnd4qn9ughfmq3ll&_ij_reload=RELOAD_ON_SAVE'; // Application host (NOT service host - that can be anything)
 const host = 'http://localhost:3000'; // Application host (NOT service host - that can be anything)
 
 const DEBUG = false;
