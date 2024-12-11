@@ -1,51 +1,115 @@
 function lockedProfile() {
+    const baseUrl = 'http://localhost:3030/jsonstore/advanced/profiles';
+
     const mainEl = document.querySelector('#main');
-    const url = 'http://localhost:3030/jsonstore/advanced/profiles'
 
-    let counter = 0;
+    let counter = 1;
 
-    mainEl.innerHTML = '';
+    fetch(baseUrl)
+        .then(res => res.json())
+        .then((res) => {
+            mainEl.innerHTML = '';
+            Object.values(res).forEach((profile) => {
+                const userCount = 'user' + counter;
 
-    fetch(url)
-        .then(response => response.json())
-        .then((profiles) => {
-            Object.values(profiles).forEach((profile) => {
-                const newProfileDivEl = document.createElement('div');
-                newProfileDivEl.className = 'profile';
+                const newProfile = document.createElement('div');
+                newProfile.className = 'profile';
+
+                const profileImage = document.createElement('img');
+                profileImage.className = 'userIcon';
+                profileImage.src = './iconProfile2.png';
+
+                const labelLock = document.createElement('label');
+                labelLock.textContent = 'Lock';
+
+                const radioInput = document.createElement('input');
+                radioInput.type = 'radio';
+                radioInput.name = `${userCount}Locked`;
+                radioInput.value = `lock`;
+                radioInput.checked = true;
+
+                const labelUnlock = document.createElement('label');
+                labelUnlock.textContent = 'Unlock';
+
+
+                const radioInput2 = document.createElement('input');
+                radioInput2.type = 'radio';
+                radioInput2.name = `${userCount}Locked`;
+                radioInput2.value = 'unlock';
+
+                const brElement = document.createElement('br');
+                const hrElement = document.createElement('hr');
+
+                const labelUserName = document.createElement('label');
+                labelUserName.textContent = 'Username';
+
+                const userNameInput = document.createElement('input');
+                userNameInput.type = 'text';
+                userNameInput.name = `${userCount}Username`;
+                userNameInput.value = `${profile.username}`;
+                userNameInput.disabled = true;
+                userNameInput.readOnly = true;
+
+                const container = document.createElement('div');
+                container.className = `${userCount}HiddenFields hiddenInfo`;
+
+                const hr2Element = document.createElement('hr');
+
+                const labelEmail = document.createElement('label');
+                labelEmail.textContent = 'Email';
+
+                const emailInput = document.createElement('input');
+                emailInput.type = 'email';
+                emailInput.name = `${userCount}Email`;
+                emailInput.value = `${profile.email}`;
+                emailInput.disabled = true;
+                emailInput.readOnly = true;
+
+                const labelAge = document.createElement('label');
+                labelAge.textContent = 'Age';
+
+                const ageInput = document.createElement('input');
+                ageInput.type = 'number';
+                ageInput.name = `${userCount}Age`;
+                ageInput.value = `${profile.age}`;
+                ageInput.disabled = true;
+                ageInput.readOnly = true;
+
+                const showMoreButton = document.createElement('button');
+                showMoreButton.textContent = 'Show more';
+
+                newProfile.appendChild(profileImage);
+                newProfile.appendChild(labelLock);
+                newProfile.appendChild(radioInput);
+                newProfile.appendChild(labelUnlock);
+                newProfile.appendChild(radioInput2);
+                newProfile.appendChild(brElement);
+                newProfile.appendChild(hrElement);
+                newProfile.appendChild(labelUserName);
+                newProfile.appendChild(userNameInput);
+
+                container.appendChild(hr2Element);
+                container.appendChild(labelEmail);
+                container.appendChild(emailInput);
+                container.appendChild(labelAge);
+                container.appendChild(ageInput);
+
+                newProfile.appendChild(container);
+                newProfile.appendChild(showMoreButton);
+
+                mainEl.appendChild(newProfile);
+
                 counter++;
-
-                newProfileDivEl.innerHTML = `
-                <img src="./iconProfile2.png" class="userIcon" />
-                <label>Lock</label>
-                <input type="radio" name="user${counter}Locked" value="lock" checked>
-                <label>Unlock</label>
-                <input type="radio" name="user${counter}Locked" value="unlock"><br>
-                <hr>
-                <label>Username</label>
-                <input type="text" name="user${counter}Username" value="${profile.username}" disabled readonly />
-                <div class="user${counter}HiddenFields hiddenInfo">
-                    <hr>
-                    <label>Email:</label>
-                    <input type="email" name="user${counter}Email" value="${profile.email}" disabled readonly />
-                    <label>Age:</label>
-                    <input type="email" name="user${counter}Age" value="${profile.age}" disabled readonly />
-                </div>
-                
-                <button>Show more</button>
-                `
-                mainEl.appendChild(newProfileDivEl);
             });
-
             const showMoreButtons = mainEl.querySelectorAll('button');
 
             showMoreButtons.forEach((button) => {
-                button.addEventListener('click', () => {
+                button.addEventListener('click', (e) => {
+                    const currProfile = e.target.closest('.profile');
+                    const hiddenFields = currProfile.querySelector('div');
+                    const lockBtn = currProfile.querySelector('input[value="lock"]');
 
-                    const profileDivEl = button.parentElement;
-                    const hiddenFields = profileDivEl.querySelector('.hiddenInfo');
-                    const lockRadioBtn = profileDivEl.querySelector(`input[value="lock"]`);
-
-                    if (!lockRadioBtn.checked) {
+                    if (!lockBtn.checked) {
                         if (hiddenFields.classList.contains('hiddenInfo')) {
                             hiddenFields.classList.remove('hiddenInfo');
                             button.textContent = 'Hide it';
@@ -56,7 +120,5 @@ function lockedProfile() {
                     }
                 });
             });
-        }).catch(error => {
-            console.log(error);
-    });
+        });
 }
