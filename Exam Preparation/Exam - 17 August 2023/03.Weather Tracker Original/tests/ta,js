@@ -1,8 +1,9 @@
 const { chromium } = require('playwright-chromium');
 const { expect } = require('chai');
 
-const host = 'http://localhost:3000'; // Application host (NOT service host - that can be anything)
-const host = 'http://localhost:3000'; // Application host (NOT service host - that can be anything)
+const userApplicationHttpPort = '#userApplicationHttpPort#';
+
+const host = 'http://localhost:' + userApplicationHttpPort; // Application host (NOT service host - that can be anything)
 
 const DEBUG = false;
 const slowMo = 500;
@@ -10,27 +11,31 @@ const slowMo = 500;
 const mockData = {
   list: [
     {
-      location: 'Bug 1',
-      temperature: '5',
-      date: '2023-07-19',
+      title: 'Bug 1',
+      type: 'Short',
+      description: 'My first course 1',
+      teacher: 'Teacher1',
       _id: '1001',
     },
     {
-      location: 'Bug 2',
-      temperature: '3',
-      date: '2023-07-13',
+      title: 'Bug 2',
+      type: 'Medium',
+      description: 'My first course 2',
+      teacher: 'Teacher2',
       _id: '1002',
     },
     {
-      location: 'Bug 3',
-      temperature: '4',
-      date: '2023-07-12',
+      title: 'Bug 3',
+      type: 'Long',
+      description: 'My first course 3',
+      teacher: 'Teacher3',
       _id: '1003',
     },
     {
-      location: 'Bug 4',
-      temperature: '8',
-      date: '2023-07-11',
+      title: 'Bug 4',
+      type: 'Short',
+      description: 'My first course 4',
+      teacher: 'Teacher4',
       _id: '1004',
     },
   ],
@@ -65,25 +70,25 @@ describe('E2E tests', function () {
     await context.close();
   });
 
-  describe('Weather Tracker Tests', () => {
-    it('Load History', async () => {
+  describe('Course Planner Tests', () => {
+    it('Load Course', async () => {
       const data = mockData.list;
       const { get } = await handle(endpoints.catalog);
       get(data);
 
       await page.goto(host);
-      await page.waitForSelector('#load-history');
+      await page.waitForSelector('#load-course');
 
-      await page.click('#load-history');
+      await page.click('#load-course');
 
-      const list = await page.$$eval(`#history #list .container`, (t) =>
+      const list = await page.$$eval(`#progress-course #list .container`, (t) =>
         t.map((s) => s.textContent)
       );
       expect(list.length).to.equal(data.length);
 
     });
 
-   it('Add Weather', async () => {
+    it('Create Course', async () => {
       const data = mockData.list[0];
       await page.goto(host);
 
@@ -91,92 +96,98 @@ describe('E2E tests', function () {
       const { onRequest } = post();
 
       await page.waitForSelector('#form');
-      await page.fill('#location', data.location);
-      await page.fill('#temperature', data.temperature);
-      await page.fill('#date', data.date);
+      await page.fill('#course-name', data.title);
+      await page.fill('#course-type', data.type);
+      await page.fill('#description', data.description);
+      await page.fill('#teacher-name', data.teacher);
 
       const [request] = await Promise.all([
         onRequest(),
-        page.click('#add-weather'),
+        page.click('#add-course'),
       ]);
 
       const postData = JSON.parse(request.postData());
       
-      expect(postData.location).to.equal(data.location);
-      expect(postData.temperature).to.equal(data.temperature);
-      expect(postData.date).to.equal(data.date);
+      expect(postData.title).to.equal(data.title);
+      expect(postData.type).to.equal(data.type);
+      expect(postData.description).to.equal(data.description);
+      expect(postData.teacher).to.equal(data.teacher);
 
-      const [location] = await page.$$eval(`#location`, (t) =>
+      const [courseName] = await page.$$eval(`#course-name`, (t) =>
         t.map((s) => s.value)
       );
-      const [temperature] = await page.$$eval(`#temperature`, (t) =>
+      const [courseLength] = await page.$$eval(`#course-type`, (t) =>
+        t.map((s) => s.value)
+      );
+      const [descriptionValue] = await page.$$eval(`#description`, (t) =>
+        t.map((s) => s.value)
+      );
+      const [courseTeacher] = await page.$$eval(`#teacher-name`, (t) =>
         t.map((s) => s.value)
       );
 
-      const [date] = await page.$$eval(`#date`, (t) =>
-        t.map((s) => s.value)
-      );
-
-      expect(location).to.equal('');
-      expect(temperature).to.equal('');
-      expect(date).to.equal('');
+      expect(courseName).to.equal('');
+      expect(courseLength).to.equal('');
+      expect(descriptionValue).to.equal('');
+      expect(courseTeacher).to.equal('');
     });
 
-    it('Edit Weather (Has Input)', async () => {
-  await page.goto(host);
-  const data = mockData.list[0];
+    it('Edit Course (Has Input)', async () => {
+      await page.goto(host);
+      const data = mockData.list[0];
 
-  await page.click('#load-history');
-  await page.waitForSelector('#list');
-  await page.click('#list .container .change-btn');
+      await page.click('#load-course');
+      await page.waitForSelector('#list');
+      await page.click('#list .container .edit-btn');
 
+      const allCourse = await page.$$eval(`#form input`, (t) =>
+        t.map((s) => s.value)
+      );
 
-  const [locationValue, temperatureValue, dateValue] = await Promise.all([
-    page.$eval('#location', (el) => el.value),
-    page.$eval('#temperature', (el) => el.value),
-    page.$eval('#date', (el) => el.value),
-  ]);
+      const allCourseText = await page.$$eval(`#form textarea`, (t) =>
+        t.map((s) => s.value)
+      );
 
+      expect(allCourse[0]).to.include(data.title);
+      expect(allCourse[1]).to.include(data.type);
+      expect(allCourse[2]).to.include(data.teacher);
+      expect(allCourseText[0]).to.include(data.description);
+    });
 
-  expect(locationValue).to.equal(data.location);
-  expect(temperatureValue).to.equal(data.temperature);
-  expect(dateValue).to.equal(data.date);
-});
-
-    it('Edit Weather (Makes API Call)', async () => {
+    it('Edit Course (Makes API Call)', async () => {
       const data = mockData.list[0];
       await page.goto(host);
       const { patch } = await handle(endpoints.byId(data._id));
       const { onRequest } = patch({ id: data._id });
 
-      await page.click('#load-history');
+      await page.click('#load-course');
       await page.waitForSelector('#list');
-      await page.click('#list .container .change-btn');
-      await page.fill('#location', data.location + '2');
+      await page.click('#list .container .edit-btn');
+      await page.fill('#course-name', data.title + '2');
 
       const [request] = await Promise.all([
         onRequest(),
-        page.click('#edit-weather'),
+        page.click('#edit-course'),
       ]);
 
       const postData = JSON.parse(request.postData());
-      expect(postData.location).to.equal(data.location + '2');
+      expect(postData.title).to.equal(data.title + '2');
     });
 
-    it('Delete Weather', async () => {
+    it('Finish Course', async () => {
       const data = mockData.list[0];
       await page.goto(host);
       const { del } = await handle(endpoints.byId(data._id));
       const { onResponse, isHandled } = del({ id: data._id });
 
-      await page.click('#load-history');
+      await page.click('#load-course');
 
       await page.waitForSelector('#list');
 
       await Promise.all([
         onResponse(),
         page.click(
-          `#list .container .delete-btn`
+          `#list .container .finish-btn`
         ),
       ]);
 

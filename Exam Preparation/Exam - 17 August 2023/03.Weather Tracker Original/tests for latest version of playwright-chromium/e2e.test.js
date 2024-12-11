@@ -2,7 +2,6 @@ const { chromium } = require('playwright-chromium');
 const { expect } = require('chai');
 
 const host = 'http://localhost:3000'; // Application host (NOT service host - that can be anything)
-const host = 'http://localhost:3000'; // Application host (NOT service host - that can be anything)
 
 const DEBUG = false;
 const slowMo = 500;
@@ -130,18 +129,39 @@ describe('E2E tests', function () {
   await page.waitForSelector('#list');
   await page.click('#list .container .change-btn');
 
-
+  // Get the values of all the input fields on the form
   const [locationValue, temperatureValue, dateValue] = await Promise.all([
     page.$eval('#location', (el) => el.value),
     page.$eval('#temperature', (el) => el.value),
     page.$eval('#date', (el) => el.value),
   ]);
 
-
+  // Compare the values with the data from the mockData
   expect(locationValue).to.equal(data.location);
   expect(temperatureValue).to.equal(data.temperature);
   expect(dateValue).to.equal(data.date);
 });
+it('Edit Weather (Has Input)', async () => {
+  await page.goto(host);
+  const data = mockData.list[0];
+
+  await page.click('#load-history');
+  await page.waitForSelector('#list');
+  await page.click('#list .container .change-btn');
+
+  // Get the values of all the input fields on the form
+  const [locationValue, temperatureValue, dateValue] = await Promise.all([
+    page.$eval('#location', (el) => el.value),
+    page.$eval('#temperature', (el) => el.value),
+    page.$eval('#date', (el) => el.value),
+  ]);
+
+  // Compare the values with the data from the mockData
+  expect(locationValue).to.equal(data.location);
+  expect(temperatureValue).to.equal(data.temperature);
+  expect(dateValue).to.equal(data.date);
+});
+
 
     it('Edit Weather (Makes API Call)', async () => {
       const data = mockData.list[0];
@@ -186,16 +206,9 @@ describe('E2E tests', function () {
 });
 
 async function setupContext(context) {
-  // Catalog and Details
-  await handleContext(context, endpoints.catalog, { get: mockData.list });
-  await handleContext(context, endpoints.catalog, { post: mockData.list[0] });
 
-  await handleContext(context, endpoints.byId('1001'), {
-    get: mockData.list[0],
-  });
-
-  // Block external calls
-  await context.route(
+   // Block external calls
+   await context.route(
     (url) => url.href.slice(0, host.length) != host,
     (route) => {
       if (DEBUG) {
@@ -204,6 +217,20 @@ async function setupContext(context) {
       route.abort();
     }
   );
+
+  await handleContext(context, endpoints.byId('1001'), {
+    get: mockData.list[0],
+  });
+
+
+  // Catalog and Details
+
+  await handleContext(context, endpoints.catalog, { post: mockData.list[0] });
+  await handleContext(context, endpoints.catalog, { get: mockData.list });
+  
+
+
+ 
 }
 
 function handle(match, handlers) {
