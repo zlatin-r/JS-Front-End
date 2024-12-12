@@ -156,8 +156,6 @@ function init() {
             doneEntry(result);
         });
     }
-
-    loadEntries();
 }
 
 init();
