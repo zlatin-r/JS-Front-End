@@ -56,7 +56,7 @@ function createElement(tag, properties, container) {
 function init() {
     const baseUrl = 'http://localhost:3030/jsonstore/tasks/'
 
-    const fields = document.querySelectorAll('#form form input');
+    const fields = [...document.querySelectorAll('#form form input')];
     const listEl = document.querySelector('#list');
 
     function loadEntries() {
@@ -70,11 +70,11 @@ function init() {
     function createEntry({name, days, date, _id}) {
         const entryEl = createElement('li', {
             className: 'container',
-            dataset: {name, days, date}
+            dataset: {name, days, date, _id}
         }, listEl);
         createElement('h2', {textContent: name}, entryEl);
-        createElement('h2', {textContent: days}, entryEl);
-        createElement('h2', {textContent: date}, entryEl);
+        createElement('h3', {textContent: days}, entryEl);
+        createElement('h3', {textContent: date}, entryEl);
         createElement('button', {
             className: 'change-btn',
             textContent: 'Change',
@@ -83,15 +83,22 @@ function init() {
         createElement('button', {
             className: 'done-btn',
             textContent: 'Done',
-            onclick: doneHandler}, entryEl);
+            onclick: doneHandler
+        }, entryEl);
     }
 
-    function changeHandler(e) {
+    function deleteEntry({name, days, date, _id}) {
+        listEl.querySelector(`li[data-_id='${_id}']`).remove()}
 
+    function changeHandler(e) {
+        const entryEl = e.target.closest('li');
+        const values = Object.values(entryEl.dataset);
+
+        fields.forEach((field, index) => field.value = values[index]);
     }
 
     function doneHandler(e) {
-
+        const entryEl = e.target.closest('li');
     }
 
     loadEntries();
