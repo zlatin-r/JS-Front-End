@@ -21,6 +21,11 @@ function solve() {
     }
 
     const field = document.querySelectorAll('#student, #university, #score');
+    const btnNext = document.querySelector('#next-btn');
+
+    const previewListEl = document.querySelector('#preview-list');
+    const candidatesListEl = document.querySelector('#candidates-list');
+
 
 }
   
