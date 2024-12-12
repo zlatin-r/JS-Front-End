@@ -6,14 +6,13 @@ function solve() {
     const uniInputEl = document.querySelector('#university');
     const scoreInputEl = document.querySelector('#score');
 
+    const previewListEl = document.querySelector('#preview-list');
+    const candidatesListEl = document.querySelector('#candidates-list');
+
     const nextBtnEl = document.querySelector('#next-btn');
-    nextBtnEl.addEventListener('click', publish);
 
-    function publish() {
+    nextBtnEl.addEventListener('click', () => {
         if (nameInputEl.value === '' || uniInputEl.value === '' || scoreInputEl.value === '') return;
-
-        const previewListEl = document.querySelector('#preview-list');
-        const candidatesListEl = document.querySelector('#candidates-list');
 
         const application = document.createElement('li');
         application.className = 'application';
@@ -78,5 +77,6 @@ function solve() {
 
             nextBtnEl.disabled = false;
         }
-    }
+    });
 }
+
