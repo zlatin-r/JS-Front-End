@@ -2,17 +2,18 @@ window.addEventListener("load", solve);
 
 function solve() {
 
-    const nextBtnEl = document.querySelector('#next-btn');
-
     const nameInputEl = document.querySelector('#student');
     const uniInputEl = document.querySelector('#university');
     const scoreInputEl = document.querySelector('#score');
 
-    const previewListEl = document.querySelector('#preview-list');
-    const candidatesListEl = document.querySelector('#candidates-list');
+    const nextBtnEl = document.querySelector('#next-btn');
+    nextBtnEl.addEventListener('click', publish);
 
-    nextBtnEl.addEventListener('click', e => {
+    function publish() {
         if (nameInputEl.value === '' || uniInputEl.value === '' || scoreInputEl.value === '') return;
+
+        const previewListEl = document.querySelector('#preview-list');
+        const candidatesListEl = document.querySelector('#candidates-list');
 
         const application = document.createElement('li');
         application.className = 'application';
@@ -70,12 +71,12 @@ function solve() {
         function applyBtnHandler() {
             previewListEl.removeChild(application);
 
-            application.querySelector('.edit').remove();
-            application.querySelector('.apply').remove();
+            application.removeChild(editBtnEl);
+            application.removeChild(applyBtnEl);
 
             candidatesListEl.appendChild(application);
 
             nextBtnEl.disabled = false;
         }
-    });
+    }
 }
