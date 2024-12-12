@@ -50,9 +50,10 @@ function solve(arr) {
                 break;
         }
     });
+
     Object.entries(riders).forEach(([name, data]) => {
-        console.log(`${name}: ${data.position}`);
-    })
+        console.log(`${name}\n Final position: ${data.position}`);
+    });
 }
 
 solve([
