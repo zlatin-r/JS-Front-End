@@ -59,6 +59,15 @@ function init() {
     const fields = [...document.querySelectorAll('#form form input')];
     const listEl = document.querySelector('#list');
 
+    const loadButtonEl = document.querySelector('#load-vacations');
+    const addBtnEl = document.querySelector('#add-vacation');
+    const editBtnEl = document.querySelector('#edit-vacation');
+    const changeBtnEl = document.querySelector('.change-btn');
+    const doneBtnEl = document.querySelector('.done-btn');
+
+    addBtnEl.addEventListener('click', createHandler);
+    editBtnEl.addEventListener('click', updateHandler);
+
     function loadEntries() {
         listEl.innerHTML = '';
 
@@ -87,18 +96,65 @@ function init() {
         }, entryEl);
     }
 
-    function deleteEntry({name, days, date, _id}) {
+    function doneEntry({name, days, date, _id}) {
         listEl.querySelector(`li[data-_id='${_id}']`).remove()}
+
+    function createHandler(e) {
+        e.preventDefault();
+
+        const [name, days, date] = fields.map(field => field.value);
+
+        if (!name || !days || !date) return;
+
+        const record = {name, days, date};
+
+        createRecord(baseUrl, record, (result) => {
+            createEntry(result);
+        });
+
+        fields.forEach(field => field.value = '');
+
+    }
 
     function changeHandler(e) {
         const entryEl = e.target.closest('li');
         const values = Object.values(entryEl.dataset);
 
+        entryEl.classList.add('active');
+
         fields.forEach((field, index) => field.value = values[index]);
+
+        addBtnEl.disabled = true;
+        editBtnEl.disabled = false;
+    }
+
+    function updateHandler(e) {
+        e.preventDefault();
+
+        const [name, days, date] = fields.map(field => field.value);
+
+        if (!name || !days || !date) return;
+
+        const entryEl = listEl.querySelector('li.active');
+
+        const record = {name, days, date, _id: entryEl.dataset._id};
+
+        updateRecord(baseUrl, record, (result) => {
+            loadEntries();
+            fields.forEach(field => field.value = '');
+            addBtnEl.disabled = false;
+            editBtnEl.disabled = true;
+        });
     }
 
     function doneHandler(e) {
         const entryEl = e.target.closest('li');
+
+        const record = Object.assign({}, entryEl.dataset);
+
+        deleteRecord(baseUrl, record, (result) => {
+            doneEntry(result);
+        });
     }
 
     loadEntries();
