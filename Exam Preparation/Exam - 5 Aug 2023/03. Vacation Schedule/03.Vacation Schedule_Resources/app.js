@@ -68,19 +68,33 @@ function init() {
     }
 
     function createEntry({name, days, date, _id}) {
-        const entryEl = createElement('li',
-            {
-                className: 'container',
-                dataset: {name, days, date}
-            }, listEl);
+        const entryEl = createElement('li', {
+            className: 'container',
+            dataset: {name, days, date}
+        }, listEl);
         createElement('h2', {textContent: name}, entryEl);
         createElement('h2', {textContent: days}, entryEl);
         createElement('h2', {textContent: date}, entryEl);
-        createElement('button', {className: 'change-btn', textContent: 'Change'}, entryEl);
-        createElement('button', {className: 'done-btn', textContent: 'Done'}, entryEl);
+        createElement('button', {
+            className: 'change-btn',
+            textContent: 'Change',
+            onclick: changeHandler
+        }, entryEl);
+        createElement('button', {
+            className: 'done-btn',
+            textContent: 'Done',
+            onclick: doneHandler}, entryEl);
     }
 
-    loadEntries()
+    function changeHandler(e) {
+
+    }
+
+    function doneHandler(e) {
+
+    }
+
+    loadEntries();
 }
 
 init();
