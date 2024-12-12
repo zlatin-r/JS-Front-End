@@ -2,7 +2,6 @@ window.addEventListener("load", solve);
 
 function solve() {
 
-
     const nextBtnEl = document.querySelector('#next-btn');
 
     const nameInputEl = document.querySelector('#student');
@@ -35,7 +34,7 @@ function solve() {
         const editBtnEl = document.createElement('button');
         editBtnEl.className = 'action-btn edit';
         editBtnEl.textContent = 'edit';
-        editBtnEl.addEventListener('click', editBtnHandler)
+        editBtnEl.addEventListener('click', editBtnHandler);
 
         const applyBtnEl = document.createElement('button');
         applyBtnEl.className = 'action-btn apply';
@@ -69,9 +68,14 @@ function solve() {
         }
 
         function applyBtnHandler() {
+            previewListEl.removeChild(application);
 
+            application.querySelector('.edit').remove();
+            application.querySelector('.apply').remove();
+
+            candidatesListEl.appendChild(application);
+
+            nextBtnEl.disabled = false;
         }
     });
-
-
 }
