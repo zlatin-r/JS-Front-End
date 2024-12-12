@@ -1,5 +1,7 @@
 window.addEventListener("load", solve);
 
+//Functionality: Works! // In Judge: 70 points------------------------------------------------------
+
 function solve() {
 
     function createElement(tag, properties, container) {
@@ -7,6 +9,7 @@ function solve() {
 
         Object.keys(properties).forEach(key => {
             if (typeof properties[key] === "object") {
+                if (!element[key]) element[key] = {}; // same like: element[key] ??= {};
                 Object.assign(element[key], properties[key]);
             } else {
                 element[key] = properties[key];
@@ -35,8 +38,8 @@ function solve() {
         const articleEl = createElement('article', {}, entryEl);
 
         createElement('p', {textContent: student}, articleEl);
-        createElement('p', {textContent: uni}, articleEl);
-        createElement('p', {textContent: score}, articleEl);
+        createElement('p', {textContent: `University: ${uni}`}, articleEl);
+        createElement('p', {textContent: `Score: ${score}`}, articleEl);
 
         createElement('button', {
             className: 'action-btn edit',
@@ -64,11 +67,26 @@ function solve() {
     });
 
     function editHandler(e) {
+        const entryEl = e.target.closest('li');
+        entryEl.remove();
 
+        const values = [entryEl.dataset.student, entryEl.dataset.uni, entryEl.dataset.score]
+
+        fields.forEach((field, index) => field.value = values[index]);
+
+        btnNext.disabled = false;
     }
 
     function applyHandler(e) {
+        const entryEl = e.target.closest('li');
+        entryEl.remove();
 
+        entryEl.querySelector('.action-btn').remove();
+        entryEl.querySelector('.action-btn').remove();
+
+        candidatesListEl.appendChild(entryEl);
+
+        btnNext.disabled = false;
     }
 }
   
