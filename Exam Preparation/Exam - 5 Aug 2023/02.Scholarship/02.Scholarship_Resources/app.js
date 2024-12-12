@@ -1,6 +1,6 @@
 window.addEventListener("load", solve);
 
-//Functionality: Works! // In Judge: 70 points------------------------------------------------------
+//Functionality: Works! // In Judge: 80 points ------------------------------------------------------
 
 function solve() {
 
@@ -37,7 +37,7 @@ function solve() {
             previewListEl);
         const articleEl = createElement('article', {}, entryEl);
 
-        createElement('p', {textContent: student}, articleEl);
+        createElement('h4', {textContent: student}, articleEl);
         createElement('p', {textContent: `University: ${uni}`}, articleEl);
         createElement('p', {textContent: `Score: ${score}`}, articleEl);
 
