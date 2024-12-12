@@ -1,5 +1,7 @@
 window.addEventListener("load", solve);
 
+// Functionality: Works! // In Judge: 20 points --------------------------------- can't find errors...
+
 function solve() {
 
     const nameInputEl = document.querySelector('#student');
