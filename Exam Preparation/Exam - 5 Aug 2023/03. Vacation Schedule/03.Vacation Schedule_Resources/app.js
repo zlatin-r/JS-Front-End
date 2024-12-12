@@ -62,9 +62,8 @@ function init() {
     const loadButtonEl = document.querySelector('#load-vacations');
     const addBtnEl = document.querySelector('#add-vacation');
     const editBtnEl = document.querySelector('#edit-vacation');
-    const changeBtnEl = document.querySelector('.change-btn');
-    const doneBtnEl = document.querySelector('.done-btn');
 
+    loadButtonEl.addEventListener('click', loadEntries);
     addBtnEl.addEventListener('click', createHandler);
     editBtnEl.addEventListener('click', updateHandler);
 
@@ -113,7 +112,6 @@ function init() {
         });
 
         fields.forEach(field => field.value = '');
-
     }
 
     function changeHandler(e) {
