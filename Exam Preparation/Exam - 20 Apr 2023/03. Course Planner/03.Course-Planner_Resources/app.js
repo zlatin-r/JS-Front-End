@@ -15,9 +15,12 @@ const loadButtonEl = document.querySelector('#load-course');
 const addCourseBtnEl = document.querySelector('#add-course');
 const editCourseBtnEl = document.querySelector('#edit-course');
 
-loadButtonEl.addEventListener('click', loadCourses);
+loadButtonEl.addEventListener('click', loadBtnHandler);
+addCourseBtnEl.addEventListener('click', addBtnHandler);
 
-function loadCourses() {
+
+function loadBtnHandler() {
+
     fetch(baseUrl)
         .then(res => res.json())
         .then(data => {
@@ -60,13 +63,28 @@ function loadCourses() {
         .catch(err => console.log(err));
 }
 
-function addHandler() {
+function addBtnHandler(e) {
+    e.preventDefault();
+
+    console.log('clicked');
     if (!titleInputEl.value || !typeInputEl.value || !teacherNameInputEl.value || !descriptionInputEl.value) return;
 
-    const newCourse = {
-        title: titleInputEl.value,
-        type: typeInputEl.value,
-        teacherName: teacherNameInputEl.value,
-        description: descriptionInputEl.value,
+    const headers = {
+        method: 'POST',
+        body: JSON.stringify({
+            title: titleInputEl.value,
+            type: typeInputEl.value,
+            teacherName: teacherNameInputEl.value,
+            description: descriptionInputEl.value,
+        }),
     }
+
+    fetch(baseUrl, headers)
+        .then(loadBtnHandler)
+        .catch(err => console.log(err));
+
+    titleInputEl.value = '';
+    typeInputEl.value = '';
+    teacherNameInputEl.value = '';
+    descriptionInputEl.value = '';
 }
