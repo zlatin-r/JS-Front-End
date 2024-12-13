@@ -85,7 +85,7 @@ async function loadBoard() {
                 todoListEl.appendChild(newTask);
                 break;
             case 'In Progress':
-                taskButton.textContent = 'Move to Code Preview';
+                taskButton.textContent = 'Move to Code Review';
                 newTask.appendChild(taskButton);
                 inProgressListEl.appendChild(newTask);
                 break;
