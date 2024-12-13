@@ -24,7 +24,6 @@ editCourseBtnEl.addEventListener('click', editBtnHandler);
 
 
 async function loadBtnHandler() {
-    clearCoursesList()
 
     fetch(baseUrl)
         .then(res => res.json())
