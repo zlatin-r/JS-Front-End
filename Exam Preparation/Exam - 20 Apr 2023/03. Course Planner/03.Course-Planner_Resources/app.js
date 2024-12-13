@@ -17,13 +17,14 @@ const editCourseBtnEl = document.querySelector('#edit-course');
 
 let courseId = null;
 
+
 loadButtonEl.addEventListener('click', loadBtnHandler);
 addCourseBtnEl.addEventListener('click', addBtnHandler);
 editCourseBtnEl.addEventListener('click', editBtnHandler);
 
 
-function loadBtnHandler() {
-    coursesListEl.innerHTML = '';
+async function loadBtnHandler() {
+    clearCoursesList()
 
     fetch(baseUrl)
         .then(res => res.json())
@@ -85,21 +86,22 @@ function attachEventListeners() {
 
     finishButtonsEl.forEach(button => {
         button.addEventListener('click', (e) => {
-
+            const currCourse = e.target.closest('.container');
+            const courseTitle = currCourse.querySelector('h2').textContent;
+            deleteBtnHandler(courseTitle);
         });
     });
 }
 
-function populateInputFields(title, teacher, type, desc) {
-    courseId = getIdByTitle(title);
+async function populateInputFields(title, teacher, type, desc) {
+    courseId = await getIdByTitle(title);
 
     titleInputEl.value = title;
     teacherNameInputEl.value = teacher;
     typeInputEl.value = type;
     descriptionInputEl.value = desc;
 
-    editCourseBtnEl.disabled = false;
-    addCourseBtnEl.disabled = true;
+    enableAddBtn();
 }
 
 function getIdByTitle(courseTitle) {
@@ -108,9 +110,7 @@ function getIdByTitle(courseTitle) {
         .then(res => Object.entries(res).find(course => course[1].title === courseTitle)[1]._id);
 }
 
-function addBtnHandler(e) {
-    e.preventDefault();
-
+function addBtnHandler() {
     if (!titleInputEl.value || !typeInputEl.value || !teacherNameInputEl.value || !descriptionInputEl.value) return;
 
     const headers = {
@@ -129,11 +129,9 @@ function addBtnHandler(e) {
             clearInputFields();
         })
         .catch(err => console.log(err));
-
-    // clearInputFields
 }
 
-function editBtnHandler() {
+async function editBtnHandler() {
     const data = {
         title: titleInputEl.value,
         type: typeInputEl.value,
@@ -144,13 +142,26 @@ function editBtnHandler() {
 
     fetch(endpoints.update(data._id), {
         method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(data),
     }).then(() => {
-        loadBtnHandler()
-    })
+        loadBtnHandler();
+        clearInputFields();
+        courseId = null;
+        enableEditBtn();
+    });
+}
 
-    editCourseBtnEl.disabled = false;
-    addCourseBtnEl.disabled = true;
+function deleteBtnHandler(course) {
+    console.log(course);
+    getIdByTitle(course)
+        .then((id) =>
+            fetch(endpoints.delete(id), {
+                method: 'DELETE'
+            }))
+        .then(() => {
+            loadBtnHandler();
+        });
 }
 
 function clearInputFields() {
@@ -159,3 +170,18 @@ function clearInputFields() {
     teacherNameInputEl.value = '';
     descriptionInputEl.value = '';
 }
+
+function enableAddBtn() {
+    editCourseBtnEl.disabled = false;
+    addCourseBtnEl.disabled = true;
+}
+
+function enableEditBtn() {
+    editCourseBtnEl.disabled = true;
+    addCourseBtnEl.disabled = false;
+}
+
+function clearCoursesList() {
+    coursesListEl.innerHTML = ''
+}
+
