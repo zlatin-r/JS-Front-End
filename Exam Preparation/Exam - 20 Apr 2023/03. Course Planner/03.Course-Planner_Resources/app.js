@@ -1,4 +1,4 @@
-const baseUrl = 'http://localhost:3030/jsonstore/tasks/';
+const baseUrl = 'http://localhost:3030/jsonstore/tasks';
 const endpoints = {
     update: (id) => `${baseUrl}/${id}`,
     delete: (id) => `${baseUrl}/${id}`,
@@ -15,16 +15,19 @@ const loadButtonEl = document.querySelector('#load-course');
 const addCourseBtnEl = document.querySelector('#add-course');
 const editCourseBtnEl = document.querySelector('#edit-course');
 
+let courseId = null;
+
 loadButtonEl.addEventListener('click', loadBtnHandler);
 addCourseBtnEl.addEventListener('click', addBtnHandler);
+editCourseBtnEl.addEventListener('click', editBtnHandler);
 
 
 function loadBtnHandler() {
+    coursesListEl.innerHTML = '';
 
     fetch(baseUrl)
         .then(res => res.json())
         .then(data => {
-            console.log(data);
             Object.values(data).forEach((course) => {
                 const newContainer = document.createElement('div');
                 newContainer.className = 'container';
@@ -59,14 +62,55 @@ function loadBtnHandler() {
 
                 coursesListEl.appendChild(newContainer);
             });
+            attachEventListeners();
         })
         .catch(err => console.log(err));
+}
+
+function attachEventListeners() {
+    const editButtonsEl = document.querySelectorAll('.edit-btn');
+    const finishButtonsEl = document.querySelectorAll('.finish-btn');
+
+    editButtonsEl.forEach(button => {
+        button.addEventListener('click', (e) => {
+            const currCourse = e.target.closest('.container');
+            const courseTitle = currCourse.querySelector('h2').textContent;
+            const courseTeacher = currCourse.querySelector('h3:nth-of-type(1)').textContent;
+            const courseType = currCourse.querySelector('h3:nth-of-type(2)').textContent;
+            const courseDescription = currCourse.querySelector('h4').textContent;
+            populateInputFields(courseTitle, courseTeacher, courseType, courseDescription);
+            coursesListEl.removeChild(currCourse);
+        });
+    });
+
+    finishButtonsEl.forEach(button => {
+        button.addEventListener('click', (e) => {
+
+        });
+    });
+}
+
+function populateInputFields(title, teacher, type, desc) {
+    courseId = getIdByTitle(title);
+
+    titleInputEl.value = title;
+    teacherNameInputEl.value = teacher;
+    typeInputEl.value = type;
+    descriptionInputEl.value = desc;
+
+    editCourseBtnEl.disabled = false;
+    addCourseBtnEl.disabled = true;
+}
+
+function getIdByTitle(courseTitle) {
+    return fetch(baseUrl)
+        .then(res => res.json())
+        .then(res => Object.entries(res).find(course => course[1].title === courseTitle)[1]._id);
 }
 
 function addBtnHandler(e) {
     e.preventDefault();
 
-    console.log('clicked');
     if (!titleInputEl.value || !typeInputEl.value || !teacherNameInputEl.value || !descriptionInputEl.value) return;
 
     const headers = {
@@ -74,15 +118,42 @@ function addBtnHandler(e) {
         body: JSON.stringify({
             title: titleInputEl.value,
             type: typeInputEl.value,
-            teacherName: teacherNameInputEl.value,
+            teacher: teacherNameInputEl.value,
             description: descriptionInputEl.value,
         }),
     }
 
     fetch(baseUrl, headers)
-        .then(loadBtnHandler)
+        .then(() => {
+            loadBtnHandler();
+            clearInputFields();
+        })
         .catch(err => console.log(err));
 
+    // clearInputFields
+}
+
+function editBtnHandler() {
+    const data = {
+        title: titleInputEl.value,
+        type: typeInputEl.value,
+        teacher: teacherNameInputEl.value,
+        description: descriptionInputEl.value,
+        _id: courseId
+    }
+
+    fetch(endpoints.update(data._id), {
+        method: 'PUT',
+        body: JSON.stringify(data),
+    }).then(() => {
+        loadBtnHandler()
+    })
+
+    editCourseBtnEl.disabled = false;
+    addCourseBtnEl.disabled = true;
+}
+
+function clearInputFields() {
     titleInputEl.value = '';
     typeInputEl.value = '';
     teacherNameInputEl.value = '';
