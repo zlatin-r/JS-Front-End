@@ -1,76 +1,84 @@
-window.addEventListener("load", solve);
+window.addEventListener("load", solve)
 
 function solve() {
-    const addLaptopFormInputEl = document.querySelectorAll('.laptop-info input');
-    const addBtnEl = document.querySelector('.laptop-info button');
-    const clearBtnEl = document.querySelector('.btn.clear');
+    const modelInputEl = document.querySelector('#laptop-model');
+    const storageInputEl = document.querySelector('#storage');
+    const priceInputEl = document.querySelector('#price');
+
     const checkListEl = document.querySelector('#check-list');
     const laptopsListEl = document.querySelector('#laptops-list');
 
-    addBtnEl.addEventListener('click', (e) => {
-        e.preventDefault();
+    const clearBtnEl = document.querySelector('.clear');
+    clearBtnEl.addEventListener('click', () => {location.reload()});
 
-        const model = addLaptopFormInputEl[0].value.trim();
-        const memory = addLaptopFormInputEl[1].value.trim();
-        const price = addLaptopFormInputEl[2].value.trim();
+    const addBtnEl = document.querySelector('#add-btn');
+    addBtnEl.addEventListener('click', publish)
 
-        if (model === "" ||
-            memory === "" ||
-            price === "") {
-            return
-        }
+    function publish() {
+        if (!modelInputEl.value || !storageInputEl.value || !priceInputEl.value) return;
 
-        checkListEl.innerHTML = `
-          <li class="laptop-item">
-            <article>
-                <p>${model}</p>
-                <p>Memory: ${memory} TB</p>
-                <p>Price: ${price}$</p>
-            </article>
-            <button class="btn edit">edit</button>
-            <button class="btn ok">ok</button>
-          </li>
-          `;
+        const newLaptop = document.createElement('li');
+        newLaptop.className = 'laptop-item';
 
-        addLaptopFormInputEl.forEach(el => {
-            el.value = ''
-        });
+        const articleEl = document.createElement('article');
+
+        const modelEl = document.createElement('p');
+        let model = modelInputEl.value;
+        modelEl.textContent = model;
+
+        const storageEl = document.createElement('p');
+        let storage = storageInputEl.value;
+        storageEl.textContent = `Memory: ${storage} TB`;
+
+        const priceEl = document.createElement('p');
+        let price = priceInputEl.value;
+        priceEl.textContent = `Price: ${price}$`;
+
+        const editBtnEl = document.createElement('button');
+        editBtnEl.className = 'btn edit';
+        editBtnEl.textContent = 'edit';
+        editBtnEl.addEventListener('click', editBtnHandler);
+
+        const okBtnEl = document.createElement('button');
+        okBtnEl.className = 'btn ok';
+        okBtnEl.textContent = 'ok';
+        okBtnEl.addEventListener('click', okBtnHandler);
+
+        articleEl.appendChild(modelEl);
+        articleEl.appendChild(storageEl);
+        articleEl.appendChild(priceEl);
+
+        newLaptop.appendChild(articleEl);
+        newLaptop.appendChild(editBtnEl);
+        newLaptop.appendChild(okBtnEl);
+
+        checkListEl.appendChild(newLaptop);
+
+        modelInputEl.value = '';
+        storageInputEl.value = '';
+        priceInputEl.value = '';
+
         addBtnEl.disabled = true;
-    });
 
-    checkListEl.addEventListener('click', (e) => {
-        if (e.target.classList.contains('edit')) {
+        function editBtnHandler() {
+            modelInputEl.value = model;
+            storageInputEl.value = storage;
+            priceInputEl.value = price;
 
-            const laptopItem = e.target.closest('.laptop-item');
-            const article = laptopItem.querySelector('article');
-            const model = article.querySelector('p:nth-of-type(1)').textContent;
-            const memory = article.querySelector('p:nth-of-type(2)').textContent
-                .replace('Memory: ', '')
-                .replace(' TB', '');
-            const price = article.querySelector('p:nth-of-type(3)').textContent
-                .replace('Price: ', '')
-                .replace('$', '');
-
-            addLaptopFormInputEl[0].value = model;
-            addLaptopFormInputEl[1].value = memory;
-            addLaptopFormInputEl[2].value = price;
-
-            addBtnEl.disabled = false;
-            laptopItem.remove();
-
-        } else if (e.target.classList.contains('ok')) {
-            checkListEl.remove();
-            laptopsListEl.append(checkListEl);
-
-            document.querySelectorAll('#laptops-list .btn').forEach((el) => {
-                el.remove();
-            });
+            checkListEl.removeChild(newLaptop);
 
             addBtnEl.disabled = false;
         }
-    })
-    clearBtnEl.addEventListener('click', () => {
-        location.reload();
-    });
+
+        function okBtnHandler() {
+            checkListEl.removeChild(newLaptop);
+
+            newLaptop.removeChild(editBtnEl);
+            newLaptop.removeChild(okBtnEl);
+
+            laptopsListEl.appendChild(newLaptop);
+
+            addBtnEl.disabled = false;
+        }
+    }
 }
-  
