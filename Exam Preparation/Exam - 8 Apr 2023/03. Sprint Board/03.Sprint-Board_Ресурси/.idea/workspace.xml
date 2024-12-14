@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="aedd9475-2fad-4fd8-8583-5ee8f40112ca" name="Changes" comment="Solution" />
+    <list default="true" id="aedd9475-2fad-4fd8-8583-5ee8f40112ca" name="Changes" comment="Solution">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/solve.js" beforeDir="false" afterPath="$PROJECT_DIR$/solve.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,21 +16,21 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../.." />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "zlatin-r"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;zlatin-r&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/zlatin-r/JS-Front-End.git",
-    "accountId": "1c206b25-5d3d-4724-b68c-2fd9003dabb4"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/zlatin-r/JS-Front-End.git&quot;,
+    &quot;accountId&quot;: &quot;1c206b25-5d3d-4724-b68c-2fd9003dabb4&quot;
   }
-}]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 0
-}]]></component>
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
   <component name="ProjectId" id="2qA2SrAcT3OMteWt5cXEeFJUrpY" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -38,7 +41,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/home/zl/JS-Front-End/Exam Preparation/Exam Preparation I/03. Todo List/03. Todo List_Ресурси",
+    "last_opened_file_path": "/home/zl/JS-Front-End/Exam Preparation/Exam - 8 Apr 2023/03. Sprint Board/03.Sprint-Board_Ресурси",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -64,6 +67,7 @@
       <option name="presentableId" value="Default" />
       <updated>1734091061539</updated>
       <workItem from="1734091062587" duration="8965000" />
+      <workItem from="1734171484843" duration="704000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit">
       <option name="closed" value="true" />
@@ -89,7 +93,15 @@
       <option name="project" value="LOCAL" />
       <updated>1734101960128</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Solution">
+      <option name="closed" value="true" />
+      <created>1734171884397</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1734171884397</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -16,12 +16,12 @@ const descriptionInputEl = document.querySelector('#description');
 
 let taskId = null;
 
+function attachEvents() {
+    loadBoardBtnEl.addEventListener('click', loadBoard);
+    addTaskBtnEl.addEventListener('click', addTask);
+}
 
-loadBoardBtnEl.addEventListener('click', loadBoard);
-addTaskBtnEl.addEventListener('click', addTask);
-
-
-function attachListeners() {
+async function attachListeners() {
     const moveButtons = document.querySelectorAll('.task-list button');
     const doneButtons = document.querySelectorAll('#done-section button');
 
@@ -41,7 +41,7 @@ function attachListeners() {
     });
 }
 
-function addTask() {
+async function addTask() {
     const headers = {
         method: 'POST',
         body: JSON.stringify({
@@ -50,7 +50,7 @@ function addTask() {
             status: "ToDo"
         }),
     }
-    fetch(baseUrl, headers)
+    await fetch(baseUrl, headers)
         .then(() => {
             loadBoard();
             clearInputFields();
@@ -58,10 +58,10 @@ function addTask() {
 }
 
 async function loadBoard() {
-    clearTaskList();
-
     const response = await fetch(baseUrl);
     const data = await response.json();
+
+    clearTaskList();
 
     Object.values(data).forEach((task) => {
         const newTask = document.createElement('li');
@@ -101,7 +101,7 @@ async function loadBoard() {
                 break;
         }
     });
-    attachListeners();
+    await attachListeners();
 }
 
 async function changeStatus(title, SectionId) {
@@ -136,12 +136,13 @@ async function changeStatus(title, SectionId) {
 }
 
 async function deleteTask(taskTitle) {
-    getTaskByIdTitle(taskTitle).then((id) =>
-        fetch(endpoints.delete(id), {
-            method: 'DELETE',
-        }).then(() => {
-            loadBoard();
-        }))
+    taskId = getTaskByIdTitle(taskTitle);
+
+    fetch(endpoints.delete(taskId), {
+        method: 'DELETE',
+    }).then(() => {
+        loadBoard();
+    })
 }
 
 function getTaskByIdTitle(title) {
@@ -161,3 +162,5 @@ function clearTaskList() {
     doneListEl.innerHTML = '';
     codeReviewListEl.innerHTML = '';
 }
+
+attachEvents();
