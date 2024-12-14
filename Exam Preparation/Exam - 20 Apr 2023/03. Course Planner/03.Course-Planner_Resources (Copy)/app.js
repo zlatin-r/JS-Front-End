@@ -95,17 +95,18 @@ function editCourse() {
         body: JSON.stringify({
             title: titleInputEl.value,
             teacher: teacherInputEl.value,
-            type: coursesListEl.value,
+            type: typeInputEl.value,
             description: descriptionInputEl.value,
             _id: courseId
         }),
     }
-    fetch(endpoints.update(headers._id), headers)
+    fetch(endpoints.update(courseId), headers)
         .then(() => {
             clearInputs();
+            enableAddBtn();
             loadCourses();
             courseId = null;
-        })
+        });
 }
 
 async function populateInputFields(title, teacher, type, description) {
@@ -141,7 +142,6 @@ function addCourse() {
     fetch(baseUrl, headers)
         .then(() => {
             clearInputs();
-            enableAddBtn();
             loadCourses();
         });
 }
