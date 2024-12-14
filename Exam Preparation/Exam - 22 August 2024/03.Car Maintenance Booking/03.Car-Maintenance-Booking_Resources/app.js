@@ -1,200 +1,180 @@
 const baseUrl = 'http://localhost:3030/jsonstore/appointments';
-
 const endpoints = {
     update: (id) => `${baseUrl}/${id}`,
     delete: (id) => `${baseUrl}/${id}`,
-};
+}
 
 const appointmentsListEl = document.querySelector('#appointments-list');
 
-const loadAppointmentsBtnEl = document.querySelector('#load-appointments');
+const modelInputEl = document.querySelector('#car-model');
+const serviceInputEl = document.querySelector('#car-service');
+const appDateInputEl = document.querySelector('#date');
+
+const loadBtnEl = document.querySelector('#load-appointments');
 const addAppointmentBtnEl = document.querySelector('#add-appointment');
+const editAppointmentBtnEl = document.querySelector('#edit-appointment');
 
-const addBtn = document.getElementById("add-appointment");
-const editAppointmentBtnEl = document.getElementById("edit-appointment");
+let appointmentId = null;
 
-const carModel = document.querySelector('#car-model');
-const carService = document.querySelector('#car-service');
-const serviceDate = document.querySelector('#date');
-
-let selectedTaskId = null;
-
-loadAppointmentsBtnEl.addEventListener('click', loadAppointments);
-addAppointmentBtnEl.addEventListener('click', addAppointment);
-
-editAppointmentBtnEl.addEventListener('click', editAppointment);
-
-async function addAppointment(event) {
-    event.preventDefault();
-
-    if (carModel.value !== '' && carService.value !== '' && serviceDate.value !== '') {
-
-        try {
-            const headers = {
-                method: 'POST',
-                body: JSON.stringify({
-                    model: carModel.value,
-                    service: carService.value,
-                    date: serviceDate.value,
-                }),
-            }
-
-            fetch(baseUrl, headers)
-                .then(() => loadAppointments)
-                .catch(error => console.log(error));
-
-            clearAllInputs();
-
-        } catch (error) {
-            console.log(error);
-        }
-    }
+function init() {
+    loadBtnEl.addEventListener('click', loadAppointments)
+    addAppointmentBtnEl.addEventListener('click', addAppointment);
+    editAppointmentBtnEl.addEventListener('click', editAppointment);
 }
 
-async function loadAppointments() {
-    appointmentsListEl.innerHTML = '';
-
-    try {
-        const response = await fetch(baseUrl);
-        const appointments = await response.json();
-
-        Object.values(appointments).forEach((appointment) => {
-
-            const newAppointmentLiEl = document.createElement('li');
-            newAppointmentLiEl.className = 'appointment';
-
-            const carModelEl = document.createElement('h2');
-            carModelEl.textContent = appointment.model;
-
-            const appDateEl = document.createElement('h3');
-            appDateEl.textContent = appointment.date;
-
-            const serviceDescriptionEl = document.createElement('h3');
-            serviceDescriptionEl.textContent = appointment.service;
-
-            const buttonsContainerDivEl = document.createElement('div');
-            buttonsContainerDivEl.className = 'buttons-appointment';
-
-            const changeBtnEl = document.createElement('button');
-            changeBtnEl.textContent = 'Change';
-            changeBtnEl.className = 'change-btn';
-
-            const deleteBtnEl = document.createElement('button');
-            deleteBtnEl.textContent = 'Delete';
-            deleteBtnEl.className = 'delete-btn';
-
-            buttonsContainerDivEl.appendChild(changeBtnEl);
-            buttonsContainerDivEl.appendChild(deleteBtnEl);
-
-            newAppointmentLiEl.appendChild(carModelEl);
-            newAppointmentLiEl.appendChild(serviceDescriptionEl);
-            newAppointmentLiEl.appendChild(appDateEl);
-
-            newAppointmentLiEl.appendChild(buttonsContainerDivEl);
-
-            appointmentsListEl.appendChild(newAppointmentLiEl);
-        });
-        attachEventListeners();
-    } catch (error) {
-        console.error(error);
-    }
-}
-
-function attachEventListeners() {
-    const changeButtons = document.querySelectorAll('.change-btn');
-    const deleteButtons = document.querySelectorAll('.delete-btn');
-
-    changeButtons.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            const appointmentEl = e.target.closest('.appointment');
-            const model = appointmentEl.querySelector('h2').textContent;
-            const serviceDate = appointmentEl.querySelector('h3:first-of-type').textContent;
-            const serviceDescription = appointmentEl.querySelector('h3:last-of-type').textContent;
-            editTask(model, serviceDescription, serviceDate);
-            enableEditBtn();
-        });
-    });
-
-    deleteButtons.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            const appointmentEl = e.target.closest('.appointment');
-            const model = appointmentEl.querySelector('h2').textContent;
-            deleteTask(model);
-        });
-    });
-}
-
-function editAppointment(ev) {
-    ev.preventDefault();
-
-    const data = {
-        model: carModel.value,
-        service: carService.value,
-        date: serviceDate.value,
-        _id: selectedTaskId,
-    };
-
-    fetch(endpoints.update(data._id), {
+async function editAppointment() {
+    const headers = {
         method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    })
+        body: JSON.stringify({
+            model: modelInputEl.value,
+            service: serviceInputEl.value,
+            date: appDateInputEl.value,
+            _id: appointmentId,
+        }),
+    }
+
+    fetch(endpoints.update(appointmentId), headers)
         .then(() => {
-            clearAllInputs();
-            selectedTaskId = null;
+            loadAppointments();
+            clearInputFields();
             enableAddBtn();
-            return loadAppointments();
+            appointmentId = null;
         })
-        .catch(console.error);
 }
 
-function deleteTask(taskLocation) {
-    getIdByModel(taskLocation)
+async function deleteAppointment(model) {
+    getIdByModel(model)
         .then((id) =>
             fetch(endpoints.delete(id), {
                 method: 'DELETE',
-                headers: {'Content-Type': 'application/json'},
-            })
-        )
+            }))
         .then(() => {
-            clearAllInputs();
-            selectedTaskId = null;
-            enableAddBtn();
-            return loadAppointments();
-
+            loadAppointments();
+            appointmentId = null;
         })
-        .catch(console.error);
 }
 
+async function addAppointment() {
+    if (!modelInputEl.value || !serviceInputEl.value || !appDateInputEl.value) return;
 
-function getIdByModel(task) {
+    const headers = {
+        method: 'POST',
+        body: JSON.stringify({
+            model: modelInputEl.value,
+            service: serviceInputEl.value,
+            date: appDateInputEl.value,
+        })
+    }
+
+    fetch(baseUrl, headers)
+        .then(() => {
+            loadAppointments();
+            clearInputFields();
+        });
+}
+
+async function loadAppointments() {
+    clearAppointmentsList();
+
+    const response = await fetch(baseUrl);
+    const data = await response.json();
+
+    Object.values(data).forEach((appointment) => {
+        const newAppointment = document.createElement("li");
+        newAppointment.className = "appointment";
+
+        const carModelEl = document.createElement("h2");
+        carModelEl.textContent = appointment.model;
+
+        const appDateEl = document.createElement("h3");
+        appDateEl.textContent = appointment.date;
+
+        const appServiceEl = document.createElement("h3");
+        appServiceEl.textContent = appointment.service;
+
+        const buttonContainerEl = document.createElement("div");
+        buttonContainerEl.className = "buttons-appointment";
+
+        const changeBtnEl = document.createElement("button");
+        changeBtnEl.className = "change-btn";
+        changeBtnEl.textContent = 'Change';
+
+        const deleteBtnEl = document.createElement("button");
+        deleteBtnEl.className = 'delete-btn';
+        deleteBtnEl.textContent = 'Delete';
+
+        buttonContainerEl.append(changeBtnEl);
+        buttonContainerEl.append(deleteBtnEl);
+
+        newAppointment.appendChild(carModelEl);
+        newAppointment.appendChild(appDateEl);
+        newAppointment.appendChild(appServiceEl);
+        newAppointment.appendChild(buttonContainerEl);
+
+        appointmentsListEl.appendChild(newAppointment);
+    });
+    attachEventListeners();
+}
+
+async function attachEventListeners() {
+    const changeButtonsEl = document.querySelectorAll('.change-btn');
+    const deleteButtonEl = document.querySelectorAll('.delete-btn');
+
+    changeButtonsEl.forEach(button => {
+        button.addEventListener('click', (e) => {
+            const currAppointment = e.target.parentElement.parentElement;
+            const carModel = currAppointment.querySelector('h2').textContent;
+            const appDate = currAppointment.querySelector('h3:nth-of-type(1)').textContent;
+            const service = currAppointment.querySelector('h3:nth-of-type(2)').textContent;
+            populateData(carModel, appDate, service);
+        });
+    });
+
+    deleteButtonEl.forEach(button => {
+        button.addEventListener('click', (e) => {
+            const currAppointment = e.target.parentElement.parentElement;
+            const carModel = currAppointment.querySelector('h2').textContent;
+            deleteAppointment(carModel);
+        })
+    })
+}
+
+function getIdByModel(model) {
     return fetch(baseUrl)
         .then(res => res.json())
-        .then(res => Object.entries(res).find(e => e[1].model === task)[1]._id);
+        .then(res => Object.entries(res).find(a => a[1].model === model)[1]._id);
 }
 
-async function editTask(taskModel, taskService, taskDate) {
-    selectedTaskId = await getIdByModel(taskModel);
+async function populateData(m, d, s) {
+    appointmentId = await getIdByModel(m);
 
-    carModel.value = taskModel;
-    carService.value = taskService;
-    serviceDate.value = taskDate;
+    console.log(appointmentId);
+
+    modelInputEl.value = m;
+    appDateInputEl.value = d;
+    serviceInputEl.value = s;
+
+    enableEditBtn();
 }
 
 function enableEditBtn() {
-    addBtn.disabled = true;
+    addAppointmentBtnEl.disabled = true;
     editAppointmentBtnEl.disabled = false;
 }
 
 function enableAddBtn() {
-    addBtn.disabled = false;
+    addAppointmentBtnEl.disabled = false;
     editAppointmentBtnEl.disabled = true;
 }
 
-function clearAllInputs() {
-    carModel.value = '';
-    carService.value = '';
-    serviceDate.value = '';
+function clearAppointmentsList() {
+    appointmentsListEl.innerHTML = '';
 }
+
+function clearInputFields() {
+    modelInputEl.value = '';
+    serviceInputEl.value = '';
+    appDateInputEl.value = '';
+}
+
+init();
