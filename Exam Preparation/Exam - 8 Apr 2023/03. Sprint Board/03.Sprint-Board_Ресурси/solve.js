@@ -87,7 +87,10 @@ function addTask() {
 }
 
 function addEventListeners() {
-    const moveButtons = document.querySelectorAll('button');
+    const moveButtons = document.querySelectorAll(
+        '#todo-section button, #in-progress-section button, #code-review-section button'
+    );
+    const closeButtons = document.querySelectorAll('#done-section button');
 
     moveButtons.forEach(button => {
         button.addEventListener('click', (e) => {
@@ -97,6 +100,14 @@ function addEventListeners() {
             changeStatus(taskTitle, currBoard);
         });
     });
+
+    closeButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            const currTask = e.target.parentElement;
+            const taskTitle = currTask.querySelector('h3').textContent;
+            deleteTask(taskTitle);
+        })
+    })
 }
 
 //---------- Helpers ---------------------
@@ -124,7 +135,18 @@ async function changeStatus(title, SectionId) {
     }
 
     fetch(endpoints.update(taskId), headers)
-        .then(() => loadTasks());
+        .then(() => {
+            loadTasks();
+        });
+}
+
+function deleteTask(title) {
+    getIdByTitle(title)
+        .then((id) =>
+            fetch(endpoints.delete(id), {method: 'DELETE'}))
+        .then(() => {
+            loadTasks();
+        });
 }
 
 function getIdByTitle(title) {
