@@ -189,4 +189,4 @@ function clearList() {
     coursesListEl.innerHTML = '';
 }
 
-attachEvents();
+attachEvents()
