@@ -1,0 +1,22 @@
+{
+  "name": "course-planner",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "mocha tests",
+    "start": "http-server -a localhost -p 3000 -P http://localhost:3000? -c-1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "playwright": "^1.49.1",
+    "playwright-chromium": "^1.49.1",
+    "mocha": "^11.0.1",
+    "chai": "^5.1.1"
+  }
+}
