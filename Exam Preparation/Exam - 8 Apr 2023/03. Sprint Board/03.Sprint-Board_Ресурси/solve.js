@@ -69,7 +69,6 @@ function loadTasks() {
 }
 
 function addTask() {
-    // TODO check if empty input fields needed
 
     const headers = {
         method: 'POST',
@@ -106,11 +105,10 @@ function addEventListeners() {
             const currTask = e.target.parentElement;
             const taskTitle = currTask.querySelector('h3').textContent;
             deleteTask(taskTitle);
-        })
-    })
+        });
+    });
 }
 
-//---------- Helpers ---------------------
 async function changeStatus(title, SectionId) {
     taskId = await getIdByTitle(title);
     let newStatus = null;
@@ -148,6 +146,8 @@ function deleteTask(title) {
             loadTasks();
         });
 }
+
+//---------- Helpers ---------------------
 
 function getIdByTitle(title) {
     return fetch(baseUrl)
