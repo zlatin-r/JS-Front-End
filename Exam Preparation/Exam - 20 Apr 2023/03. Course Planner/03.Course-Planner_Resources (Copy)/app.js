@@ -91,11 +91,10 @@ async function attachEventListeners() {
 
 async function deleteCourse(t) {
     getIdByTitle(t)
-        .then((id) => {
+        .then((id) =>
             fetch(endpoints.delete(id), {
                 method: 'DELETE',
-            })
-        })
+            }))
         .then(() => {
             loadCourses();
         });
