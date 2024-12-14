@@ -17,20 +17,20 @@ const editCourseBtnEl = document.querySelector('#edit-course');
 
 let courseId = null;
 
-async function attachEvents() {
-    loadCoursesBtnEl.addEventListener('click', (e) => {
-        e.preventDefault();
-        loadCourses();
-    });
-    addCourseBtnEl.addEventListener('click', (e) => {
-        e.preventDefault();
-        addCourse();
-    });
-    editCourseBtnEl.addEventListener('click', (e) => {
-        e.preventDefault();
-        editCourse();
-    });
-}
+
+loadCoursesBtnEl.addEventListener('click', (e) => {
+    e.preventDefault();
+    loadCourses();
+});
+addCourseBtnEl.addEventListener('click', (e) => {
+    e.preventDefault();
+    addCourse();
+});
+editCourseBtnEl.addEventListener('click', (e) => {
+    e.preventDefault();
+    editCourse();
+});
+
 
 async function loadCourses() {
     clearList();
@@ -103,7 +103,6 @@ async function attachEventListeners() {
 async function deleteCourse(t) {
     getIdByTitle(t)
         .then((id) => {
-            console.log(id)
             fetch(endpoints.delete(id), {
                 method: 'DELETE',
             })
@@ -189,5 +188,3 @@ function clearInputs() {
 function clearList() {
     coursesListEl.innerHTML = '';
 }
-
-attachEvents()
