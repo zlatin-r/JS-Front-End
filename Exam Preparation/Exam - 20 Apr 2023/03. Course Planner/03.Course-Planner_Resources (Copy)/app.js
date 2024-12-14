@@ -103,6 +103,7 @@ async function attachEventListeners() {
 async function deleteCourse(t) {
     getIdByTitle(t)
         .then((id) => {
+            console.log(id)
             fetch(endpoints.delete(id), {
                 method: 'DELETE',
             })
@@ -143,7 +144,7 @@ async function populateInputFields(title, teacher, type, description) {
     enableEditBtn();
 }
 
-async function getIdByTitle(title) {
+function getIdByTitle(title) {
     return fetch(baseUrl)
         .then(res => res.json())
         .then((data) => Object.entries(data).find(c => c[1].title === title)[1]._id);
