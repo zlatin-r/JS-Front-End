@@ -21,7 +21,7 @@ function attachEvents() {
     addTaskBtnEl.addEventListener('click', addTask);
 }
 
-async function attachListeners() {
+function attachListeners() {
     const moveButtons = document.querySelectorAll('.task-list button');
     const doneButtons = document.querySelectorAll('#done-section button');
 
@@ -41,7 +41,7 @@ async function attachListeners() {
     });
 }
 
-async function addTask() {
+function addTask() {
     const headers = {
         method: 'POST',
         body: JSON.stringify({
@@ -50,7 +50,7 @@ async function addTask() {
             status: "ToDo"
         }),
     }
-    await fetch(baseUrl, headers)
+    fetch(baseUrl, headers)
         .then(() => {
             loadBoard();
             clearInputFields();
@@ -101,7 +101,7 @@ async function loadBoard() {
                 break;
         }
     });
-    await attachListeners();
+    attachListeners();
 }
 
 async function changeStatus(title, SectionId) {
@@ -136,7 +136,7 @@ async function changeStatus(title, SectionId) {
 }
 
 async function deleteTask(taskTitle) {
-    taskId = getTaskByIdTitle(taskTitle);
+    taskId = await getTaskByIdTitle(taskTitle);
 
     fetch(endpoints.delete(taskId), {
         method: 'DELETE',
