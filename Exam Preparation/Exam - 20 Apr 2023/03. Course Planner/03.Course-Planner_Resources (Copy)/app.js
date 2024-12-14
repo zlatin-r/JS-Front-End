@@ -17,20 +17,9 @@ const editCourseBtnEl = document.querySelector('#edit-course');
 
 let courseId = null;
 
-
-loadCoursesBtnEl.addEventListener('click', (e) => {
-    e.preventDefault();
-    loadCourses();
-});
-addCourseBtnEl.addEventListener('click', (e) => {
-    e.preventDefault();
-    addCourse();
-});
-editCourseBtnEl.addEventListener('click', (e) => {
-    e.preventDefault();
-    editCourse();
-});
-
+loadCoursesBtnEl.addEventListener('click', loadCourses);
+addCourseBtnEl.addEventListener('click', addCourse);
+editCourseBtnEl.addEventListener('click', editCourse);
 
 async function loadCourses() {
     clearList();
@@ -112,7 +101,8 @@ async function deleteCourse(t) {
         });
 }
 
-async function editCourse() {
+async function editCourse(e) {
+    e.preventDefault();
     const headers = {
         method: 'PUT',
         body: JSON.stringify({
@@ -149,7 +139,8 @@ function getIdByTitle(title) {
         .then((data) => Object.entries(data).find(c => c[1].title === title)[1]._id);
 }
 
-async function addCourse() {
+async function addCourse(e) {
+    e.preventDefault();
     if (!titleInputEl.value || !typeInputEl.value || !descriptionInputEl.value || !teacherInputEl.value) return;
 
     const headers = {
