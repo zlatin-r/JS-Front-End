@@ -16,12 +16,12 @@ const descriptionInputEl = document.querySelector('#description');
 
 let taskId = null;
 
-function attachEvents() {
-    loadBoardBtnEl.addEventListener('click', loadBoard);
-    addTaskBtnEl.addEventListener('click', addTask);
-}
 
-async function attachListeners() {
+loadBoardBtnEl.addEventListener('click', loadBoard);
+addTaskBtnEl.addEventListener('click', addTask);
+
+
+function attachListeners() {
     const moveButtons = document.querySelectorAll('.task-list button');
     const doneButtons = document.querySelectorAll('#done-section button');
 
@@ -41,7 +41,7 @@ async function attachListeners() {
     });
 }
 
-async function addTask() {
+function addTask() {
     const headers = {
         method: 'POST',
         body: JSON.stringify({
@@ -50,7 +50,7 @@ async function addTask() {
             status: "ToDo"
         }),
     }
-    await fetch(baseUrl, headers)
+    fetch(baseUrl, headers)
         .then(() => {
             loadBoard();
             clearInputFields();
@@ -58,10 +58,10 @@ async function addTask() {
 }
 
 async function loadBoard() {
+    clearTaskList();
+
     const response = await fetch(baseUrl);
     const data = await response.json();
-
-    clearTaskList();
 
     Object.values(data).forEach((task) => {
         const newTask = document.createElement('li');
@@ -101,7 +101,7 @@ async function loadBoard() {
                 break;
         }
     });
-    await attachListeners();
+    attachListeners();
 }
 
 async function changeStatus(title, SectionId) {
@@ -136,16 +136,15 @@ async function changeStatus(title, SectionId) {
 }
 
 async function deleteTask(taskTitle) {
-    taskId = getTaskByIdTitle(taskTitle);
-
-    fetch(endpoints.delete(taskId), {
-        method: 'DELETE',
-    }).then(() => {
-        loadBoard();
-    })
+    getTaskByIdTitle(taskTitle).then((id) =>
+        fetch(endpoints.delete(id), {
+            method: 'DELETE',
+        }).then(() => {
+            loadBoard();
+        }))
 }
 
-async function getTaskByIdTitle(title) {
+function getTaskByIdTitle(title) {
     return fetch(baseUrl)
         .then(response => response.json())
         .then(data => Object.entries(data).find(task => task[1].title === title)[1]._id);
@@ -162,5 +161,3 @@ function clearTaskList() {
     doneListEl.innerHTML = '';
     codeReviewListEl.innerHTML = '';
 }
-
-attachEvents();
