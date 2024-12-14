@@ -9,11 +9,20 @@ const inProgressSectionEl = document.querySelector('#in-progress-section');
 const codeReviewSectionEl = document.querySelector('#code-review-section');
 const doneSectionEl = document.querySelector('#done-section');
 
+const taskTitleEl = document.querySelector('#title');
+const descriptionEl = document.querySelector('#description');
+
 const loadBtnEl = document.querySelector('#load-board-btn');
+const addTaskBtnEl = document.querySelector('#create-task-btn');
+
+let taskId = null;
 
 loadBtnEl.addEventListener('click', loadTasks);
+addTaskBtnEl.addEventListener('click', addTask);
 
 function loadTasks() {
+    clearTasks();
+
     fetch(baseUrl)
         .then(res => res.json())
         .then((res) => {
@@ -55,5 +64,83 @@ function loadTasks() {
                         break;
                 }
             });
+            addEventListeners();
         });
+}
+
+function addTask() {
+    // TODO check if empty input fields needed
+
+    const headers = {
+        method: 'POST',
+        body: JSON.stringify({
+            title: taskTitleEl.value,
+            description: descriptionEl.value,
+            status: 'ToDo'
+        }),
+    }
+    fetch(baseUrl, headers)
+        .then(() => {
+            loadTasks();
+            clearInputs();
+        });
+}
+
+function addEventListeners() {
+    const moveButtons = document.querySelectorAll('button');
+
+    moveButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            const currTask = e.target.parentElement;
+            const taskTitle = currTask.querySelector('h3').textContent;
+            const currBoard = currTask.parentElement.id;
+            changeStatus(taskTitle, currBoard);
+        });
+    });
+}
+
+//---------- Helpers ---------------------
+async function changeStatus(title, SectionId) {
+    taskId = await getIdByTitle(title);
+    let newStatus = null;
+
+    switch (SectionId) {
+        case 'todo-section':
+            newStatus = 'In Progress';
+            break;
+        case 'in-progress-section':
+            newStatus = 'Code Review';
+            break;
+        case 'code-review-section':
+            newStatus = 'Done';
+            break;
+    }
+
+    const headers = {
+        method: 'PATCH',
+        body: JSON.stringify({
+            status: newStatus,
+        })
+    }
+
+    fetch(endpoints.update(taskId), headers)
+        .then(() => loadTasks());
+}
+
+function getIdByTitle(title) {
+    return fetch(baseUrl)
+        .then(res => res.json())
+        .then((res) => Object.entries(res).find(t => t[1].title === title)[1]._id);
+}
+
+function clearInputs() {
+    taskTitleEl.value = '';
+    descriptionEl.value = '';
+}
+
+function clearTasks() {
+    todoSectionEl.innerHTML = '';
+    inProgressSectionEl.innerHTML = '';
+    codeReviewSectionEl.innerHTML = '';
+    doneSectionEl.innerHTML = '';
 }
