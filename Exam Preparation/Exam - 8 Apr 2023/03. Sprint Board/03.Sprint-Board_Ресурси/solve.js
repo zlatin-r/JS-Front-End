@@ -3,6 +3,7 @@ const endpoints = {
     update: (id) => `${baseUrl}/${id}`,
     delete: (id) => `${baseUrl}/${id}`,
 }
+
 const loadBoardBtnEl = document.querySelector('#load-board-btn');
 const addTaskBtnEl = document.querySelector('#create-task-btn');
 
@@ -16,10 +17,12 @@ const descriptionInputEl = document.querySelector('#description');
 
 let taskId = null;
 
-loadBoardBtnEl.addEventListener('click', loadBoard);
-addTaskBtnEl.addEventListener('click', addTask);
+async function attachEvents() {
+    loadBoardBtnEl.addEventListener('click', loadBoard);
+    addTaskBtnEl.addEventListener('click', addTask);
+}
 
-function attachListeners() {
+async function attachListeners() {
     const moveButtons = document.querySelectorAll('.task-list button');
     const doneButtons = document.querySelectorAll('#done-section button');
 
@@ -39,7 +42,7 @@ function attachListeners() {
     });
 }
 
-function addTask() {
+async function addTask() {
     const headers = {
         method: 'POST',
         body: JSON.stringify({
@@ -48,7 +51,7 @@ function addTask() {
             status: "ToDo"
         }),
     }
-    fetch(baseUrl, headers)
+    await fetch(baseUrl, headers)
         .then(() => {
             loadBoard();
             clearInputFields();
@@ -56,10 +59,10 @@ function addTask() {
 }
 
 async function loadBoard() {
-    clearTaskList();
-
     const response = await fetch(baseUrl);
     const data = await response.json();
+
+    clearTaskList();
 
     Object.values(data).forEach((task) => {
         const newTask = document.createElement('li');
@@ -99,7 +102,7 @@ async function loadBoard() {
                 break;
         }
     });
-    attachListeners();
+    await attachListeners();
 }
 
 async function changeStatus(title, SectionId) {
@@ -133,7 +136,7 @@ async function changeStatus(title, SectionId) {
 }
 
 async function deleteTask(taskTitle) {
-    taskId = await getTaskByIdTitle(taskTitle);
+    taskId = getTaskByIdTitle(taskTitle);
 
     fetch(endpoints.delete(taskId), {
         method: 'DELETE',
@@ -142,7 +145,7 @@ async function deleteTask(taskTitle) {
     })
 }
 
-function getTaskByIdTitle(title) {
+async function getTaskByIdTitle(title) {
     return fetch(baseUrl)
         .then(response => response.json())
         .then(data => Object.entries(data).find(task => task[1].title === title)[1]._id);
@@ -159,3 +162,5 @@ function clearTaskList() {
     doneListEl.innerHTML = '';
     codeReviewListEl.innerHTML = '';
 }
+
+attachEvents();
