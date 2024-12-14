@@ -9,178 +9,162 @@ const coursesListEl = document.querySelector('#list');
 const titleInputEl = document.querySelector('#course-name');
 const typeInputEl = document.querySelector('#course-type');
 const descriptionInputEl = document.querySelector('#description');
-const teacherNameInputEl = document.querySelector('#teacher-name');
+const teacherInputEl = document.querySelector('#teacher-name');
 
-const loadButtonEl = document.querySelector('#load-course');
+const loadCoursesBtnEl = document.querySelector('#load-course');
 const addCourseBtnEl = document.querySelector('#add-course');
 const editCourseBtnEl = document.querySelector('#edit-course');
 
 let courseId = null;
 
+function attachEvents() {
+    loadCoursesBtnEl.addEventListener('click', loadCourses);
+    addCourseBtnEl.addEventListener('click', (e) => {
+        e.preventDefault();
+        addCourse();
+    });
+    editCourseBtnEl.addEventListener('click', (e) => {
+        e.preventDefault();
+        editCourse();
+    });
+}
 
-loadButtonEl.addEventListener('click', loadBtnHandler);
-addCourseBtnEl.addEventListener('click', addBtnHandler);
-editCourseBtnEl.addEventListener('click', editBtnHandler);
-
-
-async function loadBtnHandler() {
+function loadCourses() {
+    clearList();
 
     fetch(baseUrl)
         .then(res => res.json())
-        .then(data => {
+        .then((data) => {
             Object.values(data).forEach((course) => {
-                const newContainer = document.createElement('div');
-                newContainer.className = 'container';
+                const containerEl = document.createElement('div');
+                containerEl.className = 'container';
 
-                const titleEl = document.createElement('h2');
-                titleEl.textContent = course.title;
-
+                const courseTitleEl = document.createElement('h2');
+                courseTitleEl.textContent = course.title;
 
                 const teacherNameEl = document.createElement('h3');
                 teacherNameEl.textContent = course.teacher;
 
-                const typeEl = document.createElement('h3');
-                typeEl.textContent = course.type;
+                const courseTypeEl = document.createElement('h3');
+                courseTypeEl.textContent = course.type;
 
-                const descriptionEl = document.createElement('h4');
-                descriptionEl.textContent = course.description;
+                const courseDescriptionEl = document.createElement('h4');
+                courseDescriptionEl.textContent = course.description;
 
-                const editButtonEl = document.createElement('button');
-                editButtonEl.className = 'edit-btn';
-                editButtonEl.textContent = 'Edit Course';
+                const editBtnEl = document.createElement('button');
+                editBtnEl.className = 'edit-btn';
+                editBtnEl.textContent = 'Edit Course';
 
-                const finishButtonEl = document.createElement('button');
-                finishButtonEl.className = 'finish-btn';
-                finishButtonEl.textContent = 'Finish Course';
+                const finishBtnEl = document.createElement('button');
+                finishBtnEl.className = 'finish-btn';
+                finishBtnEl.textContent = 'Finish Course';
 
-                newContainer.appendChild(titleEl);
-                newContainer.appendChild(teacherNameEl);
-                newContainer.appendChild(typeEl);
-                newContainer.appendChild(descriptionEl);
-                newContainer.appendChild(editButtonEl);
-                newContainer.appendChild(finishButtonEl);
+                containerEl.appendChild(courseTitleEl);
+                containerEl.appendChild(teacherNameEl);
+                containerEl.appendChild(courseTypeEl);
+                containerEl.appendChild(courseDescriptionEl);
+                containerEl.appendChild(editBtnEl);
+                containerEl.appendChild(finishBtnEl);
 
-                coursesListEl.appendChild(newContainer);
+                coursesListEl.appendChild(containerEl);
             });
             attachEventListeners();
-        })
-        .catch(err => console.log(err));
+        });
 }
 
 function attachEventListeners() {
     const editButtonsEl = document.querySelectorAll('.edit-btn');
     const finishButtonsEl = document.querySelectorAll('.finish-btn');
 
-    editButtonsEl.forEach(button => {
+    editButtonsEl.forEach((button) => {
         button.addEventListener('click', (e) => {
-            const currCourse = e.target.closest('.container');
-            const courseTitle = currCourse.querySelector('h2').textContent;
-            const courseTeacher = currCourse.querySelector('h3:nth-of-type(1)').textContent;
-            const courseType = currCourse.querySelector('h3:nth-of-type(2)').textContent;
-            const courseDescription = currCourse.querySelector('h4').textContent;
-            populateInputFields(courseTitle, courseTeacher, courseType, courseDescription);
+            const currCourse = e.target.parentElement;
+            const title = currCourse.querySelector('h2').textContent;
+            const type = currCourse.querySelector('h3:nth-of-type(1)').textContent;
+            const teacher = currCourse.querySelector('h3:nth-of-type(2)').textContent;
+            const description = currCourse.querySelector('h4').textContent;
+            populateInputFields(title, teacher, type, description);
             coursesListEl.removeChild(currCourse);
         });
     });
-
-    finishButtonsEl.forEach(button => {
-        button.addEventListener('click', (e) => {
-            const currCourse = e.target.closest('.container');
-            const courseTitle = currCourse.querySelector('h2').textContent;
-            deleteBtnHandler(courseTitle);
-        });
-    });
 }
 
-async function populateInputFields(title, teacher, type, desc) {
+function editCourse() {
+    const headers = {
+        method: 'PUT',
+        body: JSON.stringify({
+            title: titleInputEl.value,
+            teacher: teacherInputEl.value,
+            type: coursesListEl.value,
+            description: descriptionInputEl.value,
+            _id: courseId
+        }),
+    }
+    fetch(endpoints.update(headers._id), headers)
+        .then(() => {
+            clearInputs();
+            loadCourses();
+            courseId = null;
+        })
+}
+
+async function populateInputFields(title, teacher, type, description) {
     courseId = await getIdByTitle(title);
 
     titleInputEl.value = title;
-    teacherNameInputEl.value = teacher;
+    teacherInputEl.value = teacher;
     typeInputEl.value = type;
-    descriptionInputEl.value = desc;
+    descriptionInputEl.value = description;
 
-    enableAddBtn();
+    enableEditBtn();
 }
 
-function getIdByTitle(courseTitle) {
+function getIdByTitle(title) {
     return fetch(baseUrl)
         .then(res => res.json())
-        .then(res => Object.entries(res).find(course => course[1].title === courseTitle)[1]._id);
+        .then((data) => Object.entries(data).find(c => c[1].title === title)[1]._id);
 }
 
-function addBtnHandler() {
-    if (!titleInputEl.value || !typeInputEl.value || !teacherNameInputEl.value || !descriptionInputEl.value) return;
+
+function addCourse() {
+    if (!titleInputEl.value || !typeInputEl.value || !descriptionInputEl.value || !teacherInputEl.value) return;
 
     const headers = {
         method: 'POST',
         body: JSON.stringify({
             title: titleInputEl.value,
             type: typeInputEl.value,
-            teacher: teacherNameInputEl.value,
             description: descriptionInputEl.value,
+            teacher: teacherInputEl.value,
         }),
     }
-
     fetch(baseUrl, headers)
         .then(() => {
-            loadBtnHandler();
-            clearInputFields();
-        })
-        .catch(err => console.log(err));
-}
-
-async function editBtnHandler() {
-    const data = {
-        title: titleInputEl.value,
-        type: typeInputEl.value,
-        teacher: teacherNameInputEl.value,
-        description: descriptionInputEl.value,
-        _id: courseId
-    }
-
-    fetch(endpoints.update(data._id), {
-        method: 'PUT',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(data),
-    }).then(() => {
-        loadBtnHandler();
-        clearInputFields();
-        courseId = null;
-        enableEditBtn();
-    });
-}
-
-function deleteBtnHandler(course) {
-    console.log(course);
-    getIdByTitle(course)
-        .then((id) =>
-            fetch(endpoints.delete(id), {
-                method: 'DELETE'
-            }))
-        .then(() => {
-            loadBtnHandler();
+            clearInputs();
+            enableAddBtn();
+            loadCourses();
         });
 }
 
-function clearInputFields() {
-    titleInputEl.value = '';
-    typeInputEl.value = '';
-    teacherNameInputEl.value = '';
-    descriptionInputEl.value = '';
-}
-
-function enableAddBtn() {
+function enableEditBtn() {
     editCourseBtnEl.disabled = false;
     addCourseBtnEl.disabled = true;
 }
 
-function enableEditBtn() {
+function enableAddBtn() {
     editCourseBtnEl.disabled = true;
     addCourseBtnEl.disabled = false;
 }
 
-function clearCoursesList() {
-    coursesListEl.innerHTML = ''
+function clearInputs() {
+    titleInputEl.value = '';
+    typeInputEl.value = '';
+    descriptionInputEl.value = '';
+    teacherInputEl.value = '';
 }
 
+function clearList() {
+    coursesListEl.innerHTML = '';
+}
+
+attachEvents();
