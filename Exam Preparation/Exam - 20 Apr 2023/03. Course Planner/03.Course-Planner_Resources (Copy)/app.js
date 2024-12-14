@@ -72,8 +72,8 @@ async function attachEventListeners() {
         button.addEventListener('click', (e) => {
             const currCourse = e.target.parentElement;
             const title = currCourse.querySelector('h2').textContent;
-            const type = currCourse.querySelector('h3:nth-of-type(1)').textContent;
-            const teacher = currCourse.querySelector('h3:nth-of-type(2)').textContent;
+            const type = currCourse.querySelector('h3:nth-of-type(2)').textContent;
+            const teacher = currCourse.querySelector('h3:nth-of-type(1)').textContent;
             const description = currCourse.querySelector('h4').textContent;
             populateInputFields(title, teacher, type, description);
             coursesListEl.removeChild(currCourse);
