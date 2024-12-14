@@ -16,10 +16,8 @@ const descriptionInputEl = document.querySelector('#description');
 
 let taskId = null;
 
-function attachEvents() {
-    loadBoardBtnEl.addEventListener('click', loadBoard);
-    addTaskBtnEl.addEventListener('click', addTask);
-}
+loadBoardBtnEl.addEventListener('click', loadBoard);
+addTaskBtnEl.addEventListener('click', addTask);
 
 function attachListeners() {
     const moveButtons = document.querySelectorAll('.task-list button');
@@ -58,10 +56,10 @@ function addTask() {
 }
 
 async function loadBoard() {
+    clearTaskList();
+
     const response = await fetch(baseUrl);
     const data = await response.json();
-
-    clearTaskList();
 
     Object.values(data).forEach((task) => {
         const newTask = document.createElement('li');
@@ -132,7 +130,6 @@ async function changeStatus(title, SectionId) {
         .then(() => {
             loadBoard();
         })
-
 }
 
 async function deleteTask(taskTitle) {
@@ -162,5 +159,3 @@ function clearTaskList() {
     doneListEl.innerHTML = '';
     codeReviewListEl.innerHTML = '';
 }
-
-attachEvents();
