@@ -17,8 +17,11 @@ const editCourseBtnEl = document.querySelector('#edit-course');
 
 let courseId = null;
 
-function attachEvents() {
-    loadCoursesBtnEl.addEventListener('click', loadCourses);
+async function attachEvents() {
+    loadCoursesBtnEl.addEventListener('click', (e) => {
+        e.preventDefault();
+        loadCourses();
+    });
     addCourseBtnEl.addEventListener('click', (e) => {
         e.preventDefault();
         addCourse();
@@ -29,13 +32,13 @@ function attachEvents() {
     });
 }
 
-function loadCourses() {
+async function loadCourses() {
     clearList();
 
     fetch(baseUrl)
         .then(res => res.json())
-        .then((data) => {
-            Object.values(data).forEach((course) => {
+        .then((res) => {
+            Object.values(res).forEach((course) => {
                 const containerEl = document.createElement('div');
                 containerEl.className = 'container';
 
@@ -72,7 +75,7 @@ function loadCourses() {
         });
 }
 
-function attachEventListeners() {
+async function attachEventListeners() {
     const editButtonsEl = document.querySelectorAll('.edit-btn');
     const finishButtonsEl = document.querySelectorAll('.finish-btn');
 
@@ -87,9 +90,29 @@ function attachEventListeners() {
             coursesListEl.removeChild(currCourse);
         });
     });
+
+    finishButtonsEl.forEach((button) => {
+        button.addEventListener('click', (e) => {
+            const currCourse = e.target.parentElement;
+            const title = currCourse.querySelector('h2').textContent;
+            deleteCourse(title);
+        });
+    });
 }
 
-function editCourse() {
+async function deleteCourse(t) {
+    getIdByTitle(t)
+        .then((id) => {
+            fetch(endpoints.delete(id), {
+                method: 'DELETE',
+            })
+        })
+        .then(() => {
+            loadCourses();
+        });
+}
+
+async function editCourse() {
     const headers = {
         method: 'PUT',
         body: JSON.stringify({
@@ -120,14 +143,13 @@ async function populateInputFields(title, teacher, type, description) {
     enableEditBtn();
 }
 
-function getIdByTitle(title) {
+async function getIdByTitle(title) {
     return fetch(baseUrl)
         .then(res => res.json())
         .then((data) => Object.entries(data).find(c => c[1].title === title)[1]._id);
 }
 
-
-function addCourse() {
+async function addCourse() {
     if (!titleInputEl.value || !typeInputEl.value || !descriptionInputEl.value || !teacherInputEl.value) return;
 
     const headers = {
